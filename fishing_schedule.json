@@ -33,5 +33,224 @@
             "link": "https://www.god-fishing-boat.com/"
         }
     },
-    "schedules": {}
+    "schedules": {
+        "M-selection": {
+            "data": [
+                {
+                    "date": "Mar 10",
+                    "status": "○",
+                    "detail": "Look for more"
+                }
+            ]
+        },
+        "もんじゃ丸": {
+            "data": [
+                {
+                    "date": "Jun 2026",
+                    "status": "○",
+                    "detail": "Schedule"
+                },
+                {
+                    "date": "Jun 18",
+                    "status": "○",
+                    "detail": "MONJAMARU予約状況"
+                }
+            ]
+        },
+        "ピスケス": {
+            "data": [
+                {
+                    "date": "Jun 2026",
+                    "status": "○",
+                    "detail": "Schedule"
+                },
+                {
+                    "date": "Jun 18",
+                    "status": "○",
+                    "detail": "遊漁船ピスケス"
+                }
+            ]
+        },
+        "武蔵丸": {
+            "data": [
+                {
+                    "date": "Jun 2026",
+                    "status": "○",
+                    "detail": "Schedule"
+                },
+                {
+                    "date": "Jun 11",
+                    "status": "○",
+                    "detail": "出船スケジュール"
+                }
+            ]
+        },
+        "優": {
+            "data": [
+                {
+                    "date": "Day 11",
+                    "status": "○",
+                    "detail": "Calendar: 遊漁船　優, Accepted"
+                },
+                {
+                    "date": "Day 12",
+                    "status": "○",
+                    "detail": "Calendar: 遊漁船　優, Accepted"
+                },
+                {
+                    "date": "Day 13",
+                    "status": "○",
+                    "detail": "Calendar: 遊漁船　優, Accepted"
+                },
+                {
+                    "date": "Day 1",
+                    "status": "○",
+                    "detail": "Calendar: 遊漁船　優, Accepted"
+                },
+                {
+                    "date": "Day 2",
+                    "status": "○",
+                    "detail": "Calendar: 遊漁船　優, Accepted"
+                },
+                {
+                    "date": "Day 3",
+                    "status": "○",
+                    "detail": "Calendar: 遊漁船　優, Accepted"
+                },
+                {
+                    "date": "Day 4",
+                    "status": "○",
+                    "detail": "Calendar: 遊漁船　優, Accepted"
+                },
+                {
+                    "date": "Day 5",
+                    "status": "○",
+                    "detail": "Calendar: 遊漁船　優, Accepted"
+                },
+                {
+                    "date": "Day 6",
+                    "status": "○",
+                    "detail": "Calendar: 遊漁船　優, Accepted"
+                },
+                {
+                    "date": "Day 7",
+                    "status": "○",
+                    "detail": "Calendar: 遊漁船　優, Accepted"
+                },
+                {
+                    "date": "Day 8",
+                    "status": "○",
+                    "detail": "Calendar: 遊漁船　優, Accepted"
+                },
+                {
+                    "date": "Day 1",
+                    "status": "○",
+                    "detail": "All day"
+                },
+                {
+                    "date": "Day 1",
+                    "status": "○",
+                    "detail": "22"
+                },
+                {
+                    "date": "Day 9",
+                    "status": "○",
+                    "detail": "All day"
+                },
+                {
+                    "date": "Day 2",
+                    "status": "○",
+                    "detail": "All day"
+                },
+                {
+                    "date": "Day 2",
+                    "status": "○",
+                    "detail": "23"
+                },
+                {
+                    "date": "Day 10",
+                    "status": "○",
+                    "detail": "All day"
+                },
+                {
+                    "date": "Day 11",
+                    "status": "○",
+                    "detail": "All day"
+                },
+                {
+                    "date": "Day 12",
+                    "status": "○",
+                    "detail": "All day"
+                },
+                {
+                    "date": "Day 13",
+                    "status": "○",
+                    "detail": "27"
+                },
+                {
+                    "date": "Day 14",
+                    "status": "○",
+                    "detail": "All day"
+                },
+                {
+                    "date": "Day 15",
+                    "status": "○",
+                    "detail": "All day"
+                },
+                {
+                    "date": "Day 16",
+                    "status": "○",
+                    "detail": "All day"
+                },
+                {
+                    "date": "Day 17",
+                    "status": "○",
+                    "detail": "31"
+                },
+                {
+                    "date": "Day 18",
+                    "status": "○",
+                    "detail": "All day"
+                },
+                {
+                    "date": "Day 1",
+                    "status": "○",
+                    "detail": "All day"
+                },
+                {
+                    "date": "Day 1",
+                    "status": "○",
+                    "detail": "遊漁船　優"
+                }
+            ]
+        },
+        "エルクルーズ": {
+            "data": [
+                {
+                    "date": "Apr 2026",
+                    "status": "○",
+                    "detail": "Schedule"
+                }
+            ]
+        },
+        "GOD": {
+            "data": [
+                {
+                    "date": "May 2026",
+                    "status": "○",
+                    "detail": "空き"
+                },
+                {
+                    "date": "May 2026",
+                    "status": "○",
+                    "detail": "Schedule"
+                },
+                {
+                    "date": "May 13",
+                    "status": "○",
+                    "detail": "01120212yasu@gmail.com"
+                }
+            ]
+        }
+    }
 }
