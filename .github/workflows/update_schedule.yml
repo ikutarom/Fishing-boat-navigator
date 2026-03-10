@@ -22,7 +22,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: スクレイピングの実行
-        run: python github_test.py  # 別名にした場合はその名前に合わせる
+        run: python fishingboatnavigator01.py  # 別名にした場合はその名前に合わせる
 
       - name: データの変更を保存して反映（Git Push）
         run: |
