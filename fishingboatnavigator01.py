@@ -25,17 +25,16 @@ options.add_argument('--headless')
 options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
 options.add_argument('--window-size=1280,1024')
-# ★重要：日本語設定を強制する
 options.add_argument('--lang=ja-JP')
 options.add_experimental_option('prefs', {'intl.accept_languages': 'ja'})
-options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
 
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
 
 def judge_status(content):
-    if any(k in content for k in ["満", "×", "済", "貸", "チャーター", "Full", "予約有"]): return "×"
-    if any(k in content for k in ["残り", "残", "△"]): return "△"
+    # 判定キーワードを強化
+    if any(k in content for k in ["満", "×", "済", "貸", "チャーター", "Full", "予約有", "締切"]): return "×"
+    if any(k in content for k in ["残り", "残", "△", "わずか"]): return "△"
     return "○"
 
 all_results = {}
@@ -48,64 +47,58 @@ try:
             time.sleep(15)
 
             iframes = driver.find_elements(By.TAG_NAME, "iframe")
-            target_found = False
-            
-            for i, f in enumerate(iframes):
+            for f in iframes:
                 src = f.get_attribute("src") or ""
                 if "google.com/calendar" in src:
-                    # AGENDA形式を強制
+                    # AGENDA(リスト)形式 + 日本語(hl=ja) を強制
                     agenda_url = src.replace("mode=WEEK", "mode=AGENDA").replace("mode=MONTH", "mode=AGENDA")
-                    if "mode=AGENDA" not in agenda_url:
-                        agenda_url += "&mode=AGENDA"
-                    # さらに日本語を強制するパラメータを追加
-                    agenda_url += "&hl=ja"
+                    if "mode=AGENDA" not in agenda_url: agenda_url += "&mode=AGENDA"
+                    if "hl=ja" not in agenda_url: agenda_url += "&hl=ja"
                     
-                    print(f"  🎯 日本語・リスト形式で読み込み中...")
                     driver.get(agenda_url)
                     time.sleep(10)
                     
+                    # ページ全体のテキストを取得
                     body_text = driver.find_element(By.TAG_NAME, "body").text
                     lines = body_text.splitlines()
                     
                     schedules = []
-                    # 日本語日付パターン: 「3月12日(木)」などの形式を狙う
-                    date_pattern = r"(\d+月\s?\d+日)"
-                    # ゴミとして除外するワード
-                    trash_words = ["Schedule", "Look for more", "All day", "Calendar", "Accepted", "前へ", "次へ", "今日", "印刷"]
+                    current_date = None
+                    
+                    # カレンダー特有のノイズを排除
+                    noise_words = ["これより後の予定を表示", "印刷", "今日", "前へ", "次へ", "終日", "予定はありません"]
 
-                    for idx, line in enumerate(lines):
-                        match = re.search(date_pattern, line)
-                        if match:
-                            date_str = match.group(1).replace(" ", "")
-                            detail = "空き"
-                            
-                            if idx + 1 < len(lines):
-                                next_line = lines[idx+1].strip()
-                                # ゴミワードでも日付でもない場合に詳細として採用
-                                if next_line and not any(t in next_line for t in trash_words) and not re.search(r"\d+月", next_line):
-                                    detail = next_line
-                                
+                    for line in lines:
+                        line = line.strip()
+                        if not line or any(nw in line for nw in noise_words):
+                            continue
+                        
+                        # 日付の抽出 (例: 3月12日(木) または 3月12日)
+                        date_match = re.search(r"(\d+月\d+日)", line)
+                        
+                        if date_match:
+                            current_date = date_match.group(1)
+                        elif current_date:
+                            # 日付の直後の行を予定詳細とする
+                            status = judge_status(line)
                             schedules.append({
-                                "date": date_str,
-                                "status": judge_status(detail),
-                                "detail": detail
+                                "date": current_date,
+                                "status": status,
+                                "detail": line
                             })
+                            # 1日1件見つけたらその日の日付はリセット（重複防止）
+                            current_date = None
                     
                     if schedules:
                         all_results[boat['name']] = {"data": schedules}
-                        print(f"  ✅ 【成功】 {len(schedules)}日分のデータを取得")
-                        target_found = True
-                        break
-
+                        print(f"  ✅ {len(schedules)}日分のデータを取得")
+                        break # iframeループを抜ける
         except Exception as e:
             print(f"  💥 エラー: {boat['name']} - {e}")
 
 finally:
     driver.quit()
 
-output = {
-    "boat_info": {b["name"]: {"area": b["area"], "link": b["official"]} for b in BOATS},
-    "schedules": all_results
-}
+output = {"boat_info": {b["name"]: {"area": b["area"], "link": b["official"]} for b in BOATS}, "schedules": all_results}
 with open("fishing_schedule.json", "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=4)
