@@ -15,22 +15,6 @@
         "武蔵丸": {
             "area": "博多",
             "link": "https://www.musashimaru.com/"
-        },
-        "優": {
-            "area": "博多",
-            "link": "http://yu-fishing.jp/"
-        },
-        "エルクルーズ": {
-            "area": "箱崎",
-            "link": "https://www.l-cruise.com/"
-        },
-        "Winger": {
-            "area": "唐津",
-            "link": "https://www.wingar.net/"
-        },
-        "GOD": {
-            "area": "姪浜",
-            "link": "https://www.god-fishing-boat.com/"
         }
     },
     "schedules": {}
