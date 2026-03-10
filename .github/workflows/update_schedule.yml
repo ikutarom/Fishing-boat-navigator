@@ -19,7 +19,7 @@ jobs:
 
       - name: 依存ライブラリのインストール
         run: |
-          pip install -r requirements.txt
+          pip install selenium webdriver-manager
 
       - name: スクレイピングの実行
         run: python fishingboatnavigator01.py  # 別名にした場合はその名前に合わせる
