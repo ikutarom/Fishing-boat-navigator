@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-03-11 14:48:46",
+    "last_update": "2026-03-11 15:52:20",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -820,7 +820,12 @@
                     "detail": "成人の日"
                 },
                 {
-                    "date": "1月11日",
+                    "date": "2月3日",
+                    "status": "○",
+                    "detail": "節分"
+                },
+                {
+                    "date": "2月3日",
                     "status": "○",
                     "detail": "カレンダー"
                 }
@@ -1058,11 +1063,6 @@
         "Season": {
             "data": [
                 {
-                    "date": "3月11日",
-                    "status": "△",
-                    "detail": "募集中"
-                },
-                {
                     "date": "3月12日",
                     "status": "△",
                     "detail": "募集中"
@@ -1161,11 +1161,6 @@
         },
         "暁": {
             "data": [
-                {
-                    "date": "3月11日",
-                    "status": "○",
-                    "detail": "Bジギング便"
-                },
                 {
                     "date": "3月14日",
                     "status": "×",
