@@ -5,22 +5,21 @@
     <title>釣れた奴ほどよー喋る</title>
     <style>
         body { font-family: "Helvetica Neue", Arial, sans-serif; background-color: #f4f7f8; padding: 20px; }
+        /* タイトル見出しのスタイル */
         h1 { text-align: center; color: #0056b3; margin-bottom: 30px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }
         
-        /* フィルタエリア */
         #filter-container { background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .area-group { margin-bottom: 15px; border-left: 4px solid #007bff; padding-left: 10px; }
         .area-title { font-weight: bold; color: #0056b3; margin-bottom: 5px; display: block; }
         .filter-item { display: block; margin-bottom: 3px; cursor: pointer; font-size: 14px; }
         .filter-item input { margin-right: 8px; }
 
-        /* スクロールコンテナ */
         .table-wrapper { overflow: auto; max-height: 80vh; border: 1px solid #ccc; background: white; border-radius: 4px; }
 
         table { border-collapse: separate; border-spacing: 0; width: 100%; }
         th, td { border: 1px solid #ccc; padding: 8px; text-align: center; font-size: 13px; vertical-align: top; }
         
-        /* --- 固定設定 --- */
+        /* 固定設定 */
         th { background-color: #f8f9fa; position: sticky; top: 0; z-index: 30; }
         .date-col { 
             position: sticky; 
@@ -34,12 +33,10 @@
         }
         th.date-col { z-index: 40; } 
 
-        /* ヘッダー内のレイアウト */
         .boat-header { width: 160px; min-width: 160px; padding: 10px 5px; }
         .boat-name { font-weight: bold; display: block; font-size: 1.1em; margin-bottom: 4px; }
         .boat-info-row { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 11px; color: #666; }
         
-        /* リンクボタンのスタイル */
         .official-link { 
             text-decoration: none; 
             background-color: #007bff; 
@@ -52,13 +49,11 @@
         }
         .official-link:hover { background-color: #0056b3; }
 
-        /* 曜日カラー */
         .sat { color: #0052cc; }
         .sun { color: #d93025; }
         tr:has(.sat) .date-col { background-color: #eef6ff !important; }
         tr:has(.sun) .date-col { background-color: #fff0f0 !important; }
 
-        /* ステータス表示 */
         .main-status { font-size: 1.2em; display: block; margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 3px; }
         .bg-full { background-color: #ececec !important; }
         .event-item { padding: 2px 0; }
@@ -72,7 +67,7 @@
 </head>
 <body>
 
-    <h1>🎣 釣れた奴ほどよー喋る</h1>
+    <h1 id="page-title">🎣 釣れた奴ほどよー喋る</h1>
 
     <div id="filter-container">
         <strong style="font-size: 1.1em;">出港地別フィルタ:</strong>
@@ -91,6 +86,30 @@
     </div>
 
     <script>
+        // --- タイトルランダム設定 ---
+        const titles = [
+            "🎣 釣れた奴ほどよー喋る",
+            "🎣 ステラなら釣れたのに",
+            "🎣 タイラバにエビを付てこそ",
+            "🎣 まるでアラのような根掛り",
+            "🎣 いいもん、サビキでベイト釣るもん",
+            "🎣 上から下までびっしりなんだけどね～",
+            "🎣 はい、エソ～"
+        ];
+
+        function setRandomTitle() {
+            const randomIndex = Math.floor(Math.random() * titles.length);
+            const selectedTitle = titles[randomIndex];
+            // 見出し（h1）を書き換え
+            document.getElementById('page-title').innerText = selectedTitle;
+            // ブラウザのタブ名（titleタグ）を書き換え
+            document.title = selectedTitle;
+        }
+
+        // ページ読み込み時に実行
+        setRandomTitle();
+        // ---------------------------
+
         function getStatusClass(status) {
             if (status === "×") return "status-full";
             if (status === "△") return "status-few";
@@ -113,7 +132,6 @@
                     if (!areaGroups[info.area]) areaGroups[info.area] = [];
                     areaGroups[info.area].push({ name, index, link: info.link });
 
-                    // ヘッダー生成（出港地の横にリンクボタンを配置）
                     const th = document.createElement('th');
                     th.className = `boat-header col-${index}`;
                     th.innerHTML = `
