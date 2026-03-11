@@ -35,63 +35,52 @@ for boat in BOATS:
     print(f"\n🚀 --- 【開始】 {boat['name']} ---")
     try:
         driver.get(boat['url'])
-        time.sleep(12)
+        time.sleep(15) # サイトの読み込みを十分に待つ
 
         iframes = driver.find_elements(By.TAG_NAME, "iframe")
         found_data = False
         
         for ifr in iframes:
             src = ifr.get_attribute("src") or ""
-            if "google.com/calendar" in src:
+            if "calendar" in src:
                 driver.switch_to.frame(ifr)
-                time.sleep(8)
+                time.sleep(10) # カレンダー描画を待つ
 
-                schedules = []
-                # 【重要】日付の枠ではなく、個別の「予定項目」をピンポイントで取得する
-                # 終日予定などは div[role='button'] か div[aria-label] に入っていることが多い
-                event_elements = driver.find_elements(By.XPATH, "//div[@role='button' and contains(@aria-label, '2026')]")
+                # カレンダー全体のテキストをドサッと取得
+                entire_text = driver.find_element(By.TAG_NAME, "body").text
+                lines = entire_text.split('\n')
                 
-                # 月名変換マップ
-                month_map = {"January":"1","February":"2","March":"3","April":"4","May":"5","June":"6",
-                             "July":"7","August":"8","September":"9","October":"10","November":"11","December":"12"}
+                schedules = []
+                current_day = ""
+                
+                # 今日の日付を取得（2026年3月）
+                current_month = "3月" 
 
-                for el in event_elements:
-                    label = el.get_attribute("aria-label")
-                    if not label: continue
-                    
-                    # 予定名そのものは要素のテキストから取得
-                    title = el.text.strip()
-                    
-                    # テキストが空（または数字のみ）の場合は、ラベルの最初のカンマより前を予定名とする
-                    if not title or title.isdigit():
-                        title = label.split(',')[0].strip()
+                for i, line in enumerate(lines):
+                    line = line.strip()
+                    if not line: continue
 
-                    # 「○ events」や「Today」などは除外
-                    if "event" in title.lower() or "today" in title.lower() or "イベント" in title:
+                    # 1. 数字（日付）のみの行を見つけたら、それを基準日とする
+                    if line.isdigit() and 1 <= int(line) <= 31:
+                        # ただし、直後の行が「曜日」や「events」なら、それはカレンダーのヘッダーか空の日
+                        current_day = f"{current_month}{line}日"
                         continue
-
-                    # 日付の抽出
-                    date_found = None
-                    m_ja = re.search(r"(\d{1,2})月(\d{1,2})日", label)
-                    if m_ja:
-                        date_found = f"{m_ja.group(1)}月{m_ja.group(2)}日"
-                    else:
-                        for m_name, m_num in month_map.items():
-                            if m_name in label:
-                                d_match = re.search(rf"{m_name}\s+(\d{{1,2}})", label)
-                                if d_match:
-                                    date_found = f"{m_num}月{d_match.group(1)}日"
-                                    break
                     
-                    if date_found and title:
+                    # 2. 数字以外の「予定らしき文字」が来た場合
+                    if current_day and not line.isdigit():
+                        # 除外キーワード（Googleカレンダーのシステム用語）
+                        if any(k in line for k in ["曜日", "event", "前月", "翌月", "今日", "印刷", "月", "週"]):
+                            continue
+                        
+                        # 予定として採用
                         schedules.append({
-                            "date": date_found,
-                            "status": judge_status(title),
-                            "detail": title
+                            "date": current_day,
+                            "status": judge_status(line),
+                            "detail": line
                         })
 
                 if schedules:
-                    # 同じ日付の予定をまとめる
+                    # 同じ日付の重複をまとめる
                     unique_days = {}
                     for s in schedules:
                         d = s["date"]
@@ -103,7 +92,7 @@ for boat in BOATS:
                             unique_days[d]["status"] = judge_status(unique_days[d]["detail"])
                     
                     all_results[boat['name']] = {"data": list(unique_days.values())}
-                    print(f"  ✅ {len(unique_days)}日分の予定を特定しました")
+                    print(f"  ✅ {len(unique_days)}件の予定を抽出しました")
                     found_data = True
                     driver.switch_to.default_content()
                     break
