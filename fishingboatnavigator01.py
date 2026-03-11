@@ -10,17 +10,12 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
-# --- 1. 巡回リスト ---
-BOATS = [
-    {"name": "M-selection", "url": "https://m-selection.com/", "official": "https://m-selection.com/", "area": "糸島"},
-    {"name": "もんじゃ丸", "url": "https://www.monjamaru.com/118935.html", "official": "https://www.monjamaru.com/", "area": "姪浜"},
-    {"name": "ピスケス", "url": "https://pisces-gou.jimdofree.com/", "official": "https://pisces-gou.jimdofree.com/", "area": "姪浜"},
-    {"name": "武蔵丸", "url": "https://www.musashimaru.com/#sch", "official": "https://www.musashimaru.com/", "area": "博多"}, 
-    {"name": "優", "url": "http://yu-fishing.jp/", "official": "http://yu-fishing.jp/", "area": "博多"}, 
-    {"name": "エルクルーズ", "url": "https://www.l-cruise.com/schedule", "official": "https://www.l-cruise.com/", "area": "箱崎"}, 
-    {"name": "Wingar", "url": "https://www.wingar.net/%E4%BA%88%E7%B4%84%E7%8A%B6%E6%B3%81", "official": "https://www.wingar.net/", "area": "唐津"}, 
-    {"name": "GOD", "url": "https://www.god-fishing-boat.com/%E3%82%B9%E3%82%B1%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AB/", "official": "https://www.god-fishing-boat.com/", "area": "姪浜"},
-]
+# 別ファイルから読み込み
+try:
+    from boats import BOATS
+except ImportError:
+    print("Error: boats.py not found.")
+    exit(1)
 
 options = Options()
 options.add_argument('--headless')
@@ -44,10 +39,11 @@ for boat in BOATS:
     print(f"\n🚀 --- 【開始】 {boat['name']} ---")
     try:
         driver.get(boat['url'])
-        
-        # iframeが見つかるまで待機
         wait = WebDriverWait(driver, 20)
-        iframes = wait.until(EC.presence_of_all_elements_located((By.TAG_NAME, "iframe")))
+        
+        # iframeが1つ以上現れるのを待つ
+        wait.until(EC.presence_of_element_located((By.TAG_NAME, "iframe")))
+        iframes = driver.find_elements(By.TAG_NAME, "iframe")
         
         target_iframe = None
         for ifr in iframes:
@@ -60,48 +56,59 @@ for boat in BOATS:
             print(f"  🎯 Googleカレンダーを発見。切り替えます...")
             driver.switch_to.frame(target_iframe)
             
-            # カレンダーの中身（日付など）が表示されるまで待つ
-            time.sleep(10) 
-            
-            body_text = driver.find_element(By.TAG_NAME, "body").text
-            lines = body_text.splitlines()
-            
-            schedules = []
-            temp_date = None
-            noise_words = ["これより後の予定を表示", "印刷", "今日", "前へ", "次へ", "予定はありません", "Google"]
+            # 【重要】カレンダー内の特定の要素（日付や予定を表示するクラス）が出るまで待機
+            try:
+                # 予定リストの行(クラス名: event)またはカレンダー全体が表示されるのを待つ
+                WebDriverWait(driver, 15).until(
+                    EC.presence_of_element_located((By.TAG_NAME, "body"))
+                )
+                # Googleカレンダー特有の描画時間を考慮してさらに少し待つ
+                time.sleep(7)
+                
+                body_text = driver.find_element(By.TAG_NAME, "body").text
+                # デバッグ用：取得文字数を出力
+                print(f"  📄 取得文字数: {len(body_text)}字")
+                
+                lines = body_text.splitlines()
+                schedules = []
+                temp_date = None
+                noise_words = ["これより後の予定を表示", "印刷", "今日", "前へ", "次へ", "予定はありません", "Google"]
 
-            for line in lines:
-                line = line.strip()
-                if not line or any(nw in line for nw in noise_words):
-                    continue
+                for line in lines:
+                    line = line.strip()
+                    if not line or any(nw in line for nw in noise_words):
+                        continue
+                    
+                    # 日付の抽出
+                    date_match = re.search(r"(\d+月\d+日|\d+/\d+)", line)
+                    
+                    if date_match:
+                        temp_date = date_match.group(1)
+                    elif temp_date:
+                        schedules.append({
+                            "date": temp_date,
+                            "status": judge_status(line),
+                            "detail": line
+                        })
+                        temp_date = None # 1日付1予定でリセット
                 
-                # 日付の抽出 (3月12日 や 3/12 など)
-                date_match = re.search(r"(\d+月\d+日|\d+/\d+)", line)
-                
-                if date_match:
-                    temp_date = date_match.group(1)
-                elif temp_date:
-                    # 日付の後に続く行を予定として取得
-                    schedules.append({
-                        "date": temp_date,
-                        "status": judge_status(line),
-                        "detail": line
-                    })
-                    temp_date = None
+                if schedules:
+                    all_results[boat['name']] = {"data": schedules}
+                    print(f"  ✅ {len(schedules)}日分のデータを取得")
+                else:
+                    # 取得失敗時のテキストを少し表示して原因を探る
+                    print(f"  ❌ 予定が読み取れません。テキスト断片: {body_text[:50]}...")
             
-            if schedules:
-                all_results[boat['name']] = {"data": schedules}
-                print(f"  ✅ {len(schedules)}日分のデータを取得")
-            else:
-                print(f"  ❌ カレンダーは見つかりましたが、予定が空、または読み取れませんでした")
-            
-            driver.switch_to.default_content()
+            finally:
+                driver.switch_to.default_content()
         else:
             print(f"  ⚠️ Googleカレンダーのiframeが見つかりませんでした")
 
     except Exception as e:
         print(f"  💥 エラー発生: {str(e)[:100]}")
-        driver.switch_to.default_content()
+        # フレーム内にいた場合は外に戻す
+        try: driver.switch_to.default_content()
+        except: pass
 
 driver.quit()
 
