@@ -7,16 +7,15 @@
         body { font-family: "Helvetica Neue", Arial, sans-serif; background-color: #f4f7f8; padding: 20px; }
         h1 { text-align: center; color: #333; }
         
-        /* フィルタエリアのスタイル */
         #filter-container { background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .filter-item { display: inline-block; margin-right: 15px; cursor: pointer; font-size: 14px; }
         .filter-item input { margin-right: 5px; }
 
         table { border-collapse: collapse; width: 100%; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        th, td { border: 1px solid #ccc; padding: 10px; text-align: center; font-size: 14px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; font-size: 13px; vertical-align: top; }
         
         th { background-color: #f0f0f0; position: sticky; top: 0; z-index: 10; }
-        .boat-header { min-width: 120px; }
+        .boat-header { min-width: 130px; }
         .boat-name { font-weight: bold; display: block; }
         .boat-area { font-size: 11px; color: #666; font-weight: normal; }
 
@@ -24,15 +23,17 @@
         .sat { background-color: #eef6ff !important; color: #0052cc; }
         .sun { background-color: #fff0f0 !important; color: #d93025; }
 
-        .status-ok { color: #28a745; font-weight: bold; }
-        .status-few { color: #f29900; font-weight: bold; }
-        .status-full { color: #d93025; font-weight: bold; }
-        .detail-text { font-size: 11px; color: #555; display: block; margin-top: 2px; }
+        /* 予定ごとの枠 */
+        .event-item { border-bottom: 1px dashed #eee; padding: 4px 0; margin-bottom: 4px; }
+        .event-item:last-child { border-bottom: none; margin-bottom: 0; }
+
+        .status-ok { color: #28a745; font-weight: bold; margin-right: 3px; }
+        .status-few { color: #f29900; font-weight: bold; margin-right: 3px; }
+        .status-full { color: #d93025; font-weight: bold; margin-right: 3px; }
+        .detail-text { font-size: 11px; color: #444; display: block; line-height: 1.3; }
 
         .link-btn { text-decoration: none; color: inherit; }
         .link-btn:hover { text-decoration: underline; }
-
-        /* 非表示用クラス */
         .hidden { display: none; }
     </style>
 </head>
@@ -55,6 +56,13 @@
     </table>
 
     <script>
+        // ステータスに応じたクラスを返す関数
+        function getStatusClass(status) {
+            if (status === "×") return "status-full";
+            if (status === "△") return "status-few";
+            return "status-ok";
+        }
+
         async function loadMatrix() {
             try {
                 const response = await fetch('fishing_schedule.json');
@@ -65,17 +73,16 @@
                 const matrixBody = document.getElementById('matrix-body');
                 const checkboxList = document.getElementById('checkbox-list');
 
-                // 1. フィルタ用チェックボックスの生成
+                // 1. フィルタ用チェックボックスとヘッダーの生成
                 boats.forEach((name, index) => {
                     const info = data.boat_info[name];
                     const label = document.createElement('label');
                     label.className = 'filter-item';
-                    label.innerHTML = `<input type="checkbox" checked value="${index}" onchange="toggleColumn(${index})"> ${name}(${info.area})`;
+                    label.innerHTML = `<input type="checkbox" checked onchange="toggleColumn(${index})"> ${name}(${info.area})`;
                     checkboxList.appendChild(label);
 
-                    // ついでにテーブルヘッダーも生成
                     const th = document.createElement('th');
-                    th.className = `boat-header col-${index}`; // 列特定用のクラス
+                    th.className = `boat-header col-${index}`;
                     th.innerHTML = `
                         <a href="${info.link}" target="_blank" class="link-btn">
                             <span class="boat-name">${name}</span>
@@ -85,7 +92,7 @@
                     headerRow.appendChild(th);
                 });
 
-                // 2. ユニークな日付の取得とソート
+                // 2. ユニークな日付の取得
                 const dateSet = new Set();
                 for (const boat in data.schedules) {
                     data.schedules[boat].data.forEach(item => dateSet.add(item.date));
@@ -96,10 +103,9 @@
                     return d1[0] !== d2[0] ? d1[0] - d2[0] : d1[1] - d2[1];
                 });
 
-                // 3. 各日付の行を生成
+                // 3. 行の生成
                 sortedDates.forEach(dateStr => {
                     const tr = document.createElement('tr');
-                    
                     const dateObj = parseDate(dateStr);
                     const dayNum = dateObj.getDay();
                     const dayLabel = ["日", "月", "火", "水", "木", "金", "土"][dayNum];
@@ -113,21 +119,22 @@
                     dateTd.innerText = `${dateStr}(${dayLabel})`;
                     tr.appendChild(dateTd);
 
-                    // 各船のデータを埋める
+                    // 船ごとのセル（複数予定対応）
                     boats.forEach((boatName, index) => {
                         const td = document.createElement('td');
-                        td.className = `col-${index}`; // 列特定用のクラス
-                        const schedule = data.schedules[boatName]?.data.find(s => s.date === dateStr);
+                        td.className = `col-${index}`;
                         
-                        if (schedule) {
-                            let statusClass = "status-ok";
-                            if (schedule.status === "×") statusClass = "status-full";
-                            if (schedule.status === "△") statusClass = "status-few";
-
-                            td.innerHTML = `
-                                <span class="${statusClass}">${schedule.status}</span>
-                                <span class="detail-text">${schedule.detail}</span>
-                            `;
+                        // 【ここがポイント】find ではなく filter を使う
+                        const dayEvents = data.schedules[boatName]?.data.filter(s => s.date === dateStr);
+                        
+                        if (dayEvents && dayEvents.length > 0) {
+                            // map を使って複数の予定をHTMLとして生成し、結合する
+                            td.innerHTML = dayEvents.map(event => `
+                                <div class="event-item">
+                                    <span class="${getStatusClass(event.status)}">${event.status}</span>
+                                    <span class="detail-text">${event.detail}</span>
+                                </div>
+                            `).join('');
                         } else {
                             td.innerText = "-";
                         }
@@ -141,7 +148,6 @@
             }
         }
 
-        // 列の表示・非表示を切り替える関数
         function toggleColumn(index) {
             const elements = document.querySelectorAll(`.col-${index}`);
             elements.forEach(el => el.classList.toggle('hidden'));
