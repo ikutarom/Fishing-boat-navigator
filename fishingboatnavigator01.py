@@ -25,13 +25,10 @@ service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
 
 def judge_status(content):
-    # チャーター関連の肯定的なワードを最優先
     if any(k in content for k in ["チャーター可", "チャーター募", "チャーターOK"]):
         return "○"
-    # 満員・締切・チャーター（予約済みの意味）を判定
     if any(k in content for k in ["満船", "満", "予約済", "貸切", "×", "済", "Full", "完売", "締切", "チャーター"]):
         return "×"
-    # 残り人数を判定
     if any(k in content for k in ["残り", "残", "△", "わずか"]):
         return "△"
     return "○"
@@ -43,54 +40,61 @@ for boat in BOATS:
     boat_schedules = []
     
     try:
-        # AGENDAモードを強制
         target_url = boat['url']
+        
+        # --- 期間延長のためのパラメータ追加 ---
+        # mode=AGENDA (リスト形式)
+        # weeks=14 (約3ヶ月半) を指定
         if "mode=AGENDA" not in target_url:
             target_url += "&mode=AGENDA"
+        if "weeks=" not in target_url:
+            target_url += "&weeks=14" 
         if "hl=ja" not in target_url:
             target_url += "&hl=ja"
             
         driver.get(target_url)
-        time.sleep(12)
+        # 期間が長いと読み込みに時間がかかるため、少し長めに待機
+        time.sleep(15) 
 
         raw_text = driver.execute_script("return document.body.innerText;")
         
         if raw_text:
             lines = raw_text.splitlines()
             current_day = ""
-            current_month = "3月" 
+            current_month = "" # 動的に取得するため空に
 
             for i in range(len(lines)):
                 line = lines[i].strip()
                 if not line: continue
 
-                # 1. 日付の特定（「月, 曜日」形式）
+                # 1. 日付の特定（「〇月, 曜日」形式を検出）
                 month_match = re.search(r'(\d{1,2})月,\s?[一-龠]', line)
                 if month_match:
                     current_month = f"{month_match.group(1)}月"
+                    # 日付が前の行にある場合の処理
                     if i > 0 and lines[i-1].strip().isdigit():
                         current_day = lines[i-1].strip()
                     continue
 
-                # 2. 予定の抽出（「終日」または「時刻」の次の行をすべて拾う）
+                # 2. 予定の抽出（「終日」または「時刻」の次の行を拾う）
                 if current_day and (line == "終日" or re.match(r'\d{2}:\d{2}', line)):
                     if i + 1 < len(lines):
                         detail = lines[i+1].strip()
                         
-                        # --- 【今回の修正箇所】不要な期間表記を削除 ---
-                        # 全角「（1 日目/58 日間）」や半角「(1 day / 58 days)」などを除去
+                        # 期間表記の削除
                         detail = re.sub(r'\s*[（(]\d+\s*(日目|day[s]?)\s*/\s*\d+\s*(日間|day[s]?)[）)]', '', detail).strip()
                         
                         # システム行の除外
                         if any(k in detail for k in ["カレンダー:", "フィードバック", "Google", "表示", "詳細を表示"]):
                             continue
                         
-                        full_date = f"{current_month}{current_day}日"
-                        boat_schedules.append({
-                            "date": full_date,
-                            "status": judge_status(detail),
-                            "detail": detail
-                        })
+                        if current_month and current_day:
+                            full_date = f"{current_month}{current_day}日"
+                            boat_schedules.append({
+                                "date": full_date,
+                                "status": judge_status(detail),
+                                "detail": detail
+                            })
 
             # 重複排除
             unique_schedules = []
@@ -102,7 +106,7 @@ for boat in BOATS:
                     unique_schedules.append(s)
             
             all_results[boat['name']] = {"data": unique_schedules}
-            print(f"  ✅ {len(unique_schedules)}件の予定を抽出")
+            print(f"  ✅ {len(unique_schedules)}件の予定を抽出 (4月以降を含む)")
             
     except Exception as e:
         print(f"  💥 エラー: {boat['name']} ({str(e)})")
