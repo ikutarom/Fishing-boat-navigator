@@ -3,156 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>釣り船予約ボード Pro</title>
-    <style>
-        :root { --primary: #005f73; --bg: #f8f9fa; --border: #dee2e6; --sat: #eef6ff; --sun: #fff0f0; }
-        body { font-family: sans-serif; background: var(--bg); margin: 0; padding: 10px; font-size: 14px; }
-        
-        /* フィルタエリア */
-        .filter-section { background: white; padding: 15px; border-radius: 8px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .filter-group { display: flex; gap: 15px; flex-wrap: wrap; align-items: center; }
-        
-        /* テーブル設定 */
-        .table-wrapper { overflow-x: auto; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        table { width: 100%; border-collapse: collapse; white-space: nowrap; }
-        
-        /* 中央揃えの強化 */
-        th, td { 
-            border: 1px solid var(--border); 
-            padding: 8px 5px; 
-            text-align: center; 
-            vertical-align: middle;
-        }
-        
-        /* 日付と曜日の色分け */
-        .w-sat { background-color: var(--sat) !important; color: #007bff; } /* 土曜日 */
-        .w-sun, .w-hol { background-color: var(--sun) !important; color: #dc3545; } /* 日祝 */
-        
-        /* 日付列の固定 */
-        th:first-child, td:first-child { 
-            position: sticky; 
-            left: 0; 
-            background: #fdfdfd; 
-            z-index: 10; 
-            min-width: 100px; 
-            border-right: 2px solid var(--border); 
-        }
-        th { background: var(--primary); color: white; }
-        
-        /* ステータス記号 */
-        .s-○ { color: #2ecc71; font-weight: bold; display: block; margin-bottom: 2px; }
-        .s-△ { color: #f39c12; font-weight: bold; display: block; margin-bottom: 2px; }
-        .s-× { color: #bdc3c7; font-weight: bold; display: block; margin-bottom: 2px; }
-        
-        /* 詳細テキストを中央揃え＆折り返し許可 */
-        .detail-text { 
-            font-size: 10px; 
-            color: #666; 
-            display: block; 
-            white-space: normal; /* 折り返しを許可 */
-            max-width: 120px; 
-            margin: 0 auto;    /* 中央寄せ */
-            line-height: 1.2;
-        }
-        
-        .hidden { display: none; } /* フィルタ用 */
-    </style>
+    <title>福岡 釣り船予約状況ナビ</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <header>
+        <h1>福岡 釣り船予約状況ナビ</h1>
+        <p id="last-update">データ読み込み中...</p>
+    </header>
 
-    <div class="filter-section">
-        <strong>📍 出港地フィルタ:</strong>
-        <div id="area-filters" class="filter-group"></div>
-    </div>
-
-    <div class="table-wrapper">
-        <table id="comparison-table">
-            <thead><tr id="header-row"><th>日付 (曜日)</th></tr></thead>
-            <tbody id="table-body"></tbody>
-        </table>
-    </div>
+    <main id="boat-container">
+        </main>
 
     <script>
-        const weekChars = ["日", "月", "火", "水", "木", "金", "土"];
-
-        fetch('fishing_schedule.json').then(res => res.json()).then(json => {
-            const areaContainer = document.getElementById('area-filters');
-            const headerRow = document.getElementById('header-row');
-            const tableBody = document.getElementById('table-body');
-            
-            const boatNames = Object.keys(json.schedules);
-            const boatInfo = json.boat_info;
-
-            // 1. 出港地フィルタの作成
-            const areas = [...new Set(boatNames.map(name => boatInfo[name].area))];
-            areas.forEach(area => {
-                const label = document.createElement('label');
-                label.innerHTML = `<input type="checkbox" checked value="${area}" onchange="filterBoats()"> ${area}`;
-                areaContainer.appendChild(label);
-            });
-
-            // 2. ヘッダー作成
-            boatNames.forEach(name => {
-                const th = document.createElement('th');
-                th.className = `col-${boatInfo[name].area}`;
-                th.innerHTML = `${name}<br><small style="font-weight:normal">${boatInfo[name].area}</small>`;
-                headerRow.appendChild(th);
-            });
-
-            // 3. データ行作成
-            const firstBoat = boatNames[0];
-            json.schedules[firstBoat].data.forEach((row, idx) => {
-                const tr = document.createElement('tr');
+        async function loadSchedules() {
+            try {
+                const response = await fetch('fishing_schedule.json');
+                const data = await response.json();
                 
-                // 日付から曜日を算出
-                const currentYear = new Date().getFullYear();
-                const dateMatch = row.date.match(/(\d+)月 (\d+)日/);
-                const dateObj = new Date(currentYear, dateMatch[1]-1, dateMatch[2]);
-                const dayIdx = dateObj.getDay();
-                const dayChar = weekChars[dayIdx];
+                const container = document.getElementById('boat-container');
+                container.innerHTML = ''; // クリア
 
-                // 祝日判定（簡易：詳細テキストに「祝」や「休日」が含まれる場合）
-                let isHoliday = false;
-                boatNames.forEach(name => {
-                    const d = json.schedules[name].data[idx];
-                    if (d && (d.detail.includes("祝") || d.detail.includes("休日"))) {
-                        isHoliday = true;
+                // 最終更新日を表示
+                document.getElementById('last-update').innerText = `最終更新: ${new Date().toLocaleString('ja-JP')}`;
+
+                // 各船のデータをループで処理
+                for (const boatName in data.boat_info) {
+                    const info = data.boat_info[boatName];
+                    const scheduleData = data.schedules[boatName] ? data.schedules[boatName].data : [];
+
+                    // カードの作成
+                    const card = document.createElement('section');
+                    card.className = 'boat-card';
+                    
+                    let html = `
+                        <div class="boat-header">
+                            <h2>${boatName} <span class="area-tag">${info.area}</span></h2>
+                            <a href="${info.link}" target="_blank" class="official-link">公式サイト ↗</a>
+                        </div>
+                        <div class="calendar-grid">
+                    `;
+
+                    if (scheduleData.length === 0) {
+                        html += `<p class="no-data">現在、取得できる予定はありません。</p>`;
+                    } else {
+                        // 日付順にソート（念のため）
+                        scheduleData.sort((a, b) => {
+                            const dateA = parseInt(a.date.match(/\d+/g).join(''));
+                            const dateB = parseInt(b.date.match(/\d+/g).join(''));
+                            return dateA - dateB;
+                        });
+
+                        scheduleData.forEach(item => {
+                            // 不要なゴミデータ（数字だけのdetailなど）を簡易フィルタリング
+                            if (item.detail.length < 2 && !isNaN(item.detail)) return;
+
+                            html += `
+                                <div class="day-box status-${item.status}">
+                                    <div class="date-label">${item.date}</div>
+                                    <div class="status-icon">${item.status}</div>
+                                    <div class="detail-text">${item.detail}</div>
+                                </div>
+                            `;
+                        });
                     }
-                });
 
-                // 土日祝の色クラス判定
-                let dayClass = "";
-                if (dayIdx === 6) dayClass = "w-sat";
-                if (dayIdx === 0 || isHoliday) dayClass = "w-sun";
-
-                // 日付セル
-                const tdDate = document.createElement('td');
-                tdDate.className = dayClass;
-                tdDate.innerHTML = `${row.date} (${dayChar})`;
-                tr.appendChild(tdDate);
-
-                // 各船のステータス
-                boatNames.forEach(name => {
-                    const td = document.createElement('td');
-                    td.className = `col-${boatInfo[name].area} ${dayClass}`;
-                    const d = json.schedules[name].data[idx];
-                    if (d) {
-                        td.innerHTML = `<span class="s-${d.status}">${d.status}</span><span class="detail-text">${d.detail}</span>`;
-                    }
-                    tr.appendChild(td);
-                });
-                tableBody.appendChild(tr);
-            });
-        });
-
-        function filterBoats() {
-            const checkedAreas = Array.from(document.querySelectorAll('#area-filters input:checked')).map(el => el.value);
-            const allCols = document.querySelectorAll('[class*="col-"]');
-            allCols.forEach(col => {
-                const area = col.className.match(/col-([^\s]+)/)[1];
-                col.classList.toggle('hidden', !checkedAreas.includes(area));
-            });
+                    html += `</div>`;
+                    card.innerHTML = html;
+                    container.appendChild(card);
+                }
+            } catch (error) {
+                console.error('Error loading JSON:', error);
+                document.getElementById('last-update').innerText = 'データの読み込みに失敗しました。';
+            }
         }
+
+        loadSchedules();
     </script>
 </body>
 </html>
