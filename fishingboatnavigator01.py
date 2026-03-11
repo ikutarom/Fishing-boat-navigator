@@ -25,7 +25,6 @@ options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
 options.add_argument('--lang=ja-JP')
 options.add_argument('--window-size=1920,1080')
-# 【重要】ボットだとバレないための偽装
 options.add_argument('--disable-blink-features=AutomationControlled')
 options.add_experimental_option("excludeSwitches", ["enable-automation"])
 options.add_experimental_option('useAutomationExtension', False)
@@ -34,7 +33,6 @@ options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) App
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
 
-# 判定関数
 def judge_status(content):
     if any(k in content for k in ["満", "×", "済", "貸", "チャーター", "Full", "予約有", "締切", "満員"]): return "×"
     if any(k in content for k in ["残り", "残", "△", "わずか"]): return "△"
@@ -46,68 +44,70 @@ for boat in BOATS:
     print(f"\n🚀 --- 【開始】 {boat['name']} ---")
     try:
         driver.get(boat['url'])
-        
-        # 【最重要】予定（role="button"）が表示されるまで最大20秒待機する
-        # これがないと、中身が空の状態でスクレイピングが終わってしまいます
         wait = WebDriverWait(driver, 20)
-        try:
-            wait.until(EC.presence_of_element_located((By.XPATH, "//div[@role='button']")))
-            print("  ✨ 予定の描画を確認しました")
-        except:
-            print("  ⏳ 描画待ちタイムアウト（予定がないか、読み込みが遅すぎます）")
-
-        time.sleep(3) # 念のため追加の安定待ち
+        # role='button' かつ aria-label を持つ要素が出るまで待つ
+        wait.until(EC.presence_of_element_located((By.XPATH, "//div[@role='button' and @aria-label]")))
+        time.sleep(5) 
 
         schedules = []
-        # 全ての aria-label 付き要素を取得
-        elements = driver.find_elements(By.XPATH, "//*[@aria-label]")
+        # 全ての候補要素を取得
+        elements = driver.find_elements(By.XPATH, "//div[@role='button' and @aria-label]")
         
         for el in elements:
             label = el.get_attribute("aria-label")
-            if not label: continue
-
-            # 明らかに予定ではないUIテキストを除外
-            if any(k in label for k in ["今日", "Today", "次へ", "前へ", "設定", "印刷", "Google"]): continue
+            text_content = el.text.strip() # 画面に表示されている文字
             
-            # 日付の抽出 (3月11日)
+            # システムUI（今日、前、次など）を排除
+            if any(k in label for k in ["今日", "Today", "次へ", "前へ", "設定", "印刷"]): continue
+
+            # 日付の抽出 (例: 3月1日)
             m_ja = re.search(r"(\d{1,2})月(\d{1,2})日", label)
             if m_ja:
                 date_str = f"{m_ja.group(1)}月{m_ja.group(2)}日"
-                # ラベルから日付を消して内容を取り出す
-                # 例: "鰆ミノー, 2026年3月1日" -> "鰆ミノー"
-                content = label.split(',')[0].strip()
                 
-                # 内容が日付そのものでなければ採用
-                if content != date_str and not content.isdigit() and "event" not in content.lower():
-                    schedules.append({
-                        "date": date_str,
-                        "status": judge_status(content),
-                        "detail": content
-                    })
+                # 【重要】予定名の特定
+                # 1. 要素の中にテキストがあればそれを使う
+                # 2. なければaria-labelの最初のカンマまでを使う
+                title = text_content if text_content else label.split(',')[0].strip()
+
+                # 数字だけの日付ラベルや「1 event」等は除外
+                if not title or title.isdigit() or "event" in title.lower() or "イベント" in title:
+                    continue
+
+                # まれに日付がタイトルとして誤認されるのを防ぐ
+                if title == date_str:
+                    continue
+
+                schedules.append({
+                    "date": date_str,
+                    "status": judge_status(title),
+                    "detail": title
+                })
 
         if schedules:
-            # 重複排除とマージ
             unique_days = {}
             for s in schedules:
                 d = s["date"]
                 if d not in unique_days:
                     unique_days[d] = s
                 else:
+                    # 同じ日の予定を統合
                     if s['detail'] not in unique_days[d]['detail']:
                         unique_days[d]["detail"] += f" / {s['detail']}"
                         unique_days[d]["status"] = judge_status(unique_days[d]["detail"])
             
-            all_results[boat['name']] = {"data": sorted(list(unique_days.values()), key=lambda x: int(re.search(r'\d+', x['date']).group()))}
-            print(f"  ✅ {len(unique_days)}件の予定を取得！")
+            # 日付順（数字ベース）にソート
+            sorted_list = sorted(unique_days.values(), key=lambda x: [int(v) for v in re.findall(r'\d+', x['date'])])
+            all_results[boat['name']] = {"data": sorted_list}
+            print(f"  ✅ {len(unique_days)}件の予定を取得しました")
         else:
-            print("  ⚠️ 予定データが空でした（フィルタリングで消えた可能性があります）")
+            print("  ⚠️ 予定が見つかりませんでした（要素は見つかりましたが中身が空です）")
 
     except Exception as e:
-        print(f"  💥 エラー発生: {str(e)}")
+        print(f"  💥 エラー: {str(e)}")
 
 driver.quit()
 
-# JSON保存
 output = {"boat_info": {b["name"]: {"area": b["area"], "link": b["official"]} for b in BOATS}, "schedules": all_results}
 with open("fishing_schedule.json", "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=4)
