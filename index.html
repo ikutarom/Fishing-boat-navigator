@@ -4,81 +4,115 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>福岡 釣り船予約状況ナビ</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body { font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", sans-serif; background: #f0f2f5; margin: 0; padding: 10px; font-size: 14px; color: #333; }
+        h1 { text-align: center; font-size: 1.2rem; margin: 10px 0; }
+        .update-time { text-align: center; font-size: 0.8em; color: #666; margin-bottom: 10px; }
+        
+        .table-container { overflow-x: auto; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        table { border-collapse: collapse; width: 100%; min-width: 600px; }
+        
+        /* ヘッダー（船名） */
+        th { background-color: #0056b3; color: white; padding: 12px 8px; position: sticky; top: 0; z-index: 20; font-size: 0.9em; }
+        
+        /* 日付列 */
+        .date-col { 
+            background: #f8f9fa; 
+            font-weight: bold; 
+            position: sticky; 
+            left: 0; 
+            z-index: 10; 
+            min-width: 80px; 
+            border-right: 2px solid #dee2e6;
+        }
+
+        th, td { border: 1px solid #dee2e6; text-align: center; }
+        td { height: 50px; padding: 4px; }
+
+        /* 状態別スタイル */
+        .status-○ { background-color: #e8f5e9; color: #2e7d32; }
+        .status-△ { background-color: #fff3e0; color: #ef6c00; font-weight: bold; }
+        .status-× { background-color: #ffebee; color: #c62828; }
+        .status-none { color: #ccc; font-size: 0.8em; }
+
+        .detail { display: block; font-size: 0.6em; line-height: 1.2; margin-top: 2px; color: #555; }
+        a { color: inherit; text-decoration: none; }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>福岡 釣り船予約状況ナビ</h1>
-        <p id="last-update">データ読み込み中...</p>
-    </header>
-
-    <main id="boat-container">
-        </main>
+    <h1>福岡 釣り船予約ナビ</h1>
+    <div class="update-time" id="last-update"></div>
+    
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr id="header-row">
+                    <th class="date-col">日付</th>
+                    </tr>
+            </thead>
+            <tbody id="table-body">
+                </tbody>
+        </table>
+    </div>
 
     <script>
-        async function loadSchedules() {
+        async function init() {
             try {
                 const response = await fetch('fishing_schedule.json');
                 const data = await response.json();
-                
-                const container = document.getElementById('boat-container');
-                container.innerHTML = ''; // クリア
-
-                // 最終更新日を表示
                 document.getElementById('last-update').innerText = `最終更新: ${new Date().toLocaleString('ja-JP')}`;
 
-                // 各船のデータをループで処理
-                for (const boatName in data.boat_info) {
-                    const info = data.boat_info[boatName];
-                    const scheduleData = data.schedules[boatName] ? data.schedules[boatName].data : [];
+                const tableBody = document.getElementById('table-body');
+                const headerRow = document.getElementById('header-row');
+                const boats = Object.keys(data.boat_info);
 
-                    // カードの作成
-                    const card = document.createElement('section');
-                    card.className = 'boat-card';
+                // 1. ヘッダーに船名を追加
+                boats.forEach(name => {
+                    const th = document.createElement('th');
+                    th.innerHTML = `<a href="${data.boat_info[name].link}" target="_blank">${name}</a>`;
+                    headerRow.appendChild(th);
+                });
+
+                // 2. 今日から30日間分の日付行を作成
+                const now = new Date();
+                for (let i = 0; i < 30; i++) {
+                    const d = new Date(now);
+                    d.setDate(now.getDate() + i);
+                    const dateStr = `${d.getMonth() + 1}月${d.getDate()}日`;
                     
-                    let html = `
-                        <div class="boat-header">
-                            <h2>${boatName} <span class="area-tag">${info.area}</span></h2>
-                            <a href="${info.link}" target="_blank" class="official-link">公式サイト ↗</a>
-                        </div>
-                        <div class="calendar-grid">
-                    `;
+                    const tr = document.createElement('tr');
+                    
+                    // 日付セル
+                    const dateTd = document.createElement('td');
+                    dateTd.className = 'date-col';
+                    dateTd.innerText = dateStr;
+                    tr.appendChild(dateTd);
 
-                    if (scheduleData.length === 0) {
-                        html += `<p class="no-data">現在、取得できる予定はありません。</p>`;
-                    } else {
-                        // 日付順にソート（念のため）
-                        scheduleData.sort((a, b) => {
-                            const dateA = parseInt(a.date.match(/\d+/g).join(''));
-                            const dateB = parseInt(b.date.match(/\d+/g).join(''));
-                            return dateA - dateB;
-                        });
+                    // 各船のその日の状態を追加
+                    boats.forEach(name => {
+                        const td = document.createElement('td');
+                        const boatSchedules = data.schedules[name]?.data || [];
+                        const dayData = boatSchedules.find(s => s.date === dateStr);
+                        
+                        if (dayData) {
+                            td.className = `status-${dayData.status}`;
+                            // 予定の内容（detail）が数字だけのゴミでなければ表示
+                            const detailText = (dayData.detail.length > 2) ? `<span class="detail">${dayData.detail}</span>` : '';
+                            td.innerHTML = `<strong>${dayData.status}</strong>${detailText}`;
+                        } else {
+                            td.className = 'status-none';
+                            td.innerText = '-';
+                        }
+                        tr.appendChild(td);
+                    });
 
-                        scheduleData.forEach(item => {
-                            // 不要なゴミデータ（数字だけのdetailなど）を簡易フィルタリング
-                            if (item.detail.length < 2 && !isNaN(item.detail)) return;
-
-                            html += `
-                                <div class="day-box status-${item.status}">
-                                    <div class="date-label">${item.date}</div>
-                                    <div class="status-icon">${item.status}</div>
-                                    <div class="detail-text">${item.detail}</div>
-                                </div>
-                            `;
-                        });
-                    }
-
-                    html += `</div>`;
-                    card.innerHTML = html;
-                    container.appendChild(card);
+                    tableBody.appendChild(tr);
                 }
-            } catch (error) {
-                console.error('Error loading JSON:', error);
-                document.getElementById('last-update').innerText = 'データの読み込みに失敗しました。';
+            } catch (e) {
+                console.error(e);
             }
         }
-
-        loadSchedules();
+        init();
     </script>
 </body>
 </html>
