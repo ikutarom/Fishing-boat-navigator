@@ -6,6 +6,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
 try:
@@ -19,7 +21,7 @@ options.add_argument('--headless')
 options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
 options.add_argument('--lang=ja-JP')
-options.add_argument('--window-size=1920,1080') # 画面を広くしてカレンダーを安定させる
+options.add_argument('--window-size=1920,1080')
 
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
@@ -35,7 +37,8 @@ for boat in BOATS:
     print(f"\n🚀 --- 【開始】 {boat['name']} ---")
     try:
         driver.get(boat['url'])
-        time.sleep(10)
+        # サイトの読み込みを待つ
+        time.sleep(12)
 
         iframes = driver.find_elements(By.TAG_NAME, "iframe")
         found_data = False
@@ -44,61 +47,68 @@ for boat in BOATS:
             src = ifr.get_attribute("src") or ""
             if "google.com/calendar" in src:
                 driver.switch_to.frame(ifr)
-                time.sleep(5)
+                # カレンダーの内部要素が出るまで待機
+                time.sleep(8)
                 
                 schedules = []
-                # 全ての要素から aria-label を持つものを取得
-                # Googleカレンダーの予定は aria-label に "March 8, 2026, ジギング" のように入っている
+                # aria-label属性を持つ全ての要素を対象にする
                 elements = driver.find_elements(By.XPATH, "//*[@aria-label]")
+                
+                month_map = {"January":"1","February":"2","March":"3","April":"4","May":"5","June":"6",
+                             "July":"7","August":"8","September":"9","October":"10","November":"11","December":"12"}
                 
                 for el in elements:
                     label = el.get_attribute("aria-label")
-                    if not label or "Calendar" not in label: continue
+                    if not label: continue
                     
-                    # --- 日付の抽出 ---
-                    # パターン1: "March 8, 2026" (英語設定の場合)
-                    # パターン2: "2026年3月8日" (日本語設定の場合)
-                    month_map = {"January":"1","February":"2","March":"3","April":"4","May":"5","June":"6",
-                                 "July":"7","August":"8","September":"9","October":"10","November":"11","December":"12"}
+                    # デバッグ用に「イベントなし」系はスキップ
+                    if "イベントなし" in label or "No events" in label: continue
                     
                     date_found = None
-                    
-                    # 日本語形式の検索
+                    # 日本語形式 (例: 3月15日)
                     m_ja = re.search(r"(\d{1,2})月(\d{1,2})日", label)
                     if m_ja:
                         date_found = f"{m_ja.group(1)}月{m_ja.group(2)}日"
                     else:
-                        # 英語形式の検索 (March 8, 2026)
+                        # 英語形式 (例: March 15)
                         for m_name, m_num in month_map.items():
                             if m_name in label:
-                                d_match = re.search(rf"{m_name}\s+(\d{{1,2}})", label)
+                                d_match = re.search(rf"{m_name}\s+(\d{{1,2}})", label, re.IGNORECASE)
                                 if d_match:
                                     date_found = f"{m_num}月{d_match.group(1)}日"
                                     break
                     
                     if date_found:
-                        # 予定の内容をクリーンアップ（日付やカレンダー名を除去）
-                        clean_detail = label.split(',')[0].strip() # 最初のカンマまでが予定名
+                        # 予定の中身を抽出（日付以外の部分）
+                        # カンマ区切りの最初の方にあることが多い
+                        parts = label.split(',')
+                        detail = parts[0].strip()
                         
-                        schedules.append({
-                            "date": date_found,
-                            "status": judge_status(label),
-                            "detail": clean_detail
-                        })
+                        # もしdetailが日付そのものだった場合は、次のパーツを見る
+                        if re.match(r"^\d+月\d+日$", detail) or any(m in detail for m in month_map) and len(parts) > 1:
+                            detail = parts[1].strip()
+
+                        if detail and not detail.isdigit():
+                            schedules.append({
+                                "date": date_found,
+                                "status": judge_status(label),
+                                "detail": detail
+                            })
                 
                 if schedules:
-                    # 同じ日付の予定をまとめる
                     unique_days = {}
                     for s in schedules:
                         d = s["date"]
                         if d not in unique_days:
                             unique_days[d] = s
                         else:
-                            unique_days[d]["detail"] += f" / {s['detail']}"
+                            # 同じ日の予定をマージ
+                            if s['detail'] not in unique_days[d]['detail']:
+                                unique_days[d]["detail"] += f" / {s['detail']}"
                             unique_days[d]["status"] = judge_status(unique_days[d]["detail"])
                     
                     all_results[boat['name']] = {"data": list(unique_days.values())}
-                    print(f"  ✅ {len(unique_days)}日分の予定を特定しました")
+                    print(f"  ✅ {len(unique_days)}件の予定を取得")
                     found_data = True
                     driver.switch_to.default_content()
                     break
@@ -114,3 +124,6 @@ for boat in BOATS:
 driver.quit()
 
 output = {"boat_info": {b["name"]: {"area": b["area"], "link": b["official"]} for b in BOATS}, "schedules": all_results}
+with open("fishing_schedule.json", "w", encoding="utf-8") as f:
+    json.dump(output, f, ensure_ascii=False, indent=4)
+print("\n💾 保存完了")
