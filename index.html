@@ -7,23 +7,23 @@
         body { font-family: "Helvetica Neue", Arial, sans-serif; background-color: #f4f7f8; padding: 20px; }
         h1 { text-align: center; color: #333; }
         
+        /* フィルタエリアのスタイル */
+        #filter-container { background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .filter-item { display: inline-block; margin-right: 15px; cursor: pointer; font-size: 14px; }
+        .filter-item input { margin-right: 5px; }
+
         table { border-collapse: collapse; width: 100%; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
         th, td { border: 1px solid #ccc; padding: 10px; text-align: center; font-size: 14px; }
         
-        /* ヘッダーの設定 */
         th { background-color: #f0f0f0; position: sticky; top: 0; z-index: 10; }
         .boat-header { min-width: 120px; }
         .boat-name { font-weight: bold; display: block; }
         .boat-area { font-size: 11px; color: #666; font-weight: normal; }
 
-        /* 日付列の設定 */
         .date-col { font-weight: bold; background-color: #fafafa; min-width: 100px; }
-        
-        /* 土日祝日の背景色 */
-        .sat { background-color: #eef6ff !important; color: #0052cc; } /* 土曜日: 青系 */
-        .sun { background-color: #fff0f0 !important; color: #d93025; } /* 日曜日・祝日: 赤系 */
+        .sat { background-color: #eef6ff !important; color: #0052cc; }
+        .sun { background-color: #fff0f0 !important; color: #d93025; }
 
-        /* 予約ステータス */
         .status-ok { color: #28a745; font-weight: bold; }
         .status-few { color: #f29900; font-weight: bold; }
         .status-full { color: #d93025; font-weight: bold; }
@@ -31,20 +31,27 @@
 
         .link-btn { text-decoration: none; color: inherit; }
         .link-btn:hover { text-decoration: underline; }
+
+        /* 非表示用クラス */
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
     <h1>🎣 釣り船予約マトリックス</h1>
+
+    <div id="filter-container">
+        <strong>表示する船を選択: </strong><br>
+        <div id="checkbox-list" style="margin-top: 10px;"></div>
+    </div>
     
     <table id="schedule-matrix">
         <thead>
             <tr id="header-row">
-                <th>日付</th>
+                <th class="date-col">日付</th>
             </tr>
         </thead>
-        <tbody id="matrix-body">
-            </tbody>
+        <tbody id="matrix-body"></tbody>
     </table>
 
     <script>
@@ -56,12 +63,19 @@
                 const boats = Object.keys(data.boat_info);
                 const headerRow = document.getElementById('header-row');
                 const matrixBody = document.getElementById('matrix-body');
+                const checkboxList = document.getElementById('checkbox-list');
 
-                // 1. ヘッダー（船名＋出港地）を生成
-                boats.forEach(name => {
+                // 1. フィルタ用チェックボックスの生成
+                boats.forEach((name, index) => {
                     const info = data.boat_info[name];
+                    const label = document.createElement('label');
+                    label.className = 'filter-item';
+                    label.innerHTML = `<input type="checkbox" checked value="${index}" onchange="toggleColumn(${index})"> ${name}(${info.area})`;
+                    checkboxList.appendChild(label);
+
+                    // ついでにテーブルヘッダーも生成
                     const th = document.createElement('th');
-                    th.className = 'boat-header';
+                    th.className = `boat-header col-${index}`; // 列特定用のクラス
                     th.innerHTML = `
                         <a href="${info.link}" target="_blank" class="link-btn">
                             <span class="boat-name">${name}</span>
@@ -71,7 +85,7 @@
                     headerRow.appendChild(th);
                 });
 
-                // 2. 全データのユニークな日付を取得してソート
+                // 2. ユニークな日付の取得とソート
                 const dateSet = new Set();
                 for (const boat in data.schedules) {
                     data.schedules[boat].data.forEach(item => dateSet.add(item.date));
@@ -86,7 +100,6 @@
                 sortedDates.forEach(dateStr => {
                     const tr = document.createElement('tr');
                     
-                    // 日付セル（曜日判定と色付け）
                     const dateObj = parseDate(dateStr);
                     const dayNum = dateObj.getDay();
                     const dayLabel = ["日", "月", "火", "水", "木", "金", "土"][dayNum];
@@ -101,8 +114,9 @@
                     tr.appendChild(dateTd);
 
                     // 各船のデータを埋める
-                    boats.forEach(boatName => {
+                    boats.forEach((boatName, index) => {
                         const td = document.createElement('td');
+                        td.className = `col-${index}`; // 列特定用のクラス
                         const schedule = data.schedules[boatName]?.data.find(s => s.date === dateStr);
                         
                         if (schedule) {
@@ -115,11 +129,10 @@
                                 <span class="detail-text">${schedule.detail}</span>
                             `;
                         } else {
-                            td.innerText = "-"; // データなし
+                            td.innerText = "-";
                         }
                         tr.appendChild(td);
                     });
-
                     matrixBody.appendChild(tr);
                 });
 
@@ -128,9 +141,14 @@
             }
         }
 
+        // 列の表示・非表示を切り替える関数
+        function toggleColumn(index) {
+            const elements = document.querySelectorAll(`.col-${index}`);
+            elements.forEach(el => el.classList.toggle('hidden'));
+        }
+
         function parseDate(dateStr) {
             const m = dateStr.match(/(\d+)月(\d+)日/);
-            // 2026年固定
             return new Date(2026, parseInt(m[1]) - 1, parseInt(m[2]));
         }
 
