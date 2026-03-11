@@ -2,27 +2,26 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>釣り船予約状況</title>
+    <title>釣り船予約状況マトリックス</title>
     <style>
         body { font-family: "Helvetica Neue", Arial, sans-serif; background-color: #f4f7f8; padding: 20px; }
         h1 { text-align: center; color: #333; }
         
+        /* フィルタエリア：エリアごとに縦に並べる */
         #filter-container { background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .filter-item { display: inline-block; margin-right: 15px; cursor: pointer; font-size: 14px; }
-        .filter-item input { margin-right: 5px; }
+        .area-group { margin-bottom: 15px; border-left: 4px solid #007bff; padding-left: 10px; }
+        .area-title { font-weight: bold; color: #0056b3; margin-bottom: 5px; display: block; }
+        .filter-item { display: block; margin-bottom: 3px; cursor: pointer; font-size: 14px; }
+        .filter-item input { margin-right: 8px; }
 
-        /* テーブルを囲むコンテナでスクロールを制御 */
+        /* スクロールコンテナ */
         .table-wrapper { overflow: auto; max-height: 80vh; border: 1px solid #ccc; background: white; }
 
         table { border-collapse: separate; border-spacing: 0; width: 100%; }
         th, td { border: 1px solid #ccc; padding: 8px; text-align: center; font-size: 13px; vertical-align: top; }
         
         /* --- 固定設定 --- */
-        
-        /* 1行目（船名）の固定 */
         th { background-color: #f0f0f0; position: sticky; top: 0; z-index: 30; }
-
-        /* 1列目（日付）の固定 */
         .date-col { 
             position: sticky; 
             left: 0; 
@@ -31,24 +30,21 @@
             width: 110px; 
             min-width: 110px;
             font-weight: bold; 
-            border-right: 2px solid #bbb; /* 境目を分かりやすく */
+            border-right: 2px solid #bbb;
         }
-
-        /* 左上の角（日付ヘッダー）の固定 */
         th.date-col { z-index: 40; } 
-
-        /* --- 固定設定ここまで --- */
 
         .boat-header { width: 150px; min-width: 150px; }
         .boat-name { font-weight: bold; display: block; }
         .boat-area { font-size: 11px; color: #666; font-weight: normal; }
 
+        /* 曜日カラー */
         .sat { color: #0052cc; }
         .sun { color: #d93025; }
-        /* 土日祝日の背景は個別に適用 */
         tr:has(.sat) .date-col { background-color: #eef6ff !important; }
         tr:has(.sun) .date-col { background-color: #fff0f0 !important; }
 
+        /* ステータス表示 */
         .main-status { font-size: 1.2em; display: block; margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 3px; }
         .bg-full { background-color: #ececec !important; }
         .event-item { padding: 2px 0; }
@@ -67,8 +63,9 @@
     <h1>🎣 釣り船予約マトリックス</h1>
 
     <div id="filter-container">
-        <strong>表示する船を選択: </strong><br>
-        <div id="checkbox-list" style="margin-top: 10px;"></div>
+        <strong style="font-size: 1.1em;">出港地別フィルタ:</strong>
+        <div id="checkbox-list" style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 20px;">
+            </div>
     </div>
     
     <div class="table-wrapper">
@@ -99,35 +96,58 @@
                 const matrixBody = document.getElementById('matrix-body');
                 const checkboxList = document.getElementById('checkbox-list');
 
+                // 1. エリアごとに船をグループ化
+                const areaGroups = {};
                 boats.forEach((name, index) => {
                     const info = data.boat_info[name];
-                    const label = document.createElement('label');
-                    label.className = 'filter-item';
-                    label.innerHTML = `<input type="checkbox" checked onchange="toggleColumn(${index})"> ${name}(${info.area})`;
-                    checkboxList.appendChild(label);
+                    if (!areaGroups[info.area]) areaGroups[info.area] = [];
+                    areaGroups[info.area].push({ name, index, link: info.link });
 
+                    // テーブルヘッダー生成
                     const th = document.createElement('th');
                     th.className = `boat-header col-${index}`;
                     th.innerHTML = `<a href="${info.link}" target="_blank" class="link-btn"><span class="boat-name">${name}</span><span class="boat-area">📍 ${info.area}</span></a>`;
                     headerRow.appendChild(th);
                 });
 
+                // 2. チェックボックスをエリア別に縦に並べる
+                Object.keys(areaGroups).forEach(area => {
+                    const groupDiv = document.createElement('div');
+                    groupDiv.className = 'area-group';
+                    groupDiv.innerHTML = `<span class="area-title">${area}</span>`;
+                    
+                    areaGroups[area].forEach(boat => {
+                        const label = document.createElement('label');
+                        label.className = 'filter-item';
+                        label.innerHTML = `<input type="checkbox" checked onchange="toggleColumn(${boat.index})"> ${boat.name}`;
+                        groupDiv.appendChild(label);
+                    });
+                    checkboxList.appendChild(groupDiv);
+                });
+
+                // 3. 日付の抽出と今日以降のフィルタリング
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+
                 const dateSet = new Set();
                 for (const boat in data.schedules) {
                     data.schedules[boat].data.forEach(item => dateSet.add(item.date));
                 }
+
                 const sortedDates = Array.from(dateSet).sort((a, b) => {
                     const d1 = a.match(/\d+/g).map(Number);
                     const d2 = b.match(/\d+/g).map(Number);
                     return d1[0] !== d2[0] ? d1[0] - d2[0] : d1[1] - d2[1];
                 });
 
+                // 4. 行の生成
                 sortedDates.forEach(dateStr => {
-                    const tr = document.createElement('tr');
                     const dateObj = parseDate(dateStr);
+                    if (dateObj < today) return;
+
+                    const tr = document.createElement('tr');
                     const dayNum = dateObj.getDay();
                     const dayLabel = ["日", "月", "火", "水", "木", "金", "土"][dayNum];
-                    
                     let dayClass = (dayNum === 0 ? "sun" : dayNum === 6 ? "sat" : "");
 
                     const dateTd = document.createElement('td');
@@ -173,11 +193,14 @@
 
         function parseDate(dateStr) {
             const m = dateStr.match(/(\d+)月(\d+)日/);
-            return new Date(2026, parseInt(m[1]) - 1, parseInt(m[2]));
+            const now = new Date();
+            let year = now.getFullYear();
+            const month = parseInt(m[1]);
+            if (now.getMonth() + 1 > 10 && month < 3) year += 1;
+            return new Date(year, month - 1, parseInt(m[2]));
         }
 
         loadMatrix();
     </script>
 </body>
 </html>
-
