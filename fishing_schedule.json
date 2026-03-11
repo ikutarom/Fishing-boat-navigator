@@ -31,6 +31,14 @@
         "GOD": {
             "area": "姪浜",
             "link": "https://www.god-fishing-boat.com/"
+        },
+        "Season": {
+            "area": "糸島",
+            "link": "https://season-karadomari.jimdofree.com"
+        },
+        "暁": {
+            "area": "姪浜",
+            "link": "https://www.keyascorporation.com/"
         }
     },
     "schedules": {
@@ -550,7 +558,7 @@
                 {
                     "date": "3月20日",
                     "status": "○",
-                    "detail": "ﾋﾗﾏｻﾒｲﾝ:1名空き"
+                    "detail": "ﾋﾗﾏｻﾒｲﾝ:2名空き"
                 },
                 {
                     "date": "3月21日",
@@ -1230,6 +1238,128 @@
                     "detail": "満船"
                 }
             ]
+        },
+        "Season": {
+            "data": [
+                {
+                    "date": "3月11日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "3月12日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "3月13日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "3月14日",
+                    "status": "○",
+                    "detail": "乗っ込み真鯛、タイラバ、９名様募集中"
+                },
+                {
+                    "date": "3月15日",
+                    "status": "×",
+                    "detail": "チャーター"
+                },
+                {
+                    "date": "3月16日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "3月17日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "3月18日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "3月19日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "3月20日",
+                    "status": "×",
+                    "detail": "チャーター"
+                },
+                {
+                    "date": "3月21日",
+                    "status": "○",
+                    "detail": "乗っ込み真鯛、７名様募集中"
+                },
+                {
+                    "date": "3月22日",
+                    "status": "○",
+                    "detail": "乗っ込み真鯛、タイラバ便、１０名様募集中"
+                },
+                {
+                    "date": "3月23日",
+                    "status": "○",
+                    "detail": "休船"
+                },
+                {
+                    "date": "3月24日",
+                    "status": "○",
+                    "detail": "休船"
+                },
+                {
+                    "date": "3月25日",
+                    "status": "○",
+                    "detail": "休船"
+                },
+                {
+                    "date": "3月26日",
+                    "status": "○",
+                    "detail": "休船"
+                },
+                {
+                    "date": "3月27日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "3月28日",
+                    "status": "×",
+                    "detail": "チャーター"
+                },
+                {
+                    "date": "3月29日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "3月30日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "3月31日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "4月11日",
+                    "status": "○",
+                    "detail": "乗っ込み真鯛、８名様募集中"
+                },
+                {
+                    "date": "4月18日",
+                    "status": "×",
+                    "detail": "チャーター"
+                }
+            ]
+        },
+        "暁": {
+            "data": []
         }
     }
 }
