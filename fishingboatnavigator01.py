@@ -1,11 +1,40 @@
-# --- 前略 ---
+import os
+import time
+import re
+import json
+import datetime
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.common.exceptions import TimeoutException
+
+# 💡 BOATSの読み込みシーケンス（ここを確実に保持）
+try:
+    from boats import BOATS
+except ImportError:
+    print("Error: boats.py が見つかりません。")
+    exit(1)
+
+options = Options()
+options.add_argument('--headless')
+options.add_argument('--no-sandbox')
+options.add_argument('--disable-dev-shm-usage')
+options.add_argument('--window-size=1920,1080')
+options.page_load_strategy = 'normal'
+options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36')
+
+service = Service(ChromeDriverManager().install())
+driver = webdriver.Chrome(service=service, options=options)
+driver.set_page_load_timeout(45)
 
 def judge_status(content):
     if any(k in content for k in ["満船", "満", "予約済", "貸切", "×", "済", "Full", "完売", "締切", "チャーター", "🈵"]): return "×"
     if any(k in content for k in ["残り", "残", "△", "わずか", "🈳", "募集中"]): return "△"
     return "○"
 
-# 月名変換マップ（優の4月以降対策）
+# 月名変換マップ（暁・優の英語表記対策）
 MONTH_MAP = {
     "Jan": "1月", "Feb": "2月", "Mar": "3月", "Apr": "4月", "May": "5月", "Jun": "6月",
     "Jul": "7月", "Aug": "8月", "Sep": "9月", "Oct": "10月", "Nov": "11月", "Dec": "12月"
@@ -27,7 +56,7 @@ for boat in BOATS:
         if len(driver.find_elements(By.TAG_NAME, "iframe")) > 0:
             driver.switch_to.frame(0)
 
-        # 💡 優対策：スクロールを少し深くして4月以降の描画を促す
+        # 優対策：4月以降を読み込ませるためのスクロール
         driver.execute_script("window.scrollTo(0, 800);")
         time.sleep(2)
 
@@ -55,7 +84,8 @@ for boat in BOATS:
                         current_day = lines[i-1].strip()
                     continue
 
-                # 2. 予定の抽出
+                # 2. 予定の抽出ロジック
+                # 暁の「5am – 3pm」のような範囲形式やam/pm付きにマッチさせる
                 is_time_marker = (
                     line in ["終日", "All day"] or 
                     re.search(r'\d{1,2}(:\d{2})?\s*(am|pm)?', line.lower()) or
@@ -67,7 +97,7 @@ for boat in BOATS:
                     for j in range(i + 1, min(i + 5, len(lines))):
                         detail = lines[j].strip()
                         
-                        # 💡 ゴミ掃除・メールアドレス削除
+                        # 💡 ゴミ掃除（カレンダー名・システムテキスト・メールアドレス）
                         if not detail or any(k in detail for k in ["表示", "Google", "詳細", "カレンダー:", "承諾", "辞退", "未定", "出船スケジュール"]):
                             continue
                         
@@ -90,7 +120,6 @@ for boat in BOATS:
                                 "detail": full_detail
                             })
 
-            # 重複排除
             unique_schedules = []
             seen = set()
             for s in boat_schedules:
@@ -117,3 +146,5 @@ output = {
 json_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fishing_schedule.json")
 with open(json_path, "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=4)
+
+print("\n💾 処理が完了しました。")
