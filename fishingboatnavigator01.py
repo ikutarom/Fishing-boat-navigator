@@ -25,10 +25,13 @@ service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
 
 def judge_status(content):
+    # チャーター関連の肯定的なワードを最優先
     if any(k in content for k in ["チャーター可", "チャーター募", "チャーターOK"]):
         return "○"
+    # 満員・締切・チャーター（予約済みの意味）を判定
     if any(k in content for k in ["満船", "満", "予約済", "貸切", "×", "済", "Full", "完売", "締切", "チャーター"]):
         return "×"
+    # 残り人数を判定
     if any(k in content for k in ["残り", "残", "△", "わずか"]):
         return "△"
     return "○"
@@ -70,10 +73,13 @@ for boat in BOATS:
                     continue
 
                 # 2. 予定の抽出（「終日」または「時刻」の次の行をすべて拾う）
-                # current_day が確定している間、フラグを見つけたらその直後を拾い続ける
                 if current_day and (line == "終日" or re.match(r'\d{2}:\d{2}', line)):
                     if i + 1 < len(lines):
                         detail = lines[i+1].strip()
+                        
+                        # --- 【今回の修正箇所】不要な期間表記を削除 ---
+                        # 全角「（1 日目/58 日間）」や半角「(1 day / 58 days)」などを除去
+                        detail = re.sub(r'\s*[（(]\d+\s*(日目|day[s]?)\s*/\s*\d+\s*(日間|day[s]?)[）)]', '', detail).strip()
                         
                         # システム行の除外
                         if any(k in detail for k in ["カレンダー:", "フィードバック", "Google", "表示", "詳細を表示"]):
@@ -112,5 +118,3 @@ with open("fishing_schedule.json", "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=4)
 
 print("\n💾 保存完了")
-
-
