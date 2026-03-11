@@ -3,97 +3,20 @@
         "M-selection": {
             "area": "糸島",
             "link": "https://m-selection.com/"
-        },
-        "もんじゃ丸": {
-            "area": "姪浜",
-            "link": "https://www.monjamaru.com/"
-        },
-        "ピスケス": {
-            "area": "姪浜",
-            "link": "https://pisces-gou.jimdofree.com/"
-        },
-        "武蔵丸": {
-            "area": "博多",
-            "link": "https://www.musashimaru.com/"
-        },
-        "優": {
-            "area": "博多",
-            "link": "http://yu-fishing.jp/"
-        },
-        "エルクルーズ": {
-            "area": "箱崎",
-            "link": "https://www.l-cruise.com/"
-        },
-        "Wingar": {
-            "area": "唐津",
-            "link": "https://www.wingar.net/"
-        },
-        "GOD": {
-            "area": "姪浜",
-            "link": "https://www.god-fishing-boat.com/"
         }
     },
     "schedules": {
-        "優": {
+        "M-selection": {
             "data": [
                 {
-                    "date": "3月7日",
+                    "date": "3月11日",
                     "status": "○",
-                    "detail": "船体メンテナンス / All day, 船体メンテナンス, Calendar: 遊漁船　優, No location, March 1 – 13, 2026"
+                    "detail": "Today"
                 },
                 {
-                    "date": "3月14日",
-                    "status": "×",
-                    "detail": "船体メンテナンス / All day, 船体メンテナンス, Calendar: 遊漁船　優, No location, March 1 – 13, 2026 / 乗り合い＆チャーター募集中（空欄はチャーター可能） / All day, 乗り合い＆チャーター募集中（空欄はチャーター可能）, Calendar: 遊漁船　優, Accepted, No location, March 14 – May 10, 2026 / ﾋﾗﾏｻﾒｲﾝ:4名空き / All day, ﾋﾗﾏｻﾒｲﾝ:4名空き, Calendar: 遊漁船　優, No location, March 14, 2026"
-                },
-                {
-                    "date": "3月21日",
-                    "status": "×",
-                    "detail": "乗り合い＆チャーター募集中（空欄はチャーター可能） / All day, 乗り合い＆チャーター募集中（空欄はチャーター可能）, Calendar: 遊漁船　優, Accepted, No location, March 14 – May 10, 2026 / 満員御礼 / All day, 満員御礼, Calendar: 遊漁船　優, No location, March 15, 2026 / All day, 満員御礼, Calendar: 遊漁船　優, No location, March 16, 2026 / All day, 満員御礼, Calendar: 遊漁船　優, No location, March 17, 2026 / All day, 満員御礼, Calendar: 遊漁船　優, No location, March 18, 2026 / All day, 満員御礼, Calendar: 遊漁船　優, No location, March 19, 2026 / ※再募集 / All day, ※再募集, Calendar: 遊漁船　優, No location, March 20, 2026 / ﾋﾗﾏｻﾒｲﾝ:1名空き / All day, ﾋﾗﾏｻﾒｲﾝ:1名空き, Calendar: 遊漁船　優, No location, March 20, 2026 / All day, ※再募集, Calendar: 遊漁船　優, No location, March 21 – 22, 2026 / ﾋﾗﾏｻﾒｲﾝ離島一泊二日:1名空き / All day, ﾋﾗﾏｻﾒｲﾝ離島一泊二日:1名空き, Calendar: 遊漁船　優, No location, March 21 – 22, 2026"
-                },
-                {
-                    "date": "3月28日",
-                    "status": "×",
-                    "detail": "乗り合い＆チャーター募集中（空欄はチャーター可能） / All day, 乗り合い＆チャーター募集中（空欄はチャーター可能）, Calendar: 遊漁船　優, Accepted, No location, March 14 – May 10, 2026 / ※再募集 / All day, ※再募集, Calendar: 遊漁船　優, No location, March 21 – 22, 2026 / ﾋﾗﾏｻﾒｲﾝ離島一泊二日:1名空き / All day, ﾋﾗﾏｻﾒｲﾝ離島一泊二日:1名空き, Calendar: 遊漁船　優, No location, March 21 – 22, 2026 / ﾋﾗﾏｻﾒｲﾝ:3名空き / All day, ﾋﾗﾏｻﾒｲﾝ:3名空き, Calendar: 遊漁船　優, No location, March 23, 2026 / ﾋﾗﾏｻﾒｲﾝ:1名空き / All day, ﾋﾗﾏｻﾒｲﾝ:1名空き, Calendar: 遊漁船　優, No location, March 24, 2026 / ﾋﾗﾏｻﾒｲﾝ:7名空き / All day, ﾋﾗﾏｻﾒｲﾝ:7名空き, Calendar: 遊漁船　優, No location, March 25, 2026 / ﾋﾗﾏｻﾒｲﾝ:6名空き / All day, ﾋﾗﾏｻﾒｲﾝ:6名空き, Calendar: 遊漁船　優, No location, March 27, 2026 / 満員御礼 / All day, 満員御礼, Calendar: 遊漁船　優, No location, March 28, 2026"
-                },
-                {
-                    "date": "3月31日",
+                    "date": "3月20日",
                     "status": "○",
-                    "detail": "Apr 1"
-                },
-                {
-                    "date": "3月4日",
-                    "status": "×",
-                    "detail": "乗り合い＆チャーター募集中（空欄はチャーター可能） / All day, 乗り合い＆チャーター募集中（空欄はチャーター可能）, Calendar: 遊漁船　優, Accepted, No location, March 14 – May 10, 2026 / 満員御礼 / All day, 満員御礼, Calendar: 遊漁船　優, No location, March 29, 2026 / ※再募集 / All day, ※再募集, Calendar: 遊漁船　優, No location, March 31 – April 1, 2026 / ﾋﾗﾏｻﾒｲﾝ離島一泊二日:2名空き / All day, ﾋﾗﾏｻﾒｲﾝ離島一泊二日:2名空き, Calendar: 遊漁船　優, No location, March 31 – April 1, 2026 / ﾋﾗﾏｻﾒｲﾝ:満員 / All day, ﾋﾗﾏｻﾒｲﾝ:満員, Calendar: 遊漁船　優, No location, April 2, 2026 / ﾋﾗﾏｻﾒｲﾝ:4名空き / All day, ﾋﾗﾏｻﾒｲﾝ:4名空き, Calendar: 遊漁船　優, No location, April 3, 2026 / All day, 満員御礼, Calendar: 遊漁船　優, No location, April 4, 2026 / GMT+09 / Events shown in time zone: (GMT+09:00) Japan Standard Time"
-                }
-            ]
-        },
-        "エルクルーズ": {
-            "data": [
-                {
-                    "date": "3月14日",
-                    "status": "×",
-                    "detail": "休船 / All day, 休船, Calendar: 休船・満員, No location, March 12, 2026 / ジギング(＆キャスト)【6名空き】 / All day, ジギング(＆キャスト)【6名空き】, Calendar: AM・終日, No location, March 13, 2026 / ジギング(＆キャスト)【満員】 / All day, ジギング(＆キャスト)【満員】, Calendar: 休船・満員, No location, March 14, 2026"
-                },
-                {
-                    "date": "3月21日",
-                    "status": "×",
-                    "detail": "ジギング(＆キャスト)【満員】 / All day, ジギング(＆キャスト)【満員】, Calendar: 休船・満員, No location, March 15, 2026 / 募集中 / All day, 募集中, Calendar: スケジュール, No location, March 16, 2026 / ジギング(＆キャスト)【2名空き】 / All day, ジギング(＆キャスト)【2名空き】, Calendar: AM・終日, No location, March 17, 2026 / All day, 募集中, Calendar: スケジュール, No location, March 18, 2026 / All day, 募集中, Calendar: スケジュール, No location, March 19, 2026 / All day, ジギング(＆キャスト)【満員】, Calendar: 休船・満員, No location, March 20, 2026 / All day, ジギング(＆キャスト)【満員】, Calendar: 休船・満員, No location, March 21, 2026"
-                },
-                {
-                    "date": "3月28日",
-                    "status": "×",
-                    "detail": "ジギング(＆キャスト)【7名空き】 / All day, ジギング(＆キャスト)【7名空き】, Calendar: AM・終日, No location, March 22, 2026 / ジギング(＆キャスト)【2名空き】 / All day, ジギング(＆キャスト)【2名空き】, Calendar: スケジュール, No location, March 23, 2026 / All day, ジギング(＆キャスト)【7名空き】, Calendar: スケジュール, No location, March 24, 2026 / ジギング(＆キャスト)【満員】 / All day, ジギング(＆キャスト)【満員】, Calendar: 休船・満員, No location, March 25, 2026 / 募集中 / All day, 募集中, Calendar: スケジュール, No location, March 26, 2026 / ジギング(＆キャスト)【6名空き】 / All day, ジギング(＆キャスト)【6名空き】, Calendar: AM・終日, No location, March 27, 2026 / All day, ジギング(＆キャスト)【満員】, Calendar: 休船・満員, No location, March 28, 2026"
-                },
-                {
-                    "date": "3月31日",
-                    "status": "○",
-                    "detail": "Apr 1"
-                },
-                {
-                    "date": "3月4日",
-                    "status": "○",
-                    "detail": "ジギング(＆キャスト)【2名空き】 / All day, ジギング(＆キャスト)【2名空き】, Calendar: スケジュール, No location, March 29, 2026 / 募集中 / All day, 募集中, Calendar: スケジュール, No location, March 30, 2026 / All day, 募集中, Calendar: スケジュール, No location, March 31, 2026 / ジギング(＆キャスト)【4名空き】 / All day, ジギング(＆キャスト)【4名空き】, Calendar: スケジュール, No location, April 1, 2026 / All day, ジギング(＆キャスト)【4名空き】, Calendar: スケジュール, No location, April 2, 2026 / All day, 募集中, Calendar: スケジュール, No location, April 3, 2026 / ジギング(＆キャスト)【5名空き】 / All day, ジギング(＆キャスト)【5名空き】, Calendar: スケジュール, No location, April 4, 2026 / Events shown in time zone: (GMT+09:00) Japan Standard Time / Add to Google Calendar"
+                    "detail": "March 2026"
                 }
             ]
         }
