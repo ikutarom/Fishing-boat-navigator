@@ -11,24 +11,46 @@
         .filter-item { display: inline-block; margin-right: 15px; cursor: pointer; font-size: 14px; }
         .filter-item input { margin-right: 5px; }
 
-        table { border-collapse: collapse; width: 100%; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); table-layout: fixed; }
-        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; font-size: 13px; vertical-align: top; overflow: hidden; }
+        /* テーブルを囲むコンテナでスクロールを制御 */
+        .table-wrapper { overflow: auto; max-height: 80vh; border: 1px solid #ccc; background: white; }
+
+        table { border-collapse: separate; border-spacing: 0; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; font-size: 13px; vertical-align: top; }
         
-        th { background-color: #f0f0f0; position: sticky; top: 0; z-index: 10; }
-        .boat-header { width: 150px; }
+        /* --- 固定設定 --- */
+        
+        /* 1行目（船名）の固定 */
+        th { background-color: #f0f0f0; position: sticky; top: 0; z-index: 30; }
+
+        /* 1列目（日付）の固定 */
+        .date-col { 
+            position: sticky; 
+            left: 0; 
+            z-index: 20; 
+            background-color: #fafafa !important; 
+            width: 110px; 
+            min-width: 110px;
+            font-weight: bold; 
+            border-right: 2px solid #bbb; /* 境目を分かりやすく */
+        }
+
+        /* 左上の角（日付ヘッダー）の固定 */
+        th.date-col { z-index: 40; } 
+
+        /* --- 固定設定ここまで --- */
+
+        .boat-header { width: 150px; min-width: 150px; }
         .boat-name { font-weight: bold; display: block; }
         .boat-area { font-size: 11px; color: #666; font-weight: normal; }
 
-        .date-col { font-weight: bold; background-color: #fafafa; width: 100px; }
-        .sat { background-color: #eef6ff !important; color: #0052cc; }
-        .sun { background-color: #fff0f0 !important; color: #d93025; }
+        .sat { color: #0052cc; }
+        .sun { color: #d93025; }
+        /* 土日祝日の背景は個別に適用 */
+        tr:has(.sat) .date-col { background-color: #eef6ff !important; }
+        tr:has(.sun) .date-col { background-color: #fff0f0 !important; }
 
-        /* 代表ステータスのスタイル */
         .main-status { font-size: 1.2em; display: block; margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 3px; }
-        
-        /* セル背景グレー（×判定時） */
         .bg-full { background-color: #ececec !important; }
-
         .event-item { padding: 2px 0; }
         .status-ok { color: #28a745; font-weight: bold; }
         .status-few { color: #f29900; font-weight: bold; }
@@ -49,14 +71,16 @@
         <div id="checkbox-list" style="margin-top: 10px;"></div>
     </div>
     
-    <table id="schedule-matrix">
-        <thead>
-            <tr id="header-row">
-                <th class="date-col">日付</th>
-            </tr>
-        </thead>
-        <tbody id="matrix-body"></tbody>
-    </table>
+    <div class="table-wrapper">
+        <table id="schedule-matrix">
+            <thead>
+                <tr id="header-row">
+                    <th class="date-col">日付</th>
+                </tr>
+            </thead>
+            <tbody id="matrix-body"></tbody>
+        </table>
+    </div>
 
     <script>
         function getStatusClass(status) {
@@ -103,38 +127,31 @@
                     const dateObj = parseDate(dateStr);
                     const dayNum = dateObj.getDay();
                     const dayLabel = ["日", "月", "火", "水", "木", "金", "土"][dayNum];
-                    let dateClass = "date-col " + (dayNum === 0 ? "sun" : dayNum === 6 ? "sat" : "");
+                    
+                    let dayClass = (dayNum === 0 ? "sun" : dayNum === 6 ? "sat" : "");
 
                     const dateTd = document.createElement('td');
-                    dateTd.className = dateClass;
+                    dateTd.className = "date-col " + dayClass;
                     dateTd.innerText = `${dateStr}(${dayLabel})`;
                     tr.appendChild(dateTd);
 
                     boats.forEach((boatName, index) => {
                         const td = document.createElement('td');
                         td.className = `col-${index}`;
-                        
                         const dayEvents = data.schedules[boatName]?.data.filter(s => s.date === dateStr);
                         
                         if (dayEvents && dayEvents.length > 0) {
-                            // --- 【修正】統合ステータス判定ロジック ---
                             let representativeStatus = "○";
                             const statuses = dayEvents.map(e => e.status);
-                            
                             if (statuses.includes("×")) {
                                 representativeStatus = "×";
-                                td.classList.add('bg-full'); // 背景をグレーに
+                                td.classList.add('bg-full');
                             } else if (statuses.includes("△")) {
                                 representativeStatus = "△";
                             }
-
                             td.innerHTML = `
                                 <span class="main-status ${getStatusClass(representativeStatus)}">${representativeStatus}</span>
-                                ${dayEvents.map(event => `
-                                    <div class="event-item">
-                                        <span class="detail-text">${event.detail}</span>
-                                    </div>
-                                `).join('')}
+                                ${dayEvents.map(event => `<div class="event-item"><span class="detail-text">${event.detail}</span></div>`).join('')}
                             `;
                         } else {
                             td.innerText = "-";
