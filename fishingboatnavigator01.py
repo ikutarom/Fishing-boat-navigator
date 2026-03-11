@@ -25,7 +25,9 @@ service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
 
 def judge_status(content):
-    if any(k in content for k in ["満船", "満", "予約済", "貸切", "×", "済", "Full", "完売", "締切"]):
+    if any(k in content for k in ["チャーター可", "チャーター募", "チャーターOK"]):
+        return "○"
+    if any(k in content for k in ["満船", "満", "予約済", "貸切", "×", "済", "Full", "完売", "締切", "チャーター"]):
         return "×"
     if any(k in content for k in ["残り", "残", "△", "わずか"]):
         return "△"
@@ -110,4 +112,5 @@ with open("fishing_schedule.json", "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=4)
 
 print("\n💾 保存完了")
+
 
