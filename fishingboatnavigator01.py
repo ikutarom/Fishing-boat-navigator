@@ -2,6 +2,7 @@ import os
 import time
 import re
 import json
+import datetime
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -119,11 +120,16 @@ for boat in BOATS:
 driver.quit()
 
 output = {
+    # 💡 実行時刻を入れることで、Gitに必ず「変更あり」と認識させる
+    "last_update": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     "boat_info": {b["name"]: {"area": b["area"], "link": b["official"]} for b in BOATS},
     "schedules": all_results
 }
 
-with open("fishing_schedule.json", "w", encoding="utf-8") as f:
+# 💡 保存パスをカレントディレクトリに確実に指定
+json_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fishing_schedule.json")
+with open(json_path, "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=4)
 
 print("\n💾 すべての処理が完了しました")
+
