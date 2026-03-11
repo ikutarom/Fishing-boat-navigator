@@ -2,7 +2,6 @@ import os
 import time
 import re
 import json
-import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -19,12 +18,15 @@ options = Options()
 options.add_argument('--headless')
 options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
+options.add_argument('--lang=ja-JP')
+# 重要：画面を大きくして、カレンダー内の文字が省略されないようにする
+options.add_argument('--window-size=1920,1080')
 
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
 
 def judge_status(content):
-    if any(k in content for k in ["満", "×", "済", "貸", "チャーター", "Full", "予約有", "締切", "満員"]): return "×"
+    if any(k in content for k in ["満", "×", "済", "貸", "チャーター", "Full", "予約有", "締切", "満員", "1 event"]): return "×"
     if any(k in content for k in ["残り", "残", "△", "わずか"]): return "△"
     return "○"
 
@@ -34,76 +36,71 @@ for boat in BOATS:
     print(f"\n🚀 --- 【開始】 {boat['name']} ---")
     try:
         driver.get(boat['url'])
-        time.sleep(8)
+        time.sleep(15) # サイト全体の読み込みをじっくり待つ
 
-        # 1. ページ内のiframeからGoogleカレンダーのソースURLを抽出
+        # ページ内の全iframeをチェック（カレンダーURLの判定を緩める）
         iframes = driver.find_elements(By.TAG_NAME, "iframe")
-        calendar_url = ""
+        found_data = False
+        
         for ifr in iframes:
-            src = ifr.get_attribute("src") or ""
-            if "google.com/calendar/embed" in src:
-                calendar_url = src
-                break
-        
-        if not calendar_url:
-            print(f"  ⚠️ カレンダーURLが見つかりません")
-            continue
+            try:
+                src = ifr.get_attribute("src") or ""
+                # google以外にも「calendar」が含まれればチェック対象
+                if "calendar" in src.lower() or "google.com" in src.lower():
+                    driver.switch_to.frame(ifr)
+                    time.sleep(10) # 枠内が描画されるのを待つ
 
-        print(f"  🎯 データソースURLを取得しました。直接解析します...")
-        
-        # 2. Seleniumではなく、requestsを使ってカレンダーのHTMLを直接取得
-        # これにより、UI上の不要なラベルに邪魔されず、生データを取得できます
-        response = requests.get(calendar_url)
-        html_content = response.text
+                    # 【必殺】iframe内の全テキストを取得して解析
+                    body_text = driver.find_element(By.TAG_NAME, "body").text
+                    
+                    # 予定を抽出するためのスキャナ
+                    # 「日付」「予定名」「日付」「予定名」...という並び順を想定
+                    schedules = []
+                    lines = body_text.split('\n')
+                    
+                    last_date = ""
+                    for line in lines:
+                        line = line.strip()
+                        if not line: continue
+                        
+                        # 「15」「15日」「3月15日」などの日付パターンを探す
+                        # 月の指定がない場合は、現在の月を補完（簡易版）
+                        date_match = re.search(r"(\d{1,2})月(\d{1,2})日", line)
+                        day_only_match = re.match(r"^(\d{1,2})$", line) # 数字だけの行
+                        
+                        if date_match:
+                            last_date = f"{date_match.group(1)}月{date_match.group(2)}日"
+                        elif day_only_match:
+                            # ひとまず今の月(3月)を付与
+                            last_date = f"3月{day_only_match.group(1)}日"
+                        else:
+                            # 日付の後に来た文字は「予定」とみなす
+                            if last_date and not line.isdigit() and len(line) > 1:
+                                if "前月" in line or "翌月" in line or "曜日" in line: continue
+                                
+                                schedules.append({
+                                    "date": last_date,
+                                    "status": judge_status(line),
+                                    "detail": line
+                                })
 
-        # 3. 予定データの抽出
-        # Googleカレンダーの生データに含まれる「[null,"予定名",null,null,null,"20260315",...]」のようなパターンを探す
-        # 正規表現で「日付(YYYYMMDD形式)」と「予定名」のペアを力技で抜きます
-        schedules = []
-        
-        # パターン: "予定名" と "YYYYMMDD" を含む構造を検索
-        # ※Googleカレンダーの内部JavaScript変数(dataChunk)を解析対象にします
-        found_items = re.findall(r'\[null,"([^"]+)",null,null,null,"(\d{8})"', html_content)
-        
-        if not found_items:
-            # 別のデータ形式（新しい埋め込み形式）を検索
-            found_items = re.findall(r'"([^"]+)","\d{8}",null,null,"(\d{8})"', html_content)
-
-        for title, ymd in found_items:
-            # タイトルが短すぎる数字だけ（日付ラベル）などは除外
-            if title.isdigit() or len(title) < 2:
+                    if schedules:
+                        all_results[boat['name']] = {"data": schedules}
+                        print(f"  ✅ {len(schedules)}件のテキストを抽出成功")
+                        found_data = True
+                        driver.switch_to.default_content()
+                        break
+                    
+                    driver.switch_to.default_content()
+            except:
+                driver.switch_to.default_content()
                 continue
-                
-            month = int(ymd[4:6])
-            day = int(ymd[6:8])
-            date_str = f"{month}月{day}日"
-            
-            # 今月と来月のデータのみ対象にする（古いデータ除外）
-            schedules.append({
-                "date": date_str,
-                "status": judge_status(title),
-                "detail": title
-            })
-
-        if schedules:
-            # 同一日のマージ処理
-            unique_days = {}
-            for s in schedules:
-                d = s["date"]
-                if d not in unique_days:
-                    unique_days[d] = s
-                else:
-                    if s['detail'] not in unique_days[d]['detail']:
-                        unique_days[d]["detail"] += f" / {s['detail']}"
-                    unique_days[d]["status"] = judge_status(unique_days[d]["detail"])
-            
-            all_results[boat['name']] = {"data": list(unique_days.values())}
-            print(f"  ✅ {len(unique_days)}件の予定を取得成功")
-        else:
-            print(f"  ❌ 有効な予定データが抽出できませんでした")
+        
+        if not found_data:
+            print(f"  ⚠️ 予定が取得できませんでした")
 
     except Exception as e:
-        print(f"  💥 エラー: {boat['name']} ({str(e)})")
+        print(f"  💥 エラー: {boat['name']}")
 
 driver.quit()
 
