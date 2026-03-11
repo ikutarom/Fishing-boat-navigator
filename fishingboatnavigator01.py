@@ -103,4 +103,9 @@ for boat in BOATS:
 
 driver.quit()
 
-# JSON保存処理...
+# JSON保存処理
+output = {"boat_info": {b["name"]: {"area": b["area"], "link": b["official"]} for b in BOATS}, "schedules": all_results}
+with open("fishing_schedule.json", "w", encoding="utf-8") as f:
+    json.dump(output, f, ensure_ascii=False, indent=4)
+print("\n💾 保存完了")
+
