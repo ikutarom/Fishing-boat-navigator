@@ -16,54 +16,56 @@ except ImportError:
     print("Error: boats.py が見つかりません。")
     exit(1)
 
-# ブラウザ設定
 options = Options()
 options.add_argument('--headless')
 options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
 options.add_argument('--window-size=1920,1080')
-# 💡 ページ全体の完了を待たず、HTMLが読み込まれたら制御を戻す（高速化）
-options.page_load_strategy = 'eager'
+options.page_load_strategy = 'normal' # 暁対策：完全に読み込むまで待つ設定に変更
 options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36')
 
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
-# 💡 1ページあたりの読み込み上限を30秒に設定（スタック防止）
-driver.set_page_load_timeout(30)
+driver.set_page_load_timeout(40)
 
 def judge_status(content):
-    if any(k in content for k in ["チャーター可", "チャーター募", "チャーターOK"]):
-        return "○"
-    if any(k in content for k in ["満船", "満", "予約済", "貸切", "×", "済", "Full", "完売", "締切", "チャーター"]):
-        return "×"
-    if any(k in content for k in ["残り", "残", "△", "わずか"]):
-        return "△"
+    if any(k in content for k in ["チャーター可", "チャーター募", "チャーターOK"]): return "○"
+    if any(k in content for k in ["満船", "満", "予約済", "貸切", "×", "済", "Full", "完売", "締切", "チャーター"]): return "×"
+    if any(k in content for k in ["残り", "残", "△", "わずか"]): return "△"
     return "○"
 
 all_results = {}
 
 for boat in BOATS:
-    print(f"\n🚀 --- 【開始】 {boat['name']} ---")
+    print(f"\n🚀 --- 【解析開始】 {boat['name']} ---")
     boat_schedules = []
     
     try:
         target_url = boat['url']
-        if "mode=AGENDA" not in target_url: target_url += "&mode=AGENDA"
-        if "weeks=" not in target_url: target_url += "&weeks=14" 
-        if "hl=ja" not in target_url: target_url += "&hl=ja"
+        # パラメータの補強（タイムゾーンと表示期間をさらに厳格に）
+        params = "&mode=AGENDA&weeks=14&hl=ja&ctz=Asia/Tokyo"
+        if "?" in target_url:
+            target_url += params
+        else:
+            target_url += "?" + params[1:]
             
         driver.get(target_url)
 
-        # 💡 【改善】動的ループ待機
-        # 15秒間じっと待つのではなく、2秒ごとにテキストを確認し、
-        # カレンダーの中身が描画された瞬間にスクレイピングを開始する
+        # 💡 暁/優 対策：最大30秒、2秒おきに中身をチェック
         raw_text = ""
-        for _ in range(10): # 最大約20秒間試行
+        found = False
+        for i in range(15):
             time.sleep(2)
             raw_text = driver.execute_script("return document.body.innerText;")
-            if "月," in raw_text or "終日" in raw_text:
+            # 「月,」という文字はAGENDAモードの日付見出しに必ず含まれる
+            if "月," in raw_text:
+                print(f"  💡 描画を確認しました ({i*2+2}秒経過)")
+                found = True
                 break
         
+        if not found:
+            print(f"  ⚠️ カレンダーの描画が確認できませんでした。取得できた文字数: {len(raw_text)}")
+
         if raw_text:
             lines = raw_text.splitlines()
             current_day = ""
@@ -73,30 +75,25 @@ for boat in BOATS:
                 line = lines[i].strip()
                 if not line: continue
 
-                # 1. 日付の特定
-                month_match = re.search(r'(\d{1,2})月,\s?[一-龠]', line)
+                # 日付の特定（正規表現を少し柔軟に）
+                month_match = re.search(r'(\d{1,2})月,', line)
                 if month_match:
                     current_month = f"{month_match.group(1)}月"
-                    if i > 0 and lines[i-1].strip().isdigit():
-                        current_day = lines[i-1].strip()
+                    if i > 0:
+                        prev_line = lines[i-1].strip()
+                        if prev_line.isdigit():
+                            current_day = prev_line
                     continue
 
-                # 2. 予定の抽出
+                # 予定の抽出
                 if current_day and (line == "終日" or re.match(r'\d{2}:\d{2}', line)):
                     if i + 1 < len(lines):
                         detail = lines[i+1].strip()
-                        
-                        # 期間表記（1日目など）の削除
-                        detail = re.sub(r'\s*[（(]\d+\s*(日目|day[s]?)\s*/\s*\d+\s*(日間|day[s]?)[）)]', '', detail).strip()
-                        
-                        # システム行の除外
-                        if any(k in detail for k in ["カレンダー:", "フィードバック", "Google", "表示", "詳細を表示"]):
-                            continue
+                        if any(k in detail for k in ["カレンダー:", "フィードバック", "表示", "詳細を表示"]): continue
                         
                         if current_month and current_day:
-                            full_date = f"{current_month}{current_day}日"
                             boat_schedules.append({
-                                "date": full_date,
+                                "date": f"{current_month}{current_day}日",
                                 "status": judge_status(detail),
                                 "detail": detail
                             })
@@ -106,30 +103,25 @@ for boat in BOATS:
             for s in boat_schedules:
                 identifier = (s['date'], s['detail'])
                 if identifier not in seen:
-                    seen.add(identifier)
-                    unique_schedules.append(s)
+                    seen.add(identifier); unique_schedules.append(s)
             
             all_results[boat['name']] = {"data": unique_schedules}
-            print(f"  ✅ {len(unique_schedules)}件の予定を抽出")
+            print(f"  ✅ {len(unique_schedules)}件抽出完了")
             
-    except TimeoutException:
-        print(f"  ⚠️ タイムアウト: {boat['name']} の読み込みが遅いためスキップしました")
     except Exception as e:
         print(f"  💥 エラー: {boat['name']} ({str(e)})")
 
 driver.quit()
 
+# 実行時刻を付けて保存
 output = {
-    # 💡 実行時刻を入れることで、Gitに必ず「変更あり」と認識させる
     "last_update": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     "boat_info": {b["name"]: {"area": b["area"], "link": b["official"]} for b in BOATS},
     "schedules": all_results
 }
 
-# 💡 保存パスをカレントディレクトリに確実に指定
 json_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fishing_schedule.json")
 with open(json_path, "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=4)
 
-print("\n💾 すべての処理が完了しました")
-
+print(f"\n💾 保存完了: {json_path}")
