@@ -34,69 +34,6 @@
         }
     },
     "schedules": {
-        "M-selection": {
-            "data": [
-                {
-                    "date": "3月7日",
-                    "status": "○",
-                    "detail": "鰆　ミノー　ブレード / All day, 鰆　ミノー　ブレード, Calendar: 出船スケジュール, No location, March 1, 2026"
-                },
-                {
-                    "date": "3月14日",
-                    "status": "○",
-                    "detail": "ジギング　タイラバ / All day, ジギング　タイラバ, Calendar: 出船スケジュール, No location, March 8, 2026"
-                },
-                {
-                    "date": "3月21日",
-                    "status": "○",
-                    "detail": "ジギング / All day, ジギング, Calendar: 出船スケジュール, No location, March 15, 2026 / タイラバ　SLJ / All day, タイラバ　SLJ, Calendar: 出船スケジュール, No location, March 20, 2026 / ジギング　３名空き / All day, ジギング　３名空き, Calendar: 出船スケジュール, No location, March 21, 2026"
-                },
-                {
-                    "date": "3月31日",
-                    "status": "○",
-                    "detail": "Apr 1"
-                },
-                {
-                    "date": "3月4日",
-                    "status": "○",
-                    "detail": "Add to Google Calendar"
-                }
-            ]
-        },
-        "もんじゃ丸": {
-            "data": [
-                {
-                    "date": "3月7日",
-                    "status": "×",
-                    "detail": "博多湾シーバス　残り2名 / All day, 博多湾シーバス　残り2名, Calendar: 募集中, No location, March 1, 2026 / 博多湾タチウオ　募集中 / All day, 博多湾タチウオ　募集中, Calendar: 募集中, No location, March 3, 2026 / All day, 博多湾タチウオ　募集中, Calendar: 募集中, No location, March 4, 2026 / All day, 博多湾タチウオ　募集中, Calendar: 募集中, No location, March 5, 2026 / All day, 博多湾タチウオ　募集中, Calendar: 募集中, No location, March 6, 2026 / 博多湾タチウオ　チャーター / All day, 博多湾タチウオ　チャーター, Calendar: 満船, No location, March 7, 2026"
-                },
-                {
-                    "date": "3月14日",
-                    "status": "×",
-                    "detail": "博多湾タチウオ　満船 / All day, 博多湾タチウオ　満船, Calendar: 満船, No location, March 8, 2026 / 博多湾タチウオ　募集中 / All day, 博多湾タチウオ　募集中, Calendar: 募集中, No location, March 10, 2026 / 博多湾タチウオ　４名募集中 / All day, 博多湾タチウオ　４名募集中, Calendar: 募集中, No location, March 11, 2026 / 博多湾タチウオ　残り５名 / All day, 博多湾タチウオ　残り５名, Calendar: 募集中, No location, March 12, 2026 / 乗っ込みタイラバ　残り満船 / All day, 乗っ込みタイラバ　残り満船, Calendar: 満船, No location, March 14, 2026"
-                },
-                {
-                    "date": "3月21日",
-                    "status": "×",
-                    "detail": "博多湾タチウオ　満船 / All day, 博多湾タチウオ　満船, Calendar: 満船, No location, March 15, 2026 / 博多湾タチウオ　募集中 / All day, 博多湾タチウオ　募集中, Calendar: 募集中, No location, March 16, 2026 / 乗っ込み鯛ラバ　チャーター / All day, 乗っ込み鯛ラバ　チャーター, Calendar: 満船, No location, March 17, 2026 / All day, 博多湾タチウオ　募集中, Calendar: 募集中, No location, March 19, 2026 / 調査便　メバル　チヌ　真鯛　残り３名お気軽お問い合わせ下さい / All day, 調査便　メバル　チヌ　真鯛　残り３名お気軽お問い合わせ下さい, Calendar: 募集中, No location, March 20, 2026 / 近海鯛ラバ＆SLJ チャーター / All day, 近海鯛ラバ＆SLJ チャーター, Calendar: 満船, No location, March 21, 2026"
-                },
-                {
-                    "date": "3月28日",
-                    "status": "△",
-                    "detail": "博多湾タチウオ　残り６名募集中 / All day, 博多湾タチウオ　残り６名募集中, Calendar: 募集中, No location, March 22, 2026 / 博多湾タチウオ　募集中 / All day, 博多湾タチウオ　募集中, Calendar: 募集中, No location, March 23, 2026 / All day, 博多湾タチウオ　募集中, Calendar: 募集中, No location, March 24, 2026 / 近海鯛ラバ　残り2名 / All day, 近海鯛ラバ　残り2名, Calendar: 募集中, No location, March 28, 2026"
-                },
-                {
-                    "date": "3月31日",
-                    "status": "○",
-                    "detail": "Apr 1"
-                },
-                {
-                    "date": "3月4日",
-                    "status": "×",
-                    "detail": "博多湾シーバス　残り1名 / All day, 博多湾シーバス　残り1名, Calendar: 募集中, No location, March 29, 2026 / 博多湾タチウオ　残り５名 / All day, 博多湾タチウオ　残り５名, Calendar: 募集中, No location, March 30, 2026 / 近海鯛ラバ　チャーター / All day, 近海鯛ラバ　チャーター, Calendar: 満船, No location, April 1, 2026 / 乗っ込み鯛ラバ　満船 / All day, 乗っ込み鯛ラバ　満船, Calendar: 満船, No location, April 4, 2026 / MONJAMARU予約状況 / Add to Google Calendar"
-                }
-            ]
-        },
         "優": {
             "data": [
                 {
