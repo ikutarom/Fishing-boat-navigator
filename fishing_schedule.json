@@ -1,9 +1,7 @@
 {
-    "boat_info": {
-        "M-selection": {
-            "area": "糸島",
-            "link": "https://m-selection.com/"
+    "schedules": {
+        "Combined-Calendar": {
+            "data": []
         }
-    },
-    "schedules": {}
+    }
 }
