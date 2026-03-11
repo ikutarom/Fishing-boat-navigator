@@ -47,28 +47,35 @@ for boat in BOATS:
                 time.sleep(8)
 
                 schedules = []
-                # aria-labelを持つすべての要素を取得（予定の塊）
-                elements = driver.find_elements(By.XPATH, "//*[@aria-label]")
+                # 【重要】日付の枠ではなく、個別の「予定項目」をピンポイントで取得する
+                # 終日予定などは div[role='button'] か div[aria-label] に入っていることが多い
+                event_elements = driver.find_elements(By.XPATH, "//div[@role='button' and contains(@aria-label, '2026')]")
                 
+                # 月名変換マップ
                 month_map = {"January":"1","February":"2","March":"3","April":"4","May":"5","June":"6",
                              "July":"7","August":"8","September":"9","October":"10","November":"11","December":"12"}
 
-                for el in elements:
+                for el in event_elements:
                     label = el.get_attribute("aria-label")
                     if not label: continue
                     
-                    # 1. 不要なUIテキストを徹底排除
-                    if any(k in label for k in ["No events", "イベントなし", "前月", "翌月", "Calendar", "Google"]):
-                        continue
+                    # 予定名そのものは要素のテキストから取得
+                    title = el.text.strip()
                     
-                    # 2. 日付を抽出（英語形式: March 8, 2026 または 日本語形式: 3月8日）
+                    # テキストが空（または数字のみ）の場合は、ラベルの最初のカンマより前を予定名とする
+                    if not title or title.isdigit():
+                        title = label.split(',')[0].strip()
+
+                    # 「○ events」や「Today」などは除外
+                    if "event" in title.lower() or "today" in title.lower() or "イベント" in title:
+                        continue
+
+                    # 日付の抽出
                     date_found = None
-                    # 日本語形式
                     m_ja = re.search(r"(\d{1,2})月(\d{1,2})日", label)
                     if m_ja:
                         date_found = f"{m_ja.group(1)}月{m_ja.group(2)}日"
                     else:
-                        # 英語形式 (March 8, 2026)
                         for m_name, m_num in month_map.items():
                             if m_name in label:
                                 d_match = re.search(rf"{m_name}\s+(\d{{1,2}})", label)
@@ -76,26 +83,15 @@ for boat in BOATS:
                                     date_found = f"{m_num}月{d_match.group(1)}日"
                                     break
                     
-                    # 3. 予定の内容を抽出
-                    if date_found:
-                        # labelから日付部分を消して、残ったものを「内容」とする
-                        # 例: "ジギング, Sunday, March 8, 2026" -> "ジギング"
-                        content = label
-                        # 日付文字列や曜日の単語を消去してクリーンアップ
-                        for word in list(month_map.keys()) + ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday", "2025", "2026"]:
-                            content = re.sub(rf",?\s*{word}\s*,?", "", content, flags=re.IGNORECASE)
-                        content = re.sub(r"\d{1,2}月\d{1,2}日", "", content)
-                        content = content.strip(" ,")
-
-                        if content and not content.isdigit() and len(content) > 1:
-                            schedules.append({
-                                "date": date_found,
-                                "status": judge_status(content),
-                                "detail": content
-                            })
+                    if date_found and title:
+                        schedules.append({
+                            "date": date_found,
+                            "status": judge_status(title),
+                            "detail": title
+                        })
 
                 if schedules:
-                    # 同じ日付の予定を整理（マージ）
+                    # 同じ日付の予定をまとめる
                     unique_days = {}
                     for s in schedules:
                         d = s["date"]
@@ -106,8 +102,8 @@ for boat in BOATS:
                                 unique_days[d]["detail"] += f" / {s['detail']}"
                             unique_days[d]["status"] = judge_status(unique_days[d]["detail"])
                     
-                    all_results[boat['name']] = {"data": sorted(list(unique_days.values()), key=lambda x: int(re.search(r'\d+', x['date']).group()))}
-                    print(f"  ✅ {len(unique_days)}日分の有効な予定を抽出")
+                    all_results[boat['name']] = {"data": list(unique_days.values())}
+                    print(f"  ✅ {len(unique_days)}日分の予定を特定しました")
                     found_data = True
                     driver.switch_to.default_content()
                     break
@@ -115,7 +111,7 @@ for boat in BOATS:
                 driver.switch_to.default_content()
         
         if not found_data:
-            print(f"  ⚠️ 有効な予定が見つかりませんでした")
+            print(f"  ⚠️ 予定が見つかりませんでした")
 
     except Exception as e:
         print(f"  💥 エラー: {boat['name']}")
