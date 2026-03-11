@@ -1,6 +1,75 @@
 {
+    "boat_info": {
+        "M-selection": {
+            "area": "糸島",
+            "link": "https://m-selection.com/"
+        },
+        "もんじゃ丸": {
+            "area": "姪浜",
+            "link": "https://www.monjamaru.com/"
+        }
+    },
     "schedules": {
-        "Combined-Calendar": {
+        "M-selection": {
+            "data": [
+                {
+                    "date": "3月15日",
+                    "status": "○",
+                    "detail": "ジギング"
+                },
+                {
+                    "date": "3月20日",
+                    "status": "○",
+                    "detail": "タイラバ　SLJ"
+                },
+                {
+                    "date": "3月21日",
+                    "status": "○",
+                    "detail": "ジギング　３名空き"
+                },
+                {
+                    "date": "5月17日",
+                    "status": "○",
+                    "detail": "糸島タイラバ釣り大会"
+                },
+                {
+                    "date": "6月1日",
+                    "status": "×",
+                    "detail": "チャーター　田中様"
+                },
+                {
+                    "date": "6月2日",
+                    "status": "×",
+                    "detail": "チャーター"
+                },
+                {
+                    "date": "6月3日",
+                    "status": "×",
+                    "detail": "チャーター　中尾様"
+                },
+                {
+                    "date": "6月4日",
+                    "status": "×",
+                    "detail": "チャーター　田中さん"
+                },
+                {
+                    "date": "7月1日",
+                    "status": "×",
+                    "detail": "チャーター　田中様"
+                },
+                {
+                    "date": "7月2日",
+                    "status": "×",
+                    "detail": "チャーター"
+                },
+                {
+                    "date": "7月25日",
+                    "status": "×",
+                    "detail": "夜烏賊　チャーター"
+                }
+            ]
+        },
+        "もんじゃ丸": {
             "data": [
                 {
                     "date": "3月11日",
