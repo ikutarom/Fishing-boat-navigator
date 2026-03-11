@@ -33,5 +33,467 @@
             "link": "https://www.god-fishing-boat.com/"
         }
     },
-    "schedules": {}
+    "schedules": {
+        "M-selection": {
+            "data": [
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "鰆　ミノー　ブレード All day, 鰆　ミノー　ブレード, Calendar: 出船スケジュール, No location, March 1, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "ジギング　タイラバ All day, ジギング　タイラバ, Calendar: 出船スケジュール, No location, March 8, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "ジギング All day, ジギング, Calendar: 出船スケジュール, No location, March 15, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "タイラバ　SLJ All day, タイラバ　SLJ, Calendar: 出船スケジュール, No location, March 20, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "ジギング　３名空き All day, ジギング　３名空き, Calendar: 出船スケジュール, No location, March 21, 2026"
+                }
+            ]
+        },
+        "もんじゃ丸": {
+            "data": [
+                {
+                    "date": "3月1日",
+                    "status": "△",
+                    "detail": "博多湾シーバス　残り2名 All day, 博多湾シーバス　残り2名, Calendar: 募集中, No location, March 1, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "博多湾タチウオ　募集中 All day, 博多湾タチウオ　募集中, Calendar: 募集中, No location, March 3, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "博多湾タチウオ　募集中 All day, 博多湾タチウオ　募集中, Calendar: 募集中, No location, March 4, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "博多湾タチウオ　募集中 All day, 博多湾タチウオ　募集中, Calendar: 募集中, No location, March 5, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "博多湾タチウオ　募集中 All day, 博多湾タチウオ　募集中, Calendar: 募集中, No location, March 6, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "×",
+                    "detail": "博多湾タチウオ　チャーター All day, 博多湾タチウオ　チャーター, Calendar: 満船, No location, March 7, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "×",
+                    "detail": "博多湾タチウオ　満船 All day, 博多湾タチウオ　満船, Calendar: 満船, No location, March 8, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "博多湾タチウオ　募集中 All day, 博多湾タチウオ　募集中, Calendar: 募集中, No location, March 10, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "博多湾タチウオ　４名募集中 All day, 博多湾タチウオ　４名募集中, Calendar: 募集中, No location, March 11, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "△",
+                    "detail": "博多湾タチウオ　残り５名 All day, 博多湾タチウオ　残り５名, Calendar: 募集中, No location, March 12, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "×",
+                    "detail": "乗っ込みタイラバ　残り満船 All day, 乗っ込みタイラバ　残り満船, Calendar: 満船, No location, March 14, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "×",
+                    "detail": "博多湾タチウオ　満船 All day, 博多湾タチウオ　満船, Calendar: 満船, No location, March 15, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "博多湾タチウオ　募集中 All day, 博多湾タチウオ　募集中, Calendar: 募集中, No location, March 16, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "×",
+                    "detail": "乗っ込み鯛ラバ　チャーター All day, 乗っ込み鯛ラバ　チャーター, Calendar: 満船, No location, March 17, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "博多湾タチウオ　募集中 All day, 博多湾タチウオ　募集中, Calendar: 募集中, No location, March 19, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "△",
+                    "detail": "調査便　メバル　チヌ　真鯛　残り３名お気軽お問い合わせ下さい All day, 調査便　メバル　チヌ　真鯛　残り３名お気軽お問い合わせ下さい, Calendar: 募集中, No location, March 20, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "×",
+                    "detail": "近海鯛ラバ＆SLJ チャーター All day, 近海鯛ラバ＆SLJ チャーター, Calendar: 満船, No location, March 21, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "△",
+                    "detail": "博多湾タチウオ　残り６名募集中 All day, 博多湾タチウオ　残り６名募集中, Calendar: 募集中, No location, March 22, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "博多湾タチウオ　募集中 All day, 博多湾タチウオ　募集中, Calendar: 募集中, No location, March 23, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "博多湾タチウオ　募集中 All day, 博多湾タチウオ　募集中, Calendar: 募集中, No location, March 24, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "△",
+                    "detail": "近海鯛ラバ　残り2名 All day, 近海鯛ラバ　残り2名, Calendar: 募集中, No location, March 28, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "△",
+                    "detail": "博多湾シーバス　残り1名 All day, 博多湾シーバス　残り1名, Calendar: 募集中, No location, March 29, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "△",
+                    "detail": "博多湾タチウオ　残り５名 All day, 博多湾タチウオ　残り５名, Calendar: 募集中, No location, March 30, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "×",
+                    "detail": "近海鯛ラバ　チャーター All day, 近海鯛ラバ　チャーター, Calendar: 満船, No location, April 1, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "×",
+                    "detail": "乗っ込み鯛ラバ　満船 All day, 乗っ込み鯛ラバ　満船, Calendar: 満船, No location, April 4, 2026"
+                }
+            ]
+        },
+        "優": {
+            "data": [
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "船体メンテナンス All day, 船体メンテナンス, Calendar: 遊漁船　優, No location, March 1 – 13, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "船体メンテナンス All day, 船体メンテナンス, Calendar: 遊漁船　優, No location, March 1 – 13, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "船体メンテナンス All day, 船体メンテナンス, Calendar: 遊漁船　優, No location, March 1 – 13, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "船体メンテナンス All day, 船体メンテナンス, Calendar: 遊漁船　優, No location, March 1 – 13, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "船体メンテナンス All day, 船体メンテナンス, Calendar: 遊漁船　優, No location, March 1 – 13, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "船体メンテナンス All day, 船体メンテナンス, Calendar: 遊漁船　優, No location, March 1 – 13, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "船体メンテナンス All day, 船体メンテナンス, Calendar: 遊漁船　優, No location, March 1 – 13, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "船体メンテナンス All day, 船体メンテナンス, Calendar: 遊漁船　優, No location, March 1 – 13, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "船体メンテナンス All day, 船体メンテナンス, Calendar: 遊漁船　優, No location, March 1 – 13, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "船体メンテナンス All day, 船体メンテナンス, Calendar: 遊漁船　優, No location, March 1 – 13, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "船体メンテナンス All day, 船体メンテナンス, Calendar: 遊漁船　優, No location, March 1 – 13, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "船体メンテナンス All day, 船体メンテナンス, Calendar: 遊漁船　優, No location, March 1 – 13, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "船体メンテナンス All day, 船体メンテナンス, Calendar: 遊漁船　優, No location, March 1 – 13, 2026"
+                },
+                {
+                    "date": "3月2日",
+                    "status": "○",
+                    "detail": "2 more"
+                },
+                {
+                    "date": "3月2日",
+                    "status": "○",
+                    "detail": "2 more"
+                },
+                {
+                    "date": "3月2日",
+                    "status": "○",
+                    "detail": "2 more"
+                },
+                {
+                    "date": "3月2日",
+                    "status": "○",
+                    "detail": "2 more"
+                },
+                {
+                    "date": "3月2日",
+                    "status": "○",
+                    "detail": "2 more"
+                },
+                {
+                    "date": "3月2日",
+                    "status": "○",
+                    "detail": "2 more"
+                },
+                {
+                    "date": "3月3日",
+                    "status": "○",
+                    "detail": "3 more"
+                },
+                {
+                    "date": "3月3日",
+                    "status": "○",
+                    "detail": "3 more"
+                },
+                {
+                    "date": "3月3日",
+                    "status": "○",
+                    "detail": "3 more"
+                },
+                {
+                    "date": "3月2日",
+                    "status": "○",
+                    "detail": "2 more"
+                },
+                {
+                    "date": "3月2日",
+                    "status": "○",
+                    "detail": "2 more"
+                },
+                {
+                    "date": "3月2日",
+                    "status": "○",
+                    "detail": "2 more"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "1 more"
+                },
+                {
+                    "date": "3月2日",
+                    "status": "○",
+                    "detail": "2 more"
+                },
+                {
+                    "date": "3月2日",
+                    "status": "○",
+                    "detail": "2 more"
+                },
+                {
+                    "date": "3月2日",
+                    "status": "○",
+                    "detail": "2 more"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "1 more"
+                },
+                {
+                    "date": "3月3日",
+                    "status": "○",
+                    "detail": "3 more"
+                },
+                {
+                    "date": "3月3日",
+                    "status": "○",
+                    "detail": "3 more"
+                },
+                {
+                    "date": "3月2日",
+                    "status": "○",
+                    "detail": "2 more"
+                },
+                {
+                    "date": "3月2日",
+                    "status": "○",
+                    "detail": "2 more"
+                },
+                {
+                    "date": "3月2日",
+                    "status": "○",
+                    "detail": "2 more"
+                }
+            ]
+        },
+        "エルクルーズ": {
+            "data": [
+                {
+                    "date": "3月1日",
+                    "status": "×",
+                    "detail": "休船 All day, 休船, Calendar: 休船・満員, No location, March 12, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "ジギング(＆キャスト)【6名空き】 All day, ジギング(＆キャスト)【6名空き】, Calendar: AM・終日, No location, March 13, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "×",
+                    "detail": "ジギング(＆キャスト)【満員】 All day, ジギング(＆キャスト)【満員】, Calendar: 休船・満員, No location, March 14, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "×",
+                    "detail": "ジギング(＆キャスト)【満員】 All day, ジギング(＆キャスト)【満員】, Calendar: 休船・満員, No location, March 15, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "募集中 All day, 募集中, Calendar: スケジュール, No location, March 16, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "ジギング(＆キャスト)【3名空き】 All day, ジギング(＆キャスト)【3名空き】, Calendar: AM・終日, No location, March 17, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "募集中 All day, 募集中, Calendar: スケジュール, No location, March 18, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "募集中 All day, 募集中, Calendar: スケジュール, No location, March 19, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "×",
+                    "detail": "ジギング(＆キャスト)【満員】 All day, ジギング(＆キャスト)【満員】, Calendar: 休船・満員, No location, March 20, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "×",
+                    "detail": "ジギング(＆キャスト)【満員】 All day, ジギング(＆キャスト)【満員】, Calendar: 休船・満員, No location, March 21, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "ジギング(＆キャスト)【7名空き】 All day, ジギング(＆キャスト)【7名空き】, Calendar: AM・終日, No location, March 22, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "ジギング(＆キャスト)【2名空き】 All day, ジギング(＆キャスト)【2名空き】, Calendar: スケジュール, No location, March 23, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "ジギング(＆キャスト)【7名空き】 All day, ジギング(＆キャスト)【7名空き】, Calendar: スケジュール, No location, March 24, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "×",
+                    "detail": "ジギング(＆キャスト)【満員】 All day, ジギング(＆キャスト)【満員】, Calendar: 休船・満員, No location, March 25, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "募集中 All day, 募集中, Calendar: スケジュール, No location, March 26, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "ジギング(＆キャスト)【6名空き】 All day, ジギング(＆キャスト)【6名空き】, Calendar: AM・終日, No location, March 27, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "ジギング(＆キャスト)【2名空き】 All day, ジギング(＆キャスト)【2名空き】, Calendar: スケジュール, No location, March 28, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "ジギング(＆キャスト)【2名空き】 All day, ジギング(＆キャスト)【2名空き】, Calendar: スケジュール, No location, March 29, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "募集中 All day, 募集中, Calendar: スケジュール, No location, March 30, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "募集中 All day, 募集中, Calendar: スケジュール, No location, March 31, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "ジギング(＆キャスト)【4名空き】 All day, ジギング(＆キャスト)【4名空き】, Calendar: スケジュール, No location, April 1, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "ジギング(＆キャスト)【4名空き】 All day, ジギング(＆キャスト)【4名空き】, Calendar: スケジュール, No location, April 2, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "募集中 All day, 募集中, Calendar: スケジュール, No location, April 3, 2026"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "○",
+                    "detail": "ジギング(＆キャスト)【5名空き】 All day, ジギング(＆キャスト)【5名空き】, Calendar: スケジュール, No location, April 4, 2026"
+                }
+            ]
+        }
+    }
 }
