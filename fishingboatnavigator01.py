@@ -2,6 +2,7 @@ import os
 import time
 import re
 import json
+import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -18,7 +19,6 @@ options = Options()
 options.add_argument('--headless')
 options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
-options.add_argument('--lang=ja-JP')
 
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
@@ -34,72 +34,76 @@ for boat in BOATS:
     print(f"\n🚀 --- 【開始】 {boat['name']} ---")
     try:
         driver.get(boat['url'])
-        time.sleep(10)
+        time.sleep(8)
 
+        # 1. ページ内のiframeからGoogleカレンダーのソースURLを抽出
         iframes = driver.find_elements(By.TAG_NAME, "iframe")
-        found_data = False
-        
+        calendar_url = ""
         for ifr in iframes:
             src = ifr.get_attribute("src") or ""
             if "google.com/calendar/embed" in src:
-                # 埋め込みカレンダー専用の解析
-                driver.switch_to.frame(ifr)
-                time.sleep(5)
-                
-                schedules = []
-                # 予定が入っている要素（Googleカレンダー特有のクラス名）を狙い撃ち
-                # st-ad-ln は「終日予定」のラベルが入るクラス
-                items = driver.find_elements(By.CSS_SELECTOR, ".st-ad-ln, .rb-n, .te-s")
-                
-                for item in items:
-                    try:
-                        # 親要素のaria-labelに日付が入っていることが多い
-                        # もしくは、その要素自体が持つテキストと、親の st-dgo などの日付を紐付ける
-                        label = item.find_element(By.XPATH, "./ancestor::*[@aria-label]").get_attribute("aria-label")
-                        content = item.text
-                        
-                        if not content or not label: continue
-                        
-                        # 日付抽出 (3月15日)
-                        m_ja = re.search(r"(\d{1,2})月(\d{1,2})日", label)
-                        if m_ja:
-                            date_str = f"{m_ja.group(1)}月{m_ja.group(2)}日"
-                            
-                            # 数字だけの「日付ラベル」を誤爆して拾わないようにする
-                            if content.strip() == date_str or content.strip().isdigit():
-                                continue
-
-                            schedules.append({
-                                "date": date_str,
-                                "status": judge_status(content),
-                                "detail": content
-                            })
-                    except:
-                        continue
-                
-                if schedules:
-                    unique_days = {}
-                    for s in schedules:
-                        d = s["date"]
-                        if d not in unique_days:
-                            unique_days[d] = s
-                        else:
-                            unique_days[d]["detail"] += f" / {s['detail']}"
-                            unique_days[d]["status"] = judge_status(unique_days[d]["detail"])
-                    
-                    all_results[boat['name']] = {"data": list(unique_days.values())}
-                    print(f"  ✅ {len(unique_days)}件取得成功")
-                    found_data = True
-                    driver.switch_to.default_content()
-                    break
-                
-                driver.switch_to.default_content()
+                calendar_url = src
+                break
         
-        if not found_data:
-            print(f"  ⚠️ 予定が見つかりませんでした")
+        if not calendar_url:
+            print(f"  ⚠️ カレンダーURLが見つかりません")
+            continue
+
+        print(f"  🎯 データソースURLを取得しました。直接解析します...")
+        
+        # 2. Seleniumではなく、requestsを使ってカレンダーのHTMLを直接取得
+        # これにより、UI上の不要なラベルに邪魔されず、生データを取得できます
+        response = requests.get(calendar_url)
+        html_content = response.text
+
+        # 3. 予定データの抽出
+        # Googleカレンダーの生データに含まれる「[null,"予定名",null,null,null,"20260315",...]」のようなパターンを探す
+        # 正規表現で「日付(YYYYMMDD形式)」と「予定名」のペアを力技で抜きます
+        schedules = []
+        
+        # パターン: "予定名" と "YYYYMMDD" を含む構造を検索
+        # ※Googleカレンダーの内部JavaScript変数(dataChunk)を解析対象にします
+        found_items = re.findall(r'\[null,"([^"]+)",null,null,null,"(\d{8})"', html_content)
+        
+        if not found_items:
+            # 別のデータ形式（新しい埋め込み形式）を検索
+            found_items = re.findall(r'"([^"]+)","\d{8}",null,null,"(\d{8})"', html_content)
+
+        for title, ymd in found_items:
+            # タイトルが短すぎる数字だけ（日付ラベル）などは除外
+            if title.isdigit() or len(title) < 2:
+                continue
+                
+            month = int(ymd[4:6])
+            day = int(ymd[6:8])
+            date_str = f"{month}月{day}日"
+            
+            # 今月と来月のデータのみ対象にする（古いデータ除外）
+            schedules.append({
+                "date": date_str,
+                "status": judge_status(title),
+                "detail": title
+            })
+
+        if schedules:
+            # 同一日のマージ処理
+            unique_days = {}
+            for s in schedules:
+                d = s["date"]
+                if d not in unique_days:
+                    unique_days[d] = s
+                else:
+                    if s['detail'] not in unique_days[d]['detail']:
+                        unique_days[d]["detail"] += f" / {s['detail']}"
+                    unique_days[d]["status"] = judge_status(unique_days[d]["detail"])
+            
+            all_results[boat['name']] = {"data": list(unique_days.values())}
+            print(f"  ✅ {len(unique_days)}件の予定を取得成功")
+        else:
+            print(f"  ❌ 有効な予定データが抽出できませんでした")
 
     except Exception as e:
-        print(f"  💥 エラー: {boat['name']}")
+        print(f"  💥 エラー: {boat['name']} ({str(e)})")
 
 driver.quit()
 
