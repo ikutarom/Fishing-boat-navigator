@@ -33,5 +33,442 @@
             "link": "https://www.god-fishing-boat.com/"
         }
     },
-    "schedules": {}
+    "schedules": {
+        "M-selection": {
+            "data": [
+                {
+                    "date": "3月7日",
+                    "status": "○",
+                    "detail": "1 event, Sunday, March 1"
+                },
+                {
+                    "date": "3月3日",
+                    "status": "○",
+                    "detail": "No events, Wednesday, March 4"
+                },
+                {
+                    "date": "3月5日",
+                    "status": "○",
+                    "detail": "No events, Friday, March 6"
+                },
+                {
+                    "date": "3月9日",
+                    "status": "○",
+                    "detail": "10"
+                },
+                {
+                    "date": "3月11日",
+                    "status": "○",
+                    "detail": "12"
+                },
+                {
+                    "date": "3月13日",
+                    "status": "○",
+                    "detail": "14"
+                },
+                {
+                    "date": "3月8日",
+                    "status": "○",
+                    "detail": "ジギング　タイラバ"
+                },
+                {
+                    "date": "3月10日",
+                    "status": "○",
+                    "detail": "No events, Wednesday, March 11, today"
+                },
+                {
+                    "date": "3月12日",
+                    "status": "○",
+                    "detail": "No events, Friday, March 13"
+                },
+                {
+                    "date": "3月14日",
+                    "status": "○",
+                    "detail": "15"
+                },
+                {
+                    "date": "3月16日",
+                    "status": "○",
+                    "detail": "17"
+                },
+                {
+                    "date": "3月18日",
+                    "status": "○",
+                    "detail": "19"
+                },
+                {
+                    "date": "3月20日",
+                    "status": "○",
+                    "detail": "21"
+                },
+                {
+                    "date": "3月15日",
+                    "status": "○",
+                    "detail": "ジギング"
+                },
+                {
+                    "date": "3月17日",
+                    "status": "○",
+                    "detail": "No events, Wednesday, March 18"
+                },
+                {
+                    "date": "3月19日",
+                    "status": "○",
+                    "detail": "1 event, Friday, March 20"
+                },
+                {
+                    "date": "3月23日",
+                    "status": "○",
+                    "detail": "24"
+                },
+                {
+                    "date": "3月25日",
+                    "status": "○",
+                    "detail": "26"
+                },
+                {
+                    "date": "3月27日",
+                    "status": "○",
+                    "detail": "28"
+                },
+                {
+                    "date": "3月22日",
+                    "status": "○",
+                    "detail": "No events, Monday, March 23"
+                },
+                {
+                    "date": "3月24日",
+                    "status": "○",
+                    "detail": "No events, Wednesday, March 25"
+                },
+                {
+                    "date": "3月26日",
+                    "status": "○",
+                    "detail": "No events, Friday, March 27"
+                },
+                {
+                    "date": "3月28日",
+                    "status": "○",
+                    "detail": "29"
+                },
+                {
+                    "date": "3月30日",
+                    "status": "○",
+                    "detail": "31"
+                },
+                {
+                    "date": "3月29日",
+                    "status": "○",
+                    "detail": "No events, Monday, March 30"
+                },
+                {
+                    "date": "3月31日",
+                    "status": "○",
+                    "detail": "No events, Wednesday, April 1"
+                },
+                {
+                    "date": "3月2日",
+                    "status": "○",
+                    "detail": "No events, Friday, April 3"
+                },
+                {
+                    "date": "3月4日",
+                    "status": "○",
+                    "detail": "Add to Google Calendar"
+                }
+            ]
+        },
+        "もんじゃ丸": {
+            "data": [
+                {
+                    "date": "3月7日",
+                    "status": "○",
+                    "detail": "1 event, Sunday, March 1"
+                },
+                {
+                    "date": "3月3日",
+                    "status": "○",
+                    "detail": "1 event, Saturday, April 4"
+                },
+                {
+                    "date": "3月9日",
+                    "status": "○",
+                    "detail": "10"
+                },
+                {
+                    "date": "3月11日",
+                    "status": "○",
+                    "detail": "12"
+                },
+                {
+                    "date": "3月13日",
+                    "status": "○",
+                    "detail": "14"
+                },
+                {
+                    "date": "3月8日",
+                    "status": "×",
+                    "detail": "博多湾タチウオ　満船"
+                },
+                {
+                    "date": "3月10日",
+                    "status": "○",
+                    "detail": "博多湾タチウオ　募集中"
+                },
+                {
+                    "date": "3月14日",
+                    "status": "×",
+                    "detail": "乗っ込みタイラバ　残り満船"
+                },
+                {
+                    "date": "3月16日",
+                    "status": "○",
+                    "detail": "17"
+                },
+                {
+                    "date": "3月18日",
+                    "status": "○",
+                    "detail": "19"
+                },
+                {
+                    "date": "3月20日",
+                    "status": "○",
+                    "detail": "21"
+                },
+                {
+                    "date": "3月15日",
+                    "status": "×",
+                    "detail": "博多湾タチウオ　満船"
+                },
+                {
+                    "date": "3月19日",
+                    "status": "○",
+                    "detail": "博多湾タチウオ　募集中"
+                },
+                {
+                    "date": "3月23日",
+                    "status": "○",
+                    "detail": "24"
+                },
+                {
+                    "date": "3月25日",
+                    "status": "○",
+                    "detail": "26"
+                },
+                {
+                    "date": "3月27日",
+                    "status": "○",
+                    "detail": "28"
+                },
+                {
+                    "date": "3月22日",
+                    "status": "△",
+                    "detail": "博多湾タチウオ　残り６名募集中"
+                },
+                {
+                    "date": "3月26日",
+                    "status": "○",
+                    "detail": "No events, Friday, March 27"
+                },
+                {
+                    "date": "3月28日",
+                    "status": "△",
+                    "detail": "近海鯛ラバ　残り2名"
+                },
+                {
+                    "date": "3月30日",
+                    "status": "○",
+                    "detail": "31"
+                },
+                {
+                    "date": "3月29日",
+                    "status": "△",
+                    "detail": "博多湾シーバス　残り1名"
+                },
+                {
+                    "date": "3月1日",
+                    "status": "×",
+                    "detail": "近海鯛ラバ　チャーター"
+                }
+            ]
+        },
+        "優": {
+            "data": [
+                {
+                    "date": "3月7日",
+                    "status": "○",
+                    "detail": "1 event, Sunday, March 1"
+                },
+                {
+                    "date": "3月9日",
+                    "status": "○",
+                    "detail": "10"
+                },
+                {
+                    "date": "3月11日",
+                    "status": "○",
+                    "detail": "12"
+                },
+                {
+                    "date": "3月13日",
+                    "status": "○",
+                    "detail": "14"
+                },
+                {
+                    "date": "3月8日",
+                    "status": "○",
+                    "detail": "船体メンテナンス"
+                },
+                {
+                    "date": "3月16日",
+                    "status": "○",
+                    "detail": "17"
+                },
+                {
+                    "date": "3月18日",
+                    "status": "○",
+                    "detail": "19"
+                },
+                {
+                    "date": "3月20日",
+                    "status": "○",
+                    "detail": "21"
+                },
+                {
+                    "date": "3月15日",
+                    "status": "×",
+                    "detail": "乗り合い＆チャーター募集中（空欄はチャーター可能）"
+                },
+                {
+                    "date": "3月23日",
+                    "status": "○",
+                    "detail": "24"
+                },
+                {
+                    "date": "3月25日",
+                    "status": "○",
+                    "detail": "26"
+                },
+                {
+                    "date": "3月27日",
+                    "status": "○",
+                    "detail": "28"
+                },
+                {
+                    "date": "3月22日",
+                    "status": "×",
+                    "detail": "乗り合い＆チャーター募集中（空欄はチャーター可能）"
+                },
+                {
+                    "date": "3月30日",
+                    "status": "○",
+                    "detail": "31"
+                },
+                {
+                    "date": "3月29日",
+                    "status": "×",
+                    "detail": "乗り合い＆チャーター募集中（空欄はチャーター可能）"
+                },
+                {
+                    "date": "3月09日",
+                    "status": "○",
+                    "detail": "Events shown in time zone: (GMT+09:00) Japan Standard Time"
+                }
+            ]
+        },
+        "エルクルーズ": {
+            "data": [
+                {
+                    "date": "3月7日",
+                    "status": "○",
+                    "detail": "No events, Sunday, March 1"
+                },
+                {
+                    "date": "3月2日",
+                    "status": "○",
+                    "detail": "No events, Tuesday, March 3"
+                },
+                {
+                    "date": "3月4日",
+                    "status": "○",
+                    "detail": "No events, Thursday, March 5"
+                },
+                {
+                    "date": "3月6日",
+                    "status": "○",
+                    "detail": "No events, Saturday, March 7"
+                },
+                {
+                    "date": "3月10日",
+                    "status": "○",
+                    "detail": "11"
+                },
+                {
+                    "date": "3月12日",
+                    "status": "○",
+                    "detail": "休船"
+                },
+                {
+                    "date": "3月14日",
+                    "status": "○",
+                    "detail": "No events, Sunday, March 8"
+                },
+                {
+                    "date": "3月9日",
+                    "status": "○",
+                    "detail": "No events, Tuesday, March 10"
+                },
+                {
+                    "date": "3月16日",
+                    "status": "○",
+                    "detail": "17"
+                },
+                {
+                    "date": "3月18日",
+                    "status": "○",
+                    "detail": "19"
+                },
+                {
+                    "date": "3月20日",
+                    "status": "○",
+                    "detail": "21"
+                },
+                {
+                    "date": "3月15日",
+                    "status": "×",
+                    "detail": "ジギング(＆キャスト)【満員】"
+                },
+                {
+                    "date": "3月23日",
+                    "status": "○",
+                    "detail": "24"
+                },
+                {
+                    "date": "3月25日",
+                    "status": "○",
+                    "detail": "26"
+                },
+                {
+                    "date": "3月27日",
+                    "status": "○",
+                    "detail": "28"
+                },
+                {
+                    "date": "3月22日",
+                    "status": "○",
+                    "detail": "ジギング(＆キャスト)【7名空き】"
+                },
+                {
+                    "date": "3月30日",
+                    "status": "○",
+                    "detail": "31"
+                },
+                {
+                    "date": "3月29日",
+                    "status": "○",
+                    "detail": "ジギング(＆キャスト)【2名空き】"
+                }
+            ]
+        }
+    }
 }
