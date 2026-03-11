@@ -6,8 +6,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
 try:
@@ -20,9 +18,7 @@ options = Options()
 options.add_argument('--headless')
 options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
-options.add_argument('--window-size=1920,1080')
 options.add_argument('--lang=ja-JP')
-options.set_capability("goog:loggingPrefs", {"performance": "ALL"}) 
 
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
@@ -38,7 +34,7 @@ for boat in BOATS:
     print(f"\n🚀 --- 【開始】 {boat['name']} ---")
     try:
         driver.get(boat['url'])
-        time.sleep(10) # サイト自体の読み込み待ち
+        time.sleep(10)
 
         iframes = driver.find_elements(By.TAG_NAME, "iframe")
         target_iframe = None
@@ -53,47 +49,53 @@ for boat in BOATS:
         if target_iframe:
             print(f"  🎯 Googleカレンダーを発見。")
             driver.switch_to.frame(target_iframe)
-            time.sleep(8) # カレンダー描画待ち
-            
-            body_element = driver.find_element(By.TAG_NAME, "body")
-            full_text = body_element.text
-            print(f"  📄 取得文字数: {len(full_text)}字")
+            time.sleep(8)
             
             schedules = []
+            # --- 修正ポイント：aria-label属性から正確な日付と内容を抜く ---
+            # Googleカレンダーの各マスや予定にはaria-labelに詳細が入っています
+            elements = driver.find_elements(By.XPATH, "//*[@aria-label]")
             
-            # 1. リスト形式(AGENDA)の解析パターン
-            # 「3月12日」の後に続く行を拾う
-            lines = full_text.splitlines()
-            for i, line in enumerate(lines):
-                date_m = re.search(r"(\d+月\d+日)", line)
-                if date_m and i + 1 < len(lines):
-                    date_str = date_m.group(1)
-                    detail = lines[i+1].strip()
-                    if detail and not re.search(r"(\d+月\d+日|今日|印刷|Google)", detail):
-                        schedules.append({"date": date_str, "status": judge_status(detail), "detail": detail})
-
-            # 2. カレンダー形式(MONTH)の解析パターン（1個も取れなかった場合の予備）
-            if not schedules:
-                # 「12予定あり」や「12×」のような並びを探す
-                # 数字(1〜31)の直後に特定の文字がある場合を抽出
-                month_match = re.search(r"(\d+)月", full_text)
-                target_month = month_match.group(1) if month_match else "3" # デフォルト3月
+            for el in elements:
+                label = el.get_attribute("aria-label")
+                # 例: "3月15日, 予定あり, タイラバ船" や "2026年3月15日"
+                if not label: continue
                 
-                # 数字と予定が混在するテキストから抽出を試みる
-                items = re.findall(r"(\d+)\n([^\n]+)", full_text)
-                for day, detail in items:
-                    if 1 <= int(day) <= 31 and len(detail) > 1:
-                        if not any(x in detail for x in ["日月火水木金土", "2026"]):
-                            date_str = f"{target_month}月{day}日"
-                            schedules.append({"date": date_str, "status": judge_status(detail), "detail": detail})
+                # 日付を抽出 (例: 3月15日)
+                date_match = re.search(r"(\d+月\d+日)", label)
+                if date_match:
+                    date_str = date_match.group(1)
+                    # 「今日」や曜日だけのラベルを除外、かつ「予定」という言葉が含まれるか、
+                    # あるいは特定のキーワードが含まれる場合に採用
+                    if "イベントなし" in label or "No events" in label:
+                        continue
+                    
+                    # 予定の内容をクリーンアップ
+                    clean_detail = label.replace(date_str, "").replace("のイベント:", "").strip(" ,")
+                    if len(clean_detail) > 1:
+                        schedules.append({
+                            "date": date_str,
+                            "status": judge_status(clean_detail),
+                            "detail": clean_detail
+                        })
 
             if schedules:
-                # 重複削除
-                unique_schedules = list({v['date']: v for v in schedules}.values())
-                all_results[boat['name']] = {"data": unique_schedules}
-                print(f"  ✅ {len(unique_schedules)}日分のデータを取得")
+                # 重複削除（同じ日の予定が複数あれば結合するか、最初を採用）
+                unique_schedules = {}
+                for s in schedules:
+                    d = s["date"]
+                    if d not in unique_schedules:
+                        unique_schedules[d] = s
+                    else:
+                        # 同じ日に複数の予定がある場合は結合
+                        unique_schedules[d]["detail"] += f" / {s['detail']}"
+                        unique_schedules[d]["status"] = judge_status(unique_schedules[d]["detail"])
+                
+                final_list = list(unique_schedules.values())
+                all_results[boat['name']] = {"data": final_list}
+                print(f"  ✅ {len(final_list)}日分のデータを正確に取得")
             else:
-                print(f"  ❌ 予定の抽出に失敗しました")
+                print(f"  ❌ 有効な予定が見つかりませんでした")
             
             driver.switch_to.default_content()
         else:
