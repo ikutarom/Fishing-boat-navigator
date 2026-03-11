@@ -10,7 +10,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
-# 別ファイルから読み込み
 try:
     from boats import BOATS
 except ImportError:
@@ -23,13 +22,13 @@ options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
 options.add_argument('--window-size=1920,1080')
 options.add_argument('--lang=ja-JP')
-options.add_experimental_option('prefs', {'intl.accept_languages': 'ja'})
+options.set_capability("goog:loggingPrefs", {"performance": "ALL"}) 
 
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
 
 def judge_status(content):
-    if any(k in content for k in ["満", "×", "済", "貸", "チャーター", "Full", "予約有", "締切"]): return "×"
+    if any(k in content for k in ["満", "×", "済", "貸", "チャーター", "Full", "予約有", "締切", "満員"]): return "×"
     if any(k in content for k in ["残り", "残", "△", "わずか"]): return "△"
     return "○"
 
@@ -39,74 +38,69 @@ for boat in BOATS:
     print(f"\n🚀 --- 【開始】 {boat['name']} ---")
     try:
         driver.get(boat['url'])
-        wait = WebDriverWait(driver, 20)
-        
-        # iframeが1つ以上現れるのを待つ
-        wait.until(EC.presence_of_element_located((By.TAG_NAME, "iframe")))
+        time.sleep(10) # サイト自体の読み込み待ち
+
         iframes = driver.find_elements(By.TAG_NAME, "iframe")
-        
         target_iframe = None
         for ifr in iframes:
-            src = ifr.get_attribute("src") or ""
-            if "google.com/calendar" in src:
-                target_iframe = ifr
-                break
+            try:
+                src = ifr.get_attribute("src") or ""
+                if "google.com/calendar" in src:
+                    target_iframe = ifr
+                    break
+            except: continue
         
         if target_iframe:
-            print(f"  🎯 Googleカレンダーを発見。切り替えます...")
+            print(f"  🎯 Googleカレンダーを発見。")
             driver.switch_to.frame(target_iframe)
+            time.sleep(8) # カレンダー描画待ち
             
-            # 【重要】カレンダー内の特定の要素（日付や予定を表示するクラス）が出るまで待機
-            try:
-                # 予定リストの行(クラス名: event)またはカレンダー全体が表示されるのを待つ
-                WebDriverWait(driver, 15).until(
-                    EC.presence_of_element_located((By.TAG_NAME, "body"))
-                )
-                # Googleカレンダー特有の描画時間を考慮してさらに少し待つ
-                time.sleep(7)
-                
-                body_text = driver.find_element(By.TAG_NAME, "body").text
-                # デバッグ用：取得文字数を出力
-                print(f"  📄 取得文字数: {len(body_text)}字")
-                
-                lines = body_text.splitlines()
-                schedules = []
-                temp_date = None
-                noise_words = ["これより後の予定を表示", "印刷", "今日", "前へ", "次へ", "予定はありません", "Google"]
+            body_element = driver.find_element(By.TAG_NAME, "body")
+            full_text = body_element.text
+            print(f"  📄 取得文字数: {len(full_text)}字")
+            
+            schedules = []
+            
+            # 1. リスト形式(AGENDA)の解析パターン
+            # 「3月12日」の後に続く行を拾う
+            lines = full_text.splitlines()
+            for i, line in enumerate(lines):
+                date_m = re.search(r"(\d+月\d+日)", line)
+                if date_m and i + 1 < len(lines):
+                    date_str = date_m.group(1)
+                    detail = lines[i+1].strip()
+                    if detail and not re.search(r"(\d+月\d+日|今日|印刷|Google)", detail):
+                        schedules.append({"date": date_str, "status": judge_status(detail), "detail": detail})
 
-                for line in lines:
-                    line = line.strip()
-                    if not line or any(nw in line for nw in noise_words):
-                        continue
-                    
-                    # 日付の抽出
-                    date_match = re.search(r"(\d+月\d+日|\d+/\d+)", line)
-                    
-                    if date_match:
-                        temp_date = date_match.group(1)
-                    elif temp_date:
-                        schedules.append({
-                            "date": temp_date,
-                            "status": judge_status(line),
-                            "detail": line
-                        })
-                        temp_date = None # 1日付1予定でリセット
+            # 2. カレンダー形式(MONTH)の解析パターン（1個も取れなかった場合の予備）
+            if not schedules:
+                # 「12予定あり」や「12×」のような並びを探す
+                # 数字(1〜31)の直後に特定の文字がある場合を抽出
+                month_match = re.search(r"(\d+)月", full_text)
+                target_month = month_match.group(1) if month_match else "3" # デフォルト3月
                 
-                if schedules:
-                    all_results[boat['name']] = {"data": schedules}
-                    print(f"  ✅ {len(schedules)}日分のデータを取得")
-                else:
-                    # 取得失敗時のテキストを少し表示して原因を探る
-                    print(f"  ❌ 予定が読み取れません。テキスト断片: {body_text[:50]}...")
+                # 数字と予定が混在するテキストから抽出を試みる
+                items = re.findall(r"(\d+)\n([^\n]+)", full_text)
+                for day, detail in items:
+                    if 1 <= int(day) <= 31 and len(detail) > 1:
+                        if not any(x in detail for x in ["日月火水木金土", "2026"]):
+                            date_str = f"{target_month}月{day}日"
+                            schedules.append({"date": date_str, "status": judge_status(detail), "detail": detail})
+
+            if schedules:
+                # 重複削除
+                unique_schedules = list({v['date']: v for v in schedules}.values())
+                all_results[boat['name']] = {"data": unique_schedules}
+                print(f"  ✅ {len(unique_schedules)}日分のデータを取得")
+            else:
+                print(f"  ❌ 予定の抽出に失敗しました")
             
-            finally:
-                driver.switch_to.default_content()
+            driver.switch_to.default_content()
         else:
-            print(f"  ⚠️ Googleカレンダーのiframeが見つかりませんでした")
+            print(f"  ⚠️ カレンダーiframeが見つかりません")
 
     except Exception as e:
-        print(f"  💥 エラー発生: {str(e)[:100]}")
-        # フレーム内にいた場合は外に戻す
+        print(f"  💥 エラー回避: {boat['name']}")
         try: driver.switch_to.default_content()
         except: pass
 
