@@ -7,6 +7,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.common.exceptions import TimeoutException
 
 try:
     from boats import BOATS
@@ -14,15 +15,20 @@ except ImportError:
     print("Error: boats.py が見つかりません。")
     exit(1)
 
+# ブラウザ設定
 options = Options()
 options.add_argument('--headless')
 options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
 options.add_argument('--window-size=1920,1080')
+# 💡 ページ全体の完了を待たず、HTMLが読み込まれたら制御を戻す（高速化）
+options.page_load_strategy = 'eager'
 options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36')
 
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
+# 💡 1ページあたりの読み込み上限を30秒に設定（スタック防止）
+driver.set_page_load_timeout(30)
 
 def judge_status(content):
     if any(k in content for k in ["チャーター可", "チャーター募", "チャーターOK"]):
@@ -41,47 +47,45 @@ for boat in BOATS:
     
     try:
         target_url = boat['url']
-        
-        # --- 期間延長のためのパラメータ追加 ---
-        # mode=AGENDA (リスト形式)
-        # weeks=14 (約3ヶ月半) を指定
-        if "mode=AGENDA" not in target_url:
-            target_url += "&mode=AGENDA"
-        if "weeks=" not in target_url:
-            target_url += "&weeks=14" 
-        if "hl=ja" not in target_url:
-            target_url += "&hl=ja"
+        if "mode=AGENDA" not in target_url: target_url += "&mode=AGENDA"
+        if "weeks=" not in target_url: target_url += "&weeks=14" 
+        if "hl=ja" not in target_url: target_url += "&hl=ja"
             
         driver.get(target_url)
-        # 期間が長いと読み込みに時間がかかるため、少し長めに待機
-        time.sleep(15) 
 
-        raw_text = driver.execute_script("return document.body.innerText;")
+        # 💡 【改善】動的ループ待機
+        # 15秒間じっと待つのではなく、2秒ごとにテキストを確認し、
+        # カレンダーの中身が描画された瞬間にスクレイピングを開始する
+        raw_text = ""
+        for _ in range(10): # 最大約20秒間試行
+            time.sleep(2)
+            raw_text = driver.execute_script("return document.body.innerText;")
+            if "月," in raw_text or "終日" in raw_text:
+                break
         
         if raw_text:
             lines = raw_text.splitlines()
             current_day = ""
-            current_month = "" # 動的に取得するため空に
+            current_month = ""
 
             for i in range(len(lines)):
                 line = lines[i].strip()
                 if not line: continue
 
-                # 1. 日付の特定（「〇月, 曜日」形式を検出）
+                # 1. 日付の特定
                 month_match = re.search(r'(\d{1,2})月,\s?[一-龠]', line)
                 if month_match:
                     current_month = f"{month_match.group(1)}月"
-                    # 日付が前の行にある場合の処理
                     if i > 0 and lines[i-1].strip().isdigit():
                         current_day = lines[i-1].strip()
                     continue
 
-                # 2. 予定の抽出（「終日」または「時刻」の次の行を拾う）
+                # 2. 予定の抽出
                 if current_day and (line == "終日" or re.match(r'\d{2}:\d{2}', line)):
                     if i + 1 < len(lines):
                         detail = lines[i+1].strip()
                         
-                        # 期間表記の削除
+                        # 期間表記（1日目など）の削除
                         detail = re.sub(r'\s*[（(]\d+\s*(日目|day[s]?)\s*/\s*\d+\s*(日間|day[s]?)[）)]', '', detail).strip()
                         
                         # システム行の除外
@@ -96,7 +100,6 @@ for boat in BOATS:
                                 "detail": detail
                             })
 
-            # 重複排除
             unique_schedules = []
             seen = set()
             for s in boat_schedules:
@@ -106,8 +109,10 @@ for boat in BOATS:
                     unique_schedules.append(s)
             
             all_results[boat['name']] = {"data": unique_schedules}
-            print(f"  ✅ {len(unique_schedules)}件の予定を抽出 (4月以降を含む)")
+            print(f"  ✅ {len(unique_schedules)}件の予定を抽出")
             
+    except TimeoutException:
+        print(f"  ⚠️ タイムアウト: {boat['name']} の読み込みが遅いためスキップしました")
     except Exception as e:
         print(f"  💥 エラー: {boat['name']} ({str(e)})")
 
@@ -121,4 +126,4 @@ output = {
 with open("fishing_schedule.json", "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=4)
 
-print("\n💾 保存完了")
+print("\n💾 すべての処理が完了しました")
