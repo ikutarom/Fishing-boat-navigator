@@ -22,7 +22,7 @@ jobs:
           pip install selenium webdriver-manager
           
       - name: Run script
-        run: python github_test.py
+        run: python fishingboatnavigator01.py
         env:
           FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # 明示的にNode.js 24を使用
 
