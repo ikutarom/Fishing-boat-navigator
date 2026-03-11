@@ -10,8 +10,9 @@ BOATS = [
     {"name": "Wingar", "url": "https://calendar.google.com/calendar/u/0/embed?height=600&wkst=1&ctz=Asia/Tokyo&showPrint=0&showTz=0&showCalendars=0&showTabs=0&src=em9uby5yLjQxMi5rYWdvbm1hQGdtYWlsLmNvbQ&src=cy5yLndpbmdhcjFAZ21haWwuY29t&src=amEuamFwYW5lc2UjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23f4511e&color=%23f4511e&color=%23ad1457", "official": "https://www.wingar.net/", "area": "唐津"}, 
     {"name": "GOD", "url": "https://calendar.google.com/calendar/u/0/embed?height=600&wkst=1&bgcolor=%23cc33cc&src=01120212yasu@gmail.com&color=%235229A3&ctz=Asia/Tokyo", "official": "https://www.god-fishing-boat.com/", "area": "姪浜"},
     {"name": "Season", "url": "https://calendar.google.com/calendar/u/0/embed?src=19730523sin@gmail.com&ctz=Asia/Tokyo", "official": "https://season-karadomari.jimdofree.com", "area": "糸島"},
-    {"name": "暁", "url": "https://calendar.google.com/calendar/u/0/embed?height=500&wkst=1&ctz=Asia/Tokyo&mode=MONTH&showTitle=1&showNav=1&showDate=1&showPrint=1&showTabs=1&showCalendars=1&showTz=1&src=akatsukiyugyo@gmail.com&color=%23039BE5", "official": "https://www.keyascorporation.com/", "area": "姪浜"},
+    {"name": "暁", "url": "https://calendar.google.com/calendar/embed?src=akatsukiyugyo@gmail.com&ctz=Asia/Tokyo", "official": "https://www.keyascorporation.com/", "area": "姪浜"},
 ]
+
 
 
 
