@@ -1,4 +1,5 @@
 {
+    "last_update": "2026-03-11 10:53:02",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -294,8 +295,8 @@
                 },
                 {
                     "date": "3月20日",
-                    "status": "○",
-                    "detail": "タチ7名空き"
+                    "status": "×",
+                    "detail": "タチ満船"
                 },
                 {
                     "date": "3月21日",
