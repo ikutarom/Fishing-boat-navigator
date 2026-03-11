@@ -29,9 +29,9 @@ driver = webdriver.Chrome(service=service, options=options)
 driver.set_page_load_timeout(45)
 
 def judge_status(content):
-    if any(k in content for k in ["チャーター可", "チャーター募", "チャーターOK"]): return "○"
-    if any(k in content for k in ["満船", "満", "予約済", "貸切", "×", "済", "Full", "完売", "締切", "チャーター"]): return "×"
-    if any(k in content for k in ["残り", "残", "△", "わずか"]): return "△"
+    # 暁の絵文字（🈵, 🈳）や「募集中」にも対応できるよう拡張
+    if any(k in content for k in ["満船", "満", "予約済", "貸切", "×", "済", "Full", "完売", "締切", "チャーター", "🈵"]): return "×"
+    if any(k in content for k in ["残り", "残", "△", "わずか", "🈳", "募集中"]): return "△"
     return "○"
 
 all_results = {}
@@ -41,14 +41,12 @@ for boat in BOATS:
     boat_schedules = []
     
     try:
-        # パラメータ設定
         target_url = boat['url']
         params = "&mode=AGENDA&weeks=14&hl=ja&ctz=Asia/Tokyo"
         target_url += params if "?" in target_url else "?" + params[1:]
         driver.get(target_url)
 
-        # iframe対策：Googleカレンダーの内部フレームに切り替え
-        time.sleep(6)
+        time.sleep(7)
         if len(driver.find_elements(By.TAG_NAME, "iframe")) > 0:
             driver.switch_to.frame(0)
 
@@ -59,14 +57,28 @@ for boat in BOATS:
             current_day = ""
             current_month = ""
 
+            # 時刻判定用の正規表現（5am, 5:30am, 12:30, 5am – 3pm などにマッチ）
+            # \d{1,2}(:\d{2})?\s*(am|pm)?  => 時刻部分
+            # [\-–—] => 各種ハイフン・ダッシュ記号
+            time_unit = r'\d{1,2}(:\d{2})?\s*(am|pm)?'
+            time_pattern = f"({time_unit}(\s*[\-–—]\s*{time_unit})?)"
+
             for i in range(len(lines)):
                 line = lines[i].strip()
                 if not line: continue
 
-                # 1. 月の特定 ("3月," など)
+                # 1. 月の特定 ("3月," または "Mar," など)
                 month_match = re.search(r'(\d{1,2})月,', line)
-                if month_match:
-                    current_month = f"{month_match.group(1)}月"
+                # 暁などで英語表記(Mar, Apr)になっている場合への備え
+                month_en_match = re.search(r'(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec),', line)
+
+                if month_match or month_en_match:
+                    if month_match:
+                        current_month = f"{month_match.group(1)}月"
+                    else:
+                        # 英語表記を日本語に読み替え（暫定的にそのまま保持、必要なら変換マップ追加）
+                        current_month = month_en_match.group(1) 
+                    
                     # 日付（数値）を探す
                     date_num_match = re.search(r',\s*(\d{1,2})', line)
                     if date_num_match:
@@ -75,34 +87,36 @@ for boat in BOATS:
                         current_day = lines[i-1].strip()
                     continue
 
-                # 2. 予定の抽出ロジック（ここを大幅強化）
-                # 目印1: 「終日」または「All day」
-                # 目印2: 「12:30」や「5am」などの時刻形式
+                # 2. 予定の抽出ロジック（強化版）
                 is_time_marker = (
                     line in ["終日", "All day"] or 
-                    re.match(r'\d{1,2}:\d{2}', line) or # 12:30 形式
-                    re.match(r'\d{1,2}(am|pm)', line.lower()) # 5am 形式
+                    re.match(f"^{time_pattern}$", line.lower())
                 )
 
                 if current_day and is_time_marker:
-                    # 目印の次の行、またはその次の行に予定内容がある
-                    # Googleカレンダーの構造上、時刻と内容が別行になるため2行先まで見る
-                    look_ahead_limit = min(i + 3, len(lines))
-                    for j in range(i + 1, look_ahead_limit):
+                    # 💡 暁対策：時刻の後に続く「予定名」と「空き情報」を最大2行拾う
+                    potential_details = []
+                    # 時刻の次の行から最大3行先までスキャン
+                    for j in range(i + 1, min(i + 4, len(lines))):
                         detail = lines[j].strip()
+                        # 次の時刻目印や日付、システム文字が来たらストップ
                         if not detail or any(k in detail for k in ["表示", "Google", "カレンダー", "詳細"]):
                             continue
+                        if re.match(f"^{time_pattern}$", detail.lower()) or "月," in detail:
+                            break
+                        potential_details.append(detail)
+                    
+                    if potential_details:
+                        # 「Bジギング便 / 残り3名募集中」のように結合して保存
+                        combined_detail = " / ".join(potential_details)
                         
-                        # 予定内容として採用
                         if current_month and current_day:
                             boat_schedules.append({
                                 "date": f"{current_month}{current_day}日",
-                                "status": judge_status(detail),
-                                "detail": detail
+                                "status": judge_status(combined_detail),
+                                "detail": combined_detail
                             })
-                        break # 1つ見つけたらその時刻の解析は終了
 
-            # 重複排除
             unique_schedules = []
             seen = set()
             for s in boat_schedules:
@@ -120,7 +134,6 @@ for boat in BOATS:
 
 driver.quit()
 
-# 保存処理（last_update付き）
 output = {
     "last_update": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     "boat_info": {b["name"]: {"area": b["area"], "link": b["official"]} for b in BOATS},
@@ -129,3 +142,5 @@ output = {
 json_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fishing_schedule.json")
 with open(json_path, "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=4)
+
+print("\n💾 すべての処理が完了しました")
