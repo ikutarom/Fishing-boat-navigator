@@ -1,46 +1,4 @@
-import os
-import time
-import re
-import json
-import datetime
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.common.exceptions import TimeoutException
-
-try:
-    from boats import BOATS
-except ImportError:
-    print("Error: boats.py が見つかりません。")
-    exit(1)
-
-options = Options()
-options.add_argument('--headless')
-options.add_argument('--no-sandbox')
-options.add_argument('--disable-dev-shm-usage')
-options.add_argument('--window-size=1920,2000') 
-options.page_load_strategy = 'normal'
-options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36')
-
-service = Service(ChromeDriverManager().install())
-driver = webdriver.Chrome(service=service, options=options)
-driver.set_page_load_timeout(45)
-
-def judge_status(content):
-    if any(k in content for k in ["満船", "満", "予約済", "貸切", "×", "済", "Full", "完売", "締切", "チャーター", "🈵", "休"]): 
-        return "×"
-    if any(k in content for k in ["残り", "残", "△", "わずか", "🈳", "名募集", "人募集", "様募集", "名空"]): 
-        return "△"
-    return "○"
-
-MONTH_MAP = {
-    "Jan": "1月", "Feb": "2月", "Mar": "3月", "Apr": "4月", "May": "5月", "Jun": "6月",
-    "Jul": "7月", "Aug": "8月", "Sep": "9月", "Oct": "10月", "Nov": "11月", "Dec": "12月"
-}
-
-all_results = {}
+# --- 前略 ---
 
 for boat in BOATS:
     print(f"\n🚀 --- 【解析開始】 {boat['name']} ---")
@@ -51,36 +9,28 @@ for boat in BOATS:
         params = "&mode=AGENDA&weeks=14&hl=ja&ctz=Asia/Tokyo"
         target_url += params if "?" in target_url else "?" + params[1:]
         driver.get(target_url)
-        time.sleep(10) # 暁対策で少し長めに待機
+        
+        # 💡 昨日の成功体験：暁などのために、まずはしっかり待つ
+        time.sleep(10) 
 
         if len(driver.find_elements(By.TAG_NAME, "iframe")) > 0:
             driver.switch_to.frame(0)
 
-        # 💡 ボタンクリックの改善：IDだけでなく複数の方法でボタンを探す
-        for _ in range(3):
-            try:
-                # nextButton (ID) または title属性が「次へ」のものを探す
-                next_btns = driver.find_elements(By.CSS_SELECTOR, "#nextButton, [title*='次'], [aria-label*='次']")
-                if next_btns:
-                    # 見つかったボタンのうち、実際にクリック可能なものを探す
-                    target_btn = None
-                    for b in next_btns:
-                        if b.is_displayed():
-                            target_btn = b
-                            break
-                    
-                    if target_btn:
-                        driver.execute_script("arguments[0].click();", target_btn)
+        # 💡 改善：ボタン連打は「優」など特定が必要な場合のみ、または慎重に行う
+        # 暁で0件になるのを防ぐため、ボタンが見つからない場合は即座に解析へ進む
+        if any(k in boat['name'] for k in ["優", "エルクルーズ", "Wingar", "GOD"]):
+            for i in range(2): # 回数を2回に絞って安定させる
+                try:
+                    next_btn = driver.find_element(By.ID, "nextButton")
+                    if next_btn.is_displayed():
+                        driver.execute_script("arguments[0].click();", next_btn)
                         print(f"  👆 {boat['name']}: 次の期間を読み込み中...")
                         time.sleep(4)
-                    else: break
-                else: break
-            except:
-                break
+                except:
+                    break
 
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        # 暁対策：解析直前にもう一度少し待つ（昨日成功した時のリズム）
         time.sleep(2)
-
         raw_text = driver.execute_script("return document.body.innerText;")
         
         if raw_text:
@@ -115,7 +65,7 @@ for boat in BOATS:
                     details = []
                     for j in range(i + 1, min(i + 5, len(lines))):
                         detail = lines[j].strip()
-                        # 💡 ゴミ掃除リストに "(No title)" を追加
+                        # ゴミ掃除
                         if not detail or detail == "カレンダー" or "(No title)" in detail: continue
                         if any(k in detail for k in ["表示", "Google", "詳細", "カレンダー:", "承諾", "辞退", "未定", "出船スケジュール"]):
                             continue
@@ -134,16 +84,14 @@ for boat in BOATS:
                                 "detail": full_detail
                             })
 
-            # 💡 重複排除の強化：包含関係（片方の文字列が含まれている）も排除
+            # 重複排除のロジック（そのまま維持）
             unique_schedules = []
             for s in boat_schedules:
                 is_duplicate = False
                 for existing in unique_schedules:
                     if existing['date'] == s['date']:
-                        # 内容が全く同じ、または一方がもう一方を含んでいる場合は重複とみなす
                         if s['detail'] in existing['detail'] or existing['detail'] in s['detail']:
                             is_duplicate = True
-                            # もし新しい方の文字列が長い（情報が多い）なら差し替える
                             if len(s['detail']) > len(existing['detail']):
                                 existing['detail'] = s['detail']
                                 existing['status'] = s['status']
@@ -155,20 +103,4 @@ for boat in BOATS:
             print(f"  ✅ {len(unique_schedules)}件抽出完了")
 
         driver.switch_to.default_content()
-            
-    except Exception as e:
-        print(f"  💥 エラー: {boat['name']} ({str(e)})")
-
-driver.quit()
-
-# --- 保存処理 ---
-output = {
-    "last_update": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-    "boat_info": {b["name"]: {"area": b["area"], "link": b["official"]} for b in BOATS},
-    "schedules": all_results
-}
-json_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fishing_schedule.json")
-with open(json_path, "w", encoding="utf-8") as f:
-    json.dump(output, f, ensure_ascii=False, indent=4)
-
-print("\n💾 処理が完了しました。")
+# --- 以下省略 ---
