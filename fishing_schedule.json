@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-03-12 13:15:12",
+    "last_update": "2026-03-12 13:29:53",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -57,7 +57,7 @@
                 },
                 {
                     "date": "3月21日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "ジギング　３名空き"
                 },
                 {
@@ -121,7 +121,7 @@
                 },
                 {
                     "date": "3月16日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "博多湾タチウオ　募集中"
                 },
                 {
@@ -131,7 +131,7 @@
                 },
                 {
                     "date": "3月19日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "博多湾タチウオ　募集中"
                 },
                 {
@@ -151,12 +151,12 @@
                 },
                 {
                     "date": "3月23日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "博多湾タチウオ　募集中"
                 },
                 {
                     "date": "3月24日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "博多湾タチウオ　募集中"
                 },
                 {
@@ -186,7 +186,7 @@
                 },
                 {
                     "date": "4月5日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "鯛ラバ　募集中"
                 },
                 {
@@ -196,7 +196,7 @@
                 },
                 {
                     "date": "4月12日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "鯛ラバ　募集中"
                 },
                 {
@@ -245,42 +245,42 @@
             "data": [
                 {
                     "date": "3月12日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "タチ11名空き"
                 },
                 {
                     "date": "3月13日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "タチ9名空き"
                 },
                 {
                     "date": "3月14日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "タチ1名空き"
                 },
                 {
                     "date": "3月15日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "タチ2名空き"
                 },
                 {
                     "date": "3月16日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "タチ11名空き"
                 },
                 {
                     "date": "3月17日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "タチ11名空き"
                 },
                 {
                     "date": "3月18日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "タチ6名空き"
                 },
                 {
                     "date": "3月19日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "タチ11名空き"
                 },
                 {
@@ -290,12 +290,12 @@
                 },
                 {
                     "date": "3月21日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "タチ1名空き"
                 },
                 {
                     "date": "3月22日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "タチ9名空き / 遊漁船ピスケス"
                 }
             ]
@@ -478,7 +478,7 @@
                 },
                 {
                     "date": "3月14日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "ﾋﾗﾏｻﾒｲﾝ:4名空き"
                 },
                 {
@@ -543,7 +543,7 @@
                 },
                 {
                     "date": "3月20日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "ﾋﾗﾏｻﾒｲﾝ:2名空き"
                 },
                 {
@@ -558,7 +558,7 @@
                 },
                 {
                     "date": "3月21日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "ﾋﾗﾏｻﾒｲﾝ離島一泊二日:1名空き （1 日目/2 日間）"
                 },
                 {
@@ -573,7 +573,7 @@
                 },
                 {
                     "date": "3月22日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "ﾋﾗﾏｻﾒｲﾝ離島一泊二日:1名空き （2 日目/2 日間）"
                 },
                 {
@@ -603,7 +603,7 @@
                 },
                 {
                     "date": "3月25日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "ｼﾞｸﾞ多め/ｷｬｽﾄ:2名空き"
                 },
                 {
@@ -618,7 +618,7 @@
                 },
                 {
                     "date": "3月27日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "ﾋﾗﾏｻﾒｲﾝ:6名空き"
                 },
                 {
@@ -658,7 +658,7 @@
                 },
                 {
                     "date": "3月31日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "ﾋﾗﾏｻﾒｲﾝ離島一泊二日:2名空き （1 日目/2 日間） / 遊漁船　優"
                 }
             ]
@@ -677,22 +677,22 @@
                 },
                 {
                     "date": "3月16日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
                     "date": "3月17日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "ジギング(＆キャスト)【2名空き】"
                 },
                 {
                     "date": "3月18日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
                     "date": "3月19日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
@@ -707,17 +707,17 @@
                 },
                 {
                     "date": "3月22日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "ジギング(＆キャスト)【6名空き】"
                 },
                 {
                     "date": "3月23日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "ジギング(＆キャスト)【2名空き】"
                 },
                 {
                     "date": "3月24日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "ジギング(＆キャスト)【7名空き】"
                 },
                 {
@@ -727,12 +727,12 @@
                 },
                 {
                     "date": "3月26日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
                     "date": "3月27日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "ジギング(＆キャスト)【6名空き】"
                 },
                 {
@@ -742,107 +742,107 @@
                 },
                 {
                     "date": "3月29日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "ジギング(＆キャスト)【2名空き】"
                 },
                 {
                     "date": "3月30日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
                     "date": "3月31日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "ジギング(＆キャスト)【7名空き】"
                 },
                 {
                     "date": "4月1日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "ジギング(＆キャスト)【4名空き】"
                 },
                 {
                     "date": "4月2日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "ジギング(＆キャスト)【4名空き】"
                 },
                 {
                     "date": "4月3日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
                     "date": "4月4日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "ジギング(＆キャスト)【5名空き】"
                 },
                 {
                     "date": "4月5日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
                     "date": "4月6日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "ジギング(＆キャスト)【6名空き】"
                 },
                 {
                     "date": "4月7日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
                     "date": "4月8日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
                     "date": "4月9日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
                     "date": "4月10日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "ジギング(＆キャスト)【2名空き】"
                 },
                 {
                     "date": "4月11日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "ジギング(＆キャスト)【4名空き】"
                 },
                 {
                     "date": "4月12日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
                     "date": "4月13日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
                     "date": "4月14日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "ジギング(＆キャスト)【4名空き】"
                 },
                 {
                     "date": "4月15日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
                     "date": "4月16日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
                     "date": "4月17日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
                     "date": "4月18日",
-                    "status": "○",
+                    "status": "△",
                     "detail": "ジギング(＆キャスト)【3名空き】"
                 },
                 {
@@ -857,12 +857,12 @@
                 },
                 {
                     "date": "4月21日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
                     "date": "4月22日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中 / スケジュール"
                 }
             ]
@@ -875,8 +875,13 @@
                     "detail": "🐟LJ 満船"
                 },
                 {
+                    "date": "3月15日",
+                    "status": "△",
+                    "detail": "🐟LJ 残4名"
+                },
+                {
                     "date": "3月18日",
-                    "status": "○",
+                    "status": "×",
                     "detail": "🛥️休船"
                 },
                 {
@@ -971,7 +976,7 @@
                 },
                 {
                     "date": "5月6日",
-                    "status": "○",
+                    "status": "×",
                     "detail": "憲法記念日 振替休日"
                 },
                 {
@@ -1011,7 +1016,7 @@
                 },
                 {
                     "date": "9月22日",
-                    "status": "○",
+                    "status": "×",
                     "detail": "国民の休日"
                 },
                 {
@@ -1056,18 +1061,13 @@
                 },
                 {
                     "date": "1月2日",
-                    "status": "○",
+                    "status": "×",
                     "detail": "銀行休業日"
                 },
                 {
                     "date": "1月3日",
-                    "status": "○",
-                    "detail": "銀行休業日"
-                },
-                {
-                    "date": "1月11日",
-                    "status": "○",
-                    "detail": "成人の日 / Wingar 予約表1"
+                    "status": "×",
+                    "detail": "銀行休業日 / Wingar 予約表1"
                 }
             ]
         },
@@ -1125,7 +1125,7 @@
                 },
                 {
                     "date": "3月22日",
-                    "status": "○",
+                    "status": "×",
                     "detail": "休み"
                 },
                 {
@@ -1200,7 +1200,7 @@
                 },
                 {
                     "date": "5月6日",
-                    "status": "○",
+                    "status": "×",
                     "detail": "休み"
                 },
                 {
@@ -1229,12 +1229,12 @@
             "data": [
                 {
                     "date": "3月12日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
                     "date": "3月13日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
@@ -1249,22 +1249,22 @@
                 },
                 {
                     "date": "3月16日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
                     "date": "3月17日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
                     "date": "3月18日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
                     "date": "3月19日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
@@ -1284,27 +1284,27 @@
                 },
                 {
                     "date": "3月23日",
-                    "status": "○",
+                    "status": "×",
                     "detail": "休船"
                 },
                 {
                     "date": "3月24日",
-                    "status": "○",
+                    "status": "×",
                     "detail": "休船"
                 },
                 {
                     "date": "3月25日",
-                    "status": "○",
+                    "status": "×",
                     "detail": "休船"
                 },
                 {
                     "date": "3月26日",
-                    "status": "○",
+                    "status": "×",
                     "detail": "休船"
                 },
                 {
                     "date": "3月27日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
@@ -1314,17 +1314,17 @@
                 },
                 {
                     "date": "3月29日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
                     "date": "3月30日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
                     "date": "3月31日",
-                    "status": "△",
+                    "status": "○",
                     "detail": "募集中"
                 },
                 {
