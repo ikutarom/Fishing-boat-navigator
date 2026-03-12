@@ -10,7 +10,7 @@ from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import TimeoutException
 
-# 💡 BOATSの読み込みシーケンス（ここを確実に保持）
+# 💡 BOATSの読み込みシーケンス
 try:
     from boats import BOATS
 except ImportError:
@@ -85,29 +85,32 @@ for boat in BOATS:
                     continue
 
                 # 2. 予定の抽出ロジック
-                # 暁の「5am – 3pm」のような範囲形式やam/pm付きにマッチさせる
+                # 💡 M-selection対策：時刻パターンを厳格化して、次の予定との境界線を明確にする
+                time_unit_regex = r'\d{1,2}(:\d{2})?\s*(am|pm)?'
                 is_time_marker = (
                     line in ["終日", "All day"] or 
-                    re.search(r'\d{1,2}(:\d{2})?\s*(am|pm)?', line.lower()) or
+                    re.match(f"^{time_unit_regex}$", line.lower()) or
                     "–" in line or "—" in line
                 )
 
                 if current_day and is_time_marker:
                     details = []
+                    # 時刻の次の行から、次の予定の目印が出るまでを拾う
                     for j in range(i + 1, min(i + 5, len(lines))):
                         detail = lines[j].strip()
                         
-                        # 💡 ゴミ掃除（カレンダー名・システムテキスト・メールアドレス）
-                        if not detail or any(k in detail for k in ["表示", "Google", "詳細", "カレンダー:", "承諾", "辞退", "未定", "出船スケジュール"]):
+                        # 💡 ゴミ掃除（「カレンダー」単体や特定キーワードを完全に弾く）
+                        if not detail or detail == "カレンダー": continue
+                        if any(k in detail for k in ["表示", "Google", "詳細", "カレンダー:", "承諾", "辞退", "未定", "出船スケジュール"]):
                             continue
                         
                         # メールアドレスが含まれる行はスキップ
                         if re.search(r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+', detail):
                             continue
                             
-                        # 次の日付や時刻が来たらストップ
+                        # 次の日付、または「次の予定の目印（All day/時刻）」が来たらストップ
                         if "月," in detail or re.search(r'(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec),', detail): break
-                        if re.search(r'\d{1,2}(:\d{2})?\s*(am|pm)?', detail.lower()): break
+                        if detail in ["終日", "All day"] or re.match(f"^{time_unit_regex}$", detail.lower()): break
                         
                         details.append(detail)
                     
@@ -120,12 +123,14 @@ for boat in BOATS:
                                 "detail": full_detail
                             })
 
+            # 重複排除（日付と内容のペアが完全に同じ場合のみ除外）
             unique_schedules = []
             seen = set()
             for s in boat_schedules:
                 identifier = (s['date'], s['detail'])
                 if identifier not in seen:
-                    seen.add(identifier); unique_schedules.append(s)
+                    seen.add(identifier)
+                    unique_schedules.append(s)
             
             all_results[boat['name']] = {"data": unique_schedules}
             print(f"  ✅ {len(unique_schedules)}件抽出完了")
