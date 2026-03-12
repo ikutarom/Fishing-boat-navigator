@@ -30,8 +30,15 @@ driver = webdriver.Chrome(service=service, options=options)
 driver.set_page_load_timeout(45)
 
 def judge_status(content):
-    if any(k in content for k in ["満船", "満", "予約済", "貸切", "×", "済", "Full", "完売", "締切", "チャーター", "🈵"]): return "×"
-    if any(k in content for k in ["残り", "残", "△", "わずか", "🈳", "募集中"]): return "△"
+    # 1. 優先的に「×」と判定するもの（「休」を追加）
+    if any(k in content for k in ["満船", "満", "予約済", "貸切", "×", "済", "Full", "完売", "締切", "チャーター", "🈵", "休"]): 
+        return "×"
+        
+    # 2. 「△」と判定するもの
+    if any(k in content for k in ["残り", "残", "△", "わずか", "🈳", "名募集", "人募集", "様募集", "名空"]): 
+        return "△"
+        
+    # 3. それ以外（デフォルト）
     return "○"
 
 # 月名変換マップ（暁・優の英語表記対策）
@@ -153,3 +160,4 @@ with open(json_path, "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=4)
 
 print("\n💾 処理が完了しました。")
+
