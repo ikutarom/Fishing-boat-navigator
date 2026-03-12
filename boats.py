@@ -11,7 +11,10 @@ BOATS = [
     {"name": "GOD", "url": "https://calendar.google.com/calendar/u/0/embed?height=600&wkst=1&bgcolor=%23cc33cc&src=01120212yasu@gmail.com&color=%235229A3&ctz=Asia/Tokyo", "official": "https://www.god-fishing-boat.com/", "area": "姪浜"},
     {"name": "Season", "url": "https://calendar.google.com/calendar/u/0/embed?src=19730523sin@gmail.com&ctz=Asia/Tokyo", "official": "https://season-karadomari.jimdofree.com", "area": "糸島"},
     {"name": "暁", "url": "https://calendar.google.com/calendar/embed?src=akatsukiyugyo@gmail.com&ctz=Asia/Tokyo", "official": "https://www.keyascorporation.com/", "area": "姪浜"},
+    {"name": "松丸", "url": "https://calendar.google.com/calendar/u/0/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=Asia/Tokyo&src=MWVyc2U3NXBvM250MDNwczlydWZ1OGJxdWdAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%238E24AA&showTitle=0&mode=AGENDA", "official": "https://matsumaru-izaki.jp/", "area": "福浜"},
+    {"name": "DORAGI", "url": "https://calendar.google.com/calendar/u/0/embed?height=600&wkst=2&bgcolor=%23ffffff&ctz=Asia/Tokyo&src=dWtpdWVtb25AZ21haWwuY29t&src=amEuamFwYW5lc2UjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%237986CB&color=%234285F4", "official": "https://fishing-navigator-doragi.jimdofree.com/", "area": "糸島"},
 ]
+
 
 
 
