@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-03-12 08:45:09",
+    "last_update": "2026-03-12 09:45:33",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -177,15 +177,30 @@
                 {
                     "date": "6月1日",
                     "status": "×",
-                    "detail": "マグロチャーター / MONJAMARU予約状況"
+                    "detail": "マグロチャーター"
                 },
                 {
-                    "date": "6月1日",
+                    "date": "6月20日",
+                    "status": "×",
+                    "detail": "夜炊きイカ　チャーター"
+                },
+                {
+                    "date": "7月4日",
+                    "status": "×",
+                    "detail": "夜炊きイカ　チャーター"
+                },
+                {
+                    "date": "7月18日",
+                    "status": "×",
+                    "detail": "夜炊きイカ　チャーター"
+                },
+                {
+                    "date": "7月18日",
                     "status": "○",
-                    "detail": "MONJAMARU予約状況 / カレンダー"
+                    "detail": "MONJAMARU予約状況"
                 },
                 {
-                    "date": "6月1日",
+                    "date": "7月18日",
                     "status": "○",
                     "detail": "カレンダー"
                 }
