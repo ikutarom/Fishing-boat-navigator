@@ -54,26 +54,29 @@ for boat in BOATS:
         target_url += params if "?" in target_url else "?" + params[1:]
         driver.get(target_url)
         
-        # 💡 暁対策：初期待機を少し長めの12秒に設定
+        # 💡 暁対策：ページ読み込みの待機
         time.sleep(12) 
 
         if len(driver.find_elements(By.TAG_NAME, "iframe")) > 0:
             driver.switch_to.frame(0)
 
-        # 💡 暁以外の「40件の壁」がある船のみボタン操作を試行
-        # 暁は予定が少ないため、ボタン操作をスキップして安定性を高めます
-        if boat['name'] != "暁" and any(k in boat['name'] for k in ["優", "エルクルーズ", "Wingar", "GOD", "武蔵丸"]):
+        # 💡 優などへのボタン操作（次へボタンのクリック）
+        if any(k in boat['name'] for k in ["優", "エルクルーズ", "Wingar", "GOD", "武蔵丸", "松丸", "DORAGI"]):
             for i in range(2): 
                 try:
-                    next_btn = driver.find_element(By.ID, "nextButton")
-                    if next_btn.is_displayed():
-                        driver.execute_script("arguments[0].click();", next_btn)
-                        print(f"  👆 {boat['name']}: 次の期間(Page {i+1})を読み込み中...")
-                        time.sleep(5) # 読み込み待ちを4秒から5秒へ
-                except:
-                    break
+                    js_click_next = """
+                    var target = document.getElementById('nextButton') || 
+                                 document.querySelector('[title*="次"]') || 
+                                 document.querySelector('[aria-label*="次"]');
+                    if(target){ target.click(); return true; }
+                    return false;
+                    """
+                    if driver.execute_script(js_click_next):
+                        print(f"  👆 {boat['name']}: 次の期間(Page {i+1})へ切り替え")
+                        time.sleep(6)
+                    else: break
+                except: break
 
-        # 💡 解析直前の最終待機（ここで暁の遅延読み込みを確実にキャッチする）
         time.sleep(3)
         raw_text = driver.execute_script("return document.body.innerText;")
         
@@ -86,6 +89,7 @@ for boat in BOATS:
                 line = lines[i].strip()
                 if not line: continue
 
+                # 💡 月・日の特定（昨日の成功ロジックをそのまま移植）
                 m_jp = re.search(r'(\d{1,2})月,', line)
                 m_en = re.search(r'(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec),', line)
 
@@ -98,10 +102,11 @@ for boat in BOATS:
                         current_day = lines[i-1].strip()
                     continue
 
-                time_unit_regex = r'\d{1,2}(:\d{2})?\s*(am|pm)?'
+                # 💡 予定の抽出ロジック（暁の「5am – 3pm」やam/pm付きに対応）
+                # ※他の船の「3名」などに誤爆しないよう正規表現を少し安全にしました
                 is_time_marker = (
                     line in ["終日", "All day"] or 
-                    re.match(f"^{time_unit_regex}$", line.lower()) or
+                    re.search(r'\d{1,2}:\d{2}|\d{1,2}\s*(am|pm)', line.lower()) or
                     "–" in line or "—" in line
                 )
 
@@ -109,14 +114,17 @@ for boat in BOATS:
                     details = []
                     for j in range(i + 1, min(i + 5, len(lines))):
                         detail = lines[j].strip()
-                        # ゴミ掃除（暁の "(No title)" も除外対象）
-                        if not detail or detail == "カレンダー" or "(No title)" in detail: continue
-                        if any(k in detail for k in ["表示", "Google", "詳細", "カレンダー:", "承諾", "辞退", "未定", "出船スケジュール"]):
+                        
+                        # ゴミ掃除（カレンダー名・システムテキスト・メールアドレス）
+                        if not detail or any(k in detail for k in ["表示", "Google", "詳細", "カレンダー:", "承諾", "辞退", "未定", "出船スケジュール"]):
                             continue
                         if re.search(r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+', detail):
                             continue
+                            
+                        # 次の日付や時刻が来たらストップ
                         if "月," in detail or re.search(r'(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec),', detail): break
-                        if detail in ["終日", "All day"] or re.match(f"^{time_unit_regex}$", detail.lower()): break
+                        if re.search(r'\d{1,2}:\d{2}|\d{1,2}\s*(am|pm)', detail.lower()): break
+                        if "–" in detail or "—" in detail: break
                         
                         details.append(detail)
                     
@@ -129,17 +137,17 @@ for boat in BOATS:
                                 "detail": full_detail
                             })
 
+            # 💡 重複排除（包含関係チェックで「優」の重複を合体させる）
             unique_schedules = []
             for s in boat_schedules:
                 is_duplicate = False
                 for existing in unique_schedules:
-                    if existing['date'] == s['date']:
-                        if s['detail'] in existing['detail'] or existing['detail'] in s['detail']:
-                            is_duplicate = True
-                            if len(s['detail']) > len(existing['detail']):
-                                existing['detail'] = s['detail']
-                                existing['status'] = s['status']
-                            break
+                    if existing['date'] == s['date'] and (s['detail'] in existing['detail'] or existing['detail'] in s['detail']):
+                        is_duplicate = True
+                        if len(s['detail']) > len(existing['detail']):
+                            existing['detail'] = s['detail']
+                            existing['status'] = s['status']
+                        break
                 if not is_duplicate:
                     unique_schedules.append(s)
             
