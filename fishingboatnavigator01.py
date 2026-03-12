@@ -54,13 +54,11 @@ for boat in BOATS:
         target_url += params if "?" in target_url else "?" + params[1:]
         driver.get(target_url)
         
-        # 💡 暁対策：ページ読み込みの待機
         time.sleep(12) 
 
         if len(driver.find_elements(By.TAG_NAME, "iframe")) > 0:
             driver.switch_to.frame(0)
 
-        # 💡 優などへのボタン操作（次へボタンのクリック）
         if any(k in boat['name'] for k in ["優", "エルクルーズ", "Wingar", "GOD", "武蔵丸", "松丸", "DORAGI"]):
             for i in range(2): 
                 try:
@@ -89,7 +87,6 @@ for boat in BOATS:
                 line = lines[i].strip()
                 if not line: continue
 
-                # 💡 月・日の特定（昨日の成功ロジックをそのまま移植）
                 m_jp = re.search(r'(\d{1,2})月,', line)
                 m_en = re.search(r'(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec),', line)
 
@@ -102,8 +99,6 @@ for boat in BOATS:
                         current_day = lines[i-1].strip()
                     continue
 
-                # 💡 予定の抽出ロジック（暁の「5am – 3pm」やam/pm付きに対応）
-                # ※他の船の「3名」などに誤爆しないよう正規表現を少し安全にしました
                 is_time_marker = (
                     line in ["終日", "All day"] or 
                     re.search(r'\d{1,2}:\d{2}|\d{1,2}\s*(am|pm)', line.lower()) or
@@ -115,13 +110,14 @@ for boat in BOATS:
                     for j in range(i + 1, min(i + 5, len(lines))):
                         detail = lines[j].strip()
                         
-                        # ゴミ掃除（カレンダー名・システムテキスト・メールアドレス）
+                        # ゴミ掃除
                         if not detail or any(k in detail for k in ["表示", "Google", "詳細", "カレンダー:", "承諾", "辞退", "未定", "出船スケジュール"]):
                             continue
                         if re.search(r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+', detail):
                             continue
                             
-                        # 次の日付や時刻が来たらストップ
+                        # 💡 強力なストッパー：次の行が「数字のみ（＝次の日付）」や「月」の場合は詳細の取得を止める
+                        if re.match(r'^\d{1,2}$', detail): break
                         if "月," in detail or re.search(r'(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec),', detail): break
                         if re.search(r'\d{1,2}:\d{2}|\d{1,2}\s*(am|pm)', detail.lower()): break
                         if "–" in detail or "—" in detail: break
@@ -130,6 +126,9 @@ for boat in BOATS:
                     
                     if details:
                         full_detail = " / ".join(details)
+                        # 💡 ゴミ掃除２：中身が「カレンダー」だけの予定や空の予定は保存しない
+                        if full_detail == "カレンダー" or not full_detail: continue
+                        
                         if current_month and current_day:
                             boat_schedules.append({
                                 "date": f"{current_month}{current_day}日",
@@ -137,7 +136,6 @@ for boat in BOATS:
                                 "detail": full_detail
                             })
 
-            # 💡 重複排除（包含関係チェックで「優」の重複を合体させる）
             unique_schedules = []
             for s in boat_schedules:
                 is_duplicate = False
