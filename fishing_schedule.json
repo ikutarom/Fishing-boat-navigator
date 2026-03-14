@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-03-14 07:38:23",
+    "last_update": "2026-03-14 08:39:41",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -903,6 +903,11 @@
                     "detail": "春分の日"
                 },
                 {
+                    "date": "3月21日",
+                    "status": "△",
+                    "detail": "🐟LJ（SLJ）残4名"
+                },
+                {
                     "date": "3月22日",
                     "status": "△",
                     "detail": "🐟LJ 残3名"
@@ -1065,12 +1070,7 @@
                 {
                     "date": "11月23日",
                     "status": "○",
-                    "detail": "勤労感謝の日"
-                },
-                {
-                    "date": "12月25日",
-                    "status": "○",
-                    "detail": "クリスマス / Wingar 予約表1"
+                    "detail": "勤労感謝の日 / Wingar 予約表1"
                 }
             ]
         },
@@ -1424,19 +1424,19 @@
         "松丸": {
             "data": [
                 {
-                    "date": "3月14日",
-                    "status": "○",
-                    "detail": "🙏天候不良中止"
-                },
-                {
                     "date": "3月15日",
                     "status": "○",
                     "detail": "空2タイラバ・SLJ"
                 },
                 {
+                    "date": "3月17日",
+                    "status": "○",
+                    "detail": "空5タイラバ・SLJ"
+                },
+                {
                     "date": "3月19日",
                     "status": "○",
-                    "detail": "空7タイラバ"
+                    "detail": "空7タイラバ・SLJ"
                 },
                 {
                     "date": "3月20日",
@@ -1486,12 +1486,12 @@
                 {
                     "date": "3月28日",
                     "status": "○",
-                    "detail": "空5タイラバ"
+                    "detail": "空5タイラバ・SLJ"
                 },
                 {
                     "date": "3月29日",
                     "status": "○",
-                    "detail": "空7タイラバ"
+                    "detail": "空7タイラバ・SLJ"
                 },
                 {
                     "date": "4月1日",
