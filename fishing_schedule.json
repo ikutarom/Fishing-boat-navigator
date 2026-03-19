@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-03-18 23:34:39",
+    "last_update": "2026-03-19 02:25:55",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -240,7 +240,7 @@
                 {
                     "date": "7月18日",
                     "status": "×",
-                    "detail": "夜炊きイカ　チャーター / MONJAMARU予約状況"
+                    "detail": "夜炊きイカ　チャーター"
                 }
             ]
         },
@@ -873,6 +873,11 @@
                     "detail": "🐟タイラバ（LJ）ロング便 残5名"
                 },
                 {
+                    "date": "3月30日",
+                    "status": "△",
+                    "detail": "🦑TR 残5名"
+                },
+                {
                     "date": "4月4日",
                     "status": "△",
                     "detail": "🐟LJ＋🦑TR ロング便 残5名"
@@ -1030,12 +1035,7 @@
                 {
                     "date": "10月12日",
                     "status": "○",
-                    "detail": "スポーツの日"
-                },
-                {
-                    "date": "11月3日",
-                    "status": "○",
-                    "detail": "文化の日 / Wingar 予約表1"
+                    "detail": "スポーツの日 / Wingar 予約表1"
                 }
             ]
         },
@@ -1115,6 +1115,16 @@
                     "date": "4月12日",
                     "status": "×",
                     "detail": "満船"
+                },
+                {
+                    "date": "4月19日",
+                    "status": "○",
+                    "detail": "SLJ&タイラバ / 4月 19日 (日曜日) / 終日"
+                },
+                {
+                    "date": "4月19日",
+                    "status": "△",
+                    "detail": "残：あり"
                 },
                 {
                     "date": "4月25日",
