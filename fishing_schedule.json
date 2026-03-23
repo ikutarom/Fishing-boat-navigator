@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-03-23 09:00:58",
+    "last_update": "2026-03-23 10:12:32",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -863,6 +863,11 @@
                     "detail": "🐟タイラバ（LJ）ロング便 残4名"
                 },
                 {
+                    "date": "3月29日",
+                    "status": "△",
+                    "detail": "🦑TR 残1名"
+                },
+                {
                     "date": "3月30日",
                     "status": "△",
                     "detail": "🦑TR 残5名"
@@ -1040,12 +1045,7 @@
                 {
                     "date": "10月12日",
                     "status": "○",
-                    "detail": "スポーツの日"
-                },
-                {
-                    "date": "11月3日",
-                    "status": "○",
-                    "detail": "文化の日 / Wingar 予約表1"
+                    "detail": "スポーツの日 / Wingar 予約表1"
                 }
             ]
         },
