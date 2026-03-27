@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-03-27 09:58:58",
+    "last_update": "2026-03-27 10:55:55",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -980,12 +980,7 @@
                 {
                     "date": "4月24日",
                     "status": "△",
-                    "detail": "🦑TR ロング便 残5名 / 4月 24日 (金曜日)"
-                },
-                {
-                    "date": "4月24日",
-                    "status": "○",
-                    "detail": "TR＋LJ ロング"
+                    "detail": "🦑TR ロング便 残5名"
                 },
                 {
                     "date": "4月25日",
@@ -1115,7 +1110,12 @@
                 {
                     "date": "9月23日",
                     "status": "○",
-                    "detail": "秋分の日 / Wingar 予約表1"
+                    "detail": "秋分の日"
+                },
+                {
+                    "date": "10月12日",
+                    "status": "○",
+                    "detail": "スポーツの日 / Wingar 予約表1"
                 }
             ]
         },
