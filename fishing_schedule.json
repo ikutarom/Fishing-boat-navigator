@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-03-28 18:44:47",
+    "last_update": "2026-03-28 19:33:26",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -1101,16 +1101,6 @@
         },
         "GOD": {
             "data": [
-                {
-                    "date": "3月29日",
-                    "status": "○",
-                    "detail": "SLJ&タイラバ / 3月 29日 (日曜日)、今日 / 終日"
-                },
-                {
-                    "date": "3月29日",
-                    "status": "△",
-                    "detail": "残：1"
-                },
                 {
                     "date": "4月4日",
                     "status": "×",
