@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-04-01 02:43:01",
+    "last_update": "2026-04-01 05:28:30",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -133,9 +133,19 @@
                     "detail": "近海SLJ ＆鯛ラバ　残り１名"
                 },
                 {
+                    "date": "4月6日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
                     "date": "4月8日",
                     "status": "×",
                     "detail": "休み"
+                },
+                {
+                    "date": "4月9日",
+                    "status": "○",
+                    "detail": "募集中"
                 },
                 {
                     "date": "4月11日",
@@ -146,6 +156,16 @@
                     "date": "4月12日",
                     "status": "△",
                     "detail": "博多湾タチウオ　残り1名"
+                },
+                {
+                    "date": "4月13日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "4月14日",
+                    "status": "○",
+                    "detail": "募集中"
                 },
                 {
                     "date": "4月15日",
@@ -173,6 +193,21 @@
                     "detail": "博多湾タチウオ　残り6名"
                 },
                 {
+                    "date": "4月20日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "4月23日",
+                    "status": "△",
+                    "detail": "博多湾タチウオ　残り６名"
+                },
+                {
+                    "date": "4月24日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
                     "date": "4月25日",
                     "status": "×",
                     "detail": "乗っ込み真鯛　鯛ラバ　チャーター"
@@ -186,6 +221,21 @@
                     "date": "4月27日",
                     "status": "×",
                     "detail": "乗っ込み真鯛　チャーター"
+                },
+                {
+                    "date": "4月28日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "4月29日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "4月30日",
+                    "status": "○",
+                    "detail": "募集中"
                 },
                 {
                     "date": "5月1日",
@@ -265,57 +315,7 @@
                 {
                     "date": "6月20日",
                     "status": "×",
-                    "detail": "夜炊きイカ　チャーター"
-                },
-                {
-                    "date": "6月21日",
-                    "status": "○",
-                    "detail": "夜炊きイカ　募集中"
-                },
-                {
-                    "date": "6月26日",
-                    "status": "○",
-                    "detail": "夜炊きイカ　募集中"
-                },
-                {
-                    "date": "6月27日",
-                    "status": "△",
-                    "detail": "博多湾タチウオ　残り６名 / 6月 27日 (土曜日) / 終日"
-                },
-                {
-                    "date": "6月27日",
-                    "status": "△",
-                    "detail": "夜炊きイカ　残り５名"
-                },
-                {
-                    "date": "6月28日",
-                    "status": "○",
-                    "detail": "夜炊きイカ　募集中"
-                },
-                {
-                    "date": "7月3日",
-                    "status": "○",
-                    "detail": "夜炊きイカ　募集中"
-                },
-                {
-                    "date": "7月4日",
-                    "status": "×",
-                    "detail": "夜炊きイカ　チャーター"
-                },
-                {
-                    "date": "7月5日",
-                    "status": "○",
-                    "detail": "博多湾タチウオ　募集中 / 7月 5日 (日曜日) / 終日"
-                },
-                {
-                    "date": "7月5日",
-                    "status": "○",
-                    "detail": "夜炊きイカ　募集中"
-                },
-                {
-                    "date": "7月10日",
-                    "status": "○",
-                    "detail": "夜炊きイカ　募集中 / MONJAMARU予約状況"
+                    "detail": "夜炊きイカ　チャーター / MONJAMARU予約状況"
                 }
             ]
         },
@@ -1266,14 +1266,84 @@
         "Season": {
             "data": [
                 {
+                    "date": "4月2日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "4月3日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
                     "date": "4月4日",
                     "status": "△",
                     "detail": "乗っ込み真鯛、タイラバ便、7名様募集中"
                 },
                 {
+                    "date": "4月5日",
+                    "status": "△",
+                    "detail": "乗っ込み真鯛、タイラバ便、８名様募集中"
+                },
+                {
+                    "date": "4月6日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "4月7日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "4月8日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "4月9日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "4月10日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
                     "date": "4月11日",
                     "status": "△",
                     "detail": "乗っ込み真鯛、８名様募集中"
+                },
+                {
+                    "date": "4月12日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "4月13日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "4月14日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "4月15日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "4月16日",
+                    "status": "○",
+                    "detail": "募集中"
+                },
+                {
+                    "date": "4月17日",
+                    "status": "○",
+                    "detail": "募集中"
                 },
                 {
                     "date": "4月18日",
@@ -1286,59 +1356,59 @@
                     "detail": "乗っ込み真鯛、タイラバ便、８名様募集中"
                 },
                 {
-                    "date": "5月23日",
-                    "status": "△",
-                    "detail": "夜焚き、１０名様募集中"
+                    "date": "4月20日",
+                    "status": "○",
+                    "detail": "募集中"
                 },
                 {
-                    "date": "6月13日",
-                    "status": "△",
-                    "detail": "夜焚き、５名様募集中"
+                    "date": "4月21日",
+                    "status": "○",
+                    "detail": "募集中"
                 },
                 {
-                    "date": "6月20日",
-                    "status": "×",
-                    "detail": "チャーター"
+                    "date": "4月22日",
+                    "status": "○",
+                    "detail": "募集中"
                 },
                 {
-                    "date": "7月4日",
-                    "status": "△",
-                    "detail": "夜焚き、1名様募集中"
+                    "date": "4月23日",
+                    "status": "○",
+                    "detail": "募集中"
                 },
                 {
-                    "date": "7月10日",
-                    "status": "△",
-                    "detail": "夜焚き、イカ釣り、10名様募集中"
+                    "date": "4月24日",
+                    "status": "○",
+                    "detail": "募集中"
                 },
                 {
-                    "date": "7月11日",
-                    "status": "△",
-                    "detail": "夜焚き、３名様募集中"
+                    "date": "4月25日",
+                    "status": "○",
+                    "detail": "募集中"
                 },
                 {
-                    "date": "7月18日",
-                    "status": "×",
-                    "detail": "満員御礼🙇"
+                    "date": "4月26日",
+                    "status": "○",
+                    "detail": "募集中"
                 },
                 {
-                    "date": "7月25日",
-                    "status": "△",
-                    "detail": "夜焚き、２名様募集中"
+                    "date": "4月27日",
+                    "status": "○",
+                    "detail": "募集中"
                 },
                 {
-                    "date": "8月8日",
-                    "status": "△",
-                    "detail": "夜焚き、５名様募集中"
+                    "date": "4月28日",
+                    "status": "○",
+                    "detail": "募集中"
                 },
                 {
-                    "date": "8月12日",
-                    "status": "△",
-                    "detail": "夜焚き、９名様募集中"
+                    "date": "4月29日",
+                    "status": "○",
+                    "detail": "募集中"
                 },
                 {
-                    "date": "8月14日",
-                    "status": "△",
-                    "detail": "夜焚き、１０名様募集中"
+                    "date": "4月30日",
+                    "status": "○",
+                    "detail": "募集中"
                 }
             ]
         },
