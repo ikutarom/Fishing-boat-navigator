@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-04-01 22:41:24",
+    "last_update": "2026-04-01 23:39:54",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -263,6 +263,11 @@
                     "detail": "博多湾シーバス午前便　満船"
                 },
                 {
+                    "date": "5月6日",
+                    "status": "△",
+                    "detail": "エギング　残り６名"
+                },
+                {
                     "date": "5月23日",
                     "status": "△",
                     "detail": "夜炊きイカ　残り６名"
@@ -310,12 +315,7 @@
                 {
                     "date": "6月20日",
                     "status": "×",
-                    "detail": "夜炊きイカ　チャーター"
-                },
-                {
-                    "date": "6月21日",
-                    "status": "○",
-                    "detail": "夜炊きイカ　募集中 / MONJAMARU予約状況"
+                    "detail": "夜炊きイカ　チャーター / MONJAMARU予約状況"
                 }
             ]
         },
