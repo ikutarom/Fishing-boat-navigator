@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-04-03 23:38:05",
+    "last_update": "2026-04-04 02:14:51",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -57,6 +57,11 @@
                     "date": "4月5日",
                     "status": "○",
                     "detail": "ジギング　タイラバ"
+                },
+                {
+                    "date": "5月2日",
+                    "status": "○",
+                    "detail": "タイラバ　SLJ"
                 },
                 {
                     "date": "5月17日",
@@ -1103,8 +1108,8 @@
                 },
                 {
                     "date": "4月5日",
-                    "status": "×",
-                    "detail": "満船"
+                    "status": "○",
+                    "detail": "SOLD OUT"
                 },
                 {
                     "date": "4月11日",
@@ -1118,13 +1123,13 @@
                 },
                 {
                     "date": "4月12日",
-                    "status": "×",
-                    "detail": "チャーター / 4月 12日 (日曜日) / 終日"
+                    "status": "○",
+                    "detail": "SOLD OUT / 4月 12日 (日曜日) / 終日"
                 },
                 {
                     "date": "4月12日",
                     "status": "×",
-                    "detail": "満船"
+                    "detail": "チャーター"
                 },
                 {
                     "date": "4月18日",
@@ -1148,23 +1153,23 @@
                 },
                 {
                     "date": "4月22日",
-                    "status": "×",
-                    "detail": "チャーター / 4月 22日 (水曜日) / 終日"
+                    "status": "○",
+                    "detail": "SOLD OUT / 4月 22日 (水曜日) / 終日"
                 },
                 {
                     "date": "4月22日",
                     "status": "×",
-                    "detail": "満船"
+                    "detail": "チャーター"
+                },
+                {
+                    "date": "4月25日",
+                    "status": "○",
+                    "detail": "SOLD OUT / 4月 25日 (土曜日) / 終日"
                 },
                 {
                     "date": "4月25日",
                     "status": "×",
-                    "detail": "チャーター / 4月 25日 (土曜日) / 終日"
-                },
-                {
-                    "date": "4月25日",
-                    "status": "×",
-                    "detail": "満船"
+                    "detail": "チャーター"
                 },
                 {
                     "date": "4月26日",
@@ -1183,8 +1188,8 @@
                 },
                 {
                     "date": "4月29日",
-                    "status": "×",
-                    "detail": "満船"
+                    "status": "○",
+                    "detail": "SOLD OUT"
                 },
                 {
                     "date": "5月2日",
@@ -1193,28 +1198,28 @@
                 },
                 {
                     "date": "5月2日",
-                    "status": "△",
-                    "detail": "残：1"
+                    "status": "○",
+                    "detail": "SOLD OUT"
+                },
+                {
+                    "date": "5月3日",
+                    "status": "○",
+                    "detail": "SOLD OUT / 5月 3日 (日曜日) / 終日"
                 },
                 {
                     "date": "5月3日",
                     "status": "×",
-                    "detail": "チャーター / 5月 3日 (日曜日) / 終日"
+                    "detail": "チャーター"
                 },
                 {
-                    "date": "5月3日",
-                    "status": "×",
-                    "detail": "満船"
+                    "date": "5月4日",
+                    "status": "○",
+                    "detail": "SOLD OUT / 5月 4日 (月曜日) / 終日"
                 },
                 {
                     "date": "5月4日",
                     "status": "×",
-                    "detail": "チャーター / 5月 4日 (月曜日) / 終日"
-                },
-                {
-                    "date": "5月4日",
-                    "status": "×",
-                    "detail": "満船"
+                    "detail": "チャーター"
                 },
                 {
                     "date": "5月5日",
@@ -1233,23 +1238,23 @@
                 },
                 {
                     "date": "5月7日",
-                    "status": "×",
-                    "detail": "チャーター / 5月 7日 (木曜日) / 終日"
+                    "status": "○",
+                    "detail": "SOLD OUT / 5月 7日 (木曜日) / 終日"
                 },
                 {
                     "date": "5月7日",
                     "status": "×",
-                    "detail": "満船"
+                    "detail": "チャーター"
+                },
+                {
+                    "date": "5月10日",
+                    "status": "○",
+                    "detail": "SOLD OUT / 5月 10日 (日曜日) / 終日"
                 },
                 {
                     "date": "5月10日",
                     "status": "×",
-                    "detail": "チャーター / 5月 10日 (日曜日) / 終日"
-                },
-                {
-                    "date": "5月10日",
-                    "status": "×",
-                    "detail": "満船"
+                    "detail": "チャーター"
                 }
             ]
         },
@@ -1760,7 +1765,7 @@
                 {
                     "date": "4月19日",
                     "status": "△",
-                    "detail": "🈳残り4名様タイラバ・ジギング"
+                    "detail": "🈳残り2名様タイラバ・ジギング"
                 },
                 {
                     "date": "4月20日",
