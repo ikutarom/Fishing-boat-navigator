@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-04-09 05:13:26",
+    "last_update": "2026-04-09 07:26:56",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -1290,6 +1290,11 @@
                     "date": "5月7日",
                     "status": "×",
                     "detail": "チャーター"
+                },
+                {
+                    "date": "5月9日",
+                    "status": "×",
+                    "detail": "休み"
                 },
                 {
                     "date": "5月10日",
