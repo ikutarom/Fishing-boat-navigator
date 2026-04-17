@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-04-17 02:41:04",
+    "last_update": "2026-04-17 05:31:45",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -135,7 +135,7 @@
                 {
                     "date": "4月19日",
                     "status": "△",
-                    "detail": "博多湾タチウオ　残り４名"
+                    "detail": "博多湾タチウオ　残り2名"
                 },
                 {
                     "date": "4月20日",
@@ -910,7 +910,7 @@
                 {
                     "date": "4月19日",
                     "status": "△",
-                    "detail": "🐟LJ（タイラバ）残1名"
+                    "detail": "🐟LJ（タイラバ）残2名"
                 },
                 {
                     "date": "4月20日",
@@ -920,7 +920,7 @@
                 {
                     "date": "4月21日",
                     "status": "△",
-                    "detail": "🐟LJ＋🦑TR 残5名"
+                    "detail": "🐟LJ＋🦑TR 残2名"
                 },
                 {
                     "date": "4月23日",
@@ -1108,8 +1108,8 @@
                 },
                 {
                     "date": "4月18日",
-                    "status": "△",
-                    "detail": "残：1"
+                    "status": "○",
+                    "detail": "SOLD OUT"
                 },
                 {
                     "date": "4月19日",
