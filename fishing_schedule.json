@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-04-18 02:32:19",
+    "last_update": "2026-04-18 05:10:23",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -343,8 +343,8 @@
                 },
                 {
                     "date": "4月20日",
-                    "status": "△",
-                    "detail": "タイラバ10名空き"
+                    "status": "×",
+                    "detail": "チャーター"
                 },
                 {
                     "date": "4月21日",
