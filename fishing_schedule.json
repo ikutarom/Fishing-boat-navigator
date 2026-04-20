@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-04-20 08:11:36",
+    "last_update": "2026-04-20 10:51:55",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -358,13 +358,13 @@
                 },
                 {
                     "date": "4月25日",
-                    "status": "×",
-                    "detail": "チャーター"
+                    "status": "△",
+                    "detail": "タチ11名空き"
                 },
                 {
                     "date": "4月26日",
                     "status": "△",
-                    "detail": "タチ4名空き"
+                    "detail": "タチ3名空き"
                 },
                 {
                     "date": "4月27日",
@@ -791,7 +791,7 @@
                 {
                     "date": "5月9日",
                     "status": "△",
-                    "detail": "イサキSLJ【4名空き】"
+                    "detail": "イサキSLJ【3名空き】"
                 },
                 {
                     "date": "5月10日",
@@ -939,6 +939,11 @@
                 },
                 {
                     "date": "4月27日",
+                    "status": "△",
+                    "detail": "🦑TR 残4名"
+                },
+                {
+                    "date": "4月28日",
                     "status": "△",
                     "detail": "🦑TR 残4名"
                 },
@@ -1095,12 +1100,7 @@
                 {
                     "date": "9月21日",
                     "status": "○",
-                    "detail": "敬老の日"
-                },
-                {
-                    "date": "9月22日",
-                    "status": "×",
-                    "detail": "国民の休日 / Wingar 予約表1"
+                    "detail": "敬老の日 / Wingar 予約表1"
                 }
             ]
         },
