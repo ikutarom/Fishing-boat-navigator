@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-04-20 23:45:38",
+    "last_update": "2026-04-21 02:42:01",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -349,7 +349,7 @@
                 {
                     "date": "4月25日",
                     "status": "△",
-                    "detail": "タチ11名空き"
+                    "detail": "タチ10名空き"
                 },
                 {
                     "date": "4月26日",
@@ -835,8 +835,8 @@
                 },
                 {
                     "date": "5月20日",
-                    "status": "○",
-                    "detail": "募集中"
+                    "status": "△",
+                    "detail": "イサキSLJ【4名空き】"
                 },
                 {
                     "date": "5月21日",
@@ -894,8 +894,8 @@
                 },
                 {
                     "date": "4月22日",
-                    "status": "△",
-                    "detail": "🦑TR 残2名"
+                    "status": "×",
+                    "detail": "🦑TR 満船"
                 },
                 {
                     "date": "4月23日",
