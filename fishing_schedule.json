@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-04-27 17:25:59",
+    "last_update": "2026-04-27 19:26:25",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -1020,7 +1020,22 @@
                 {
                     "date": "11月3日",
                     "status": "○",
-                    "detail": "文化の日 / Wingar 予約表1"
+                    "detail": "文化の日"
+                },
+                {
+                    "date": "11月15日",
+                    "status": "○",
+                    "detail": "七五三"
+                },
+                {
+                    "date": "11月23日",
+                    "status": "○",
+                    "detail": "勤労感謝の日"
+                },
+                {
+                    "date": "12月25日",
+                    "status": "○",
+                    "detail": "クリスマス / Wingar 予約表1"
                 }
             ]
         },
