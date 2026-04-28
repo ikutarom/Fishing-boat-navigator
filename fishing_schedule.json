@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-04-28 18:20:57",
+    "last_update": "2026-04-28 20:19:49",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -1470,18 +1470,18 @@
             "data": [
                 {
                     "date": "4月29日",
+                    "status": "○",
+                    "detail": "🙏天候不良中止"
+                },
+                {
+                    "date": "4月30日",
                     "status": "×",
                     "detail": "満席タイラバ・SLJ"
                 },
                 {
-                    "date": "4月30日",
-                    "status": "○",
-                    "detail": "空1タイラバ・SLJ"
-                },
-                {
                     "date": "5月1日",
                     "status": "○",
-                    "detail": "空5タイラバ"
+                    "detail": "空4タイラバ"
                 },
                 {
                     "date": "5月2日",
@@ -1492,6 +1492,11 @@
                     "date": "5月3日",
                     "status": "○",
                     "detail": "空3タイラバ・SLJ"
+                },
+                {
+                    "date": "5月5日",
+                    "status": "○",
+                    "detail": "空7タイラバ"
                 },
                 {
                     "date": "5月9日",
@@ -1662,11 +1667,6 @@
                     "date": "7月10日",
                     "status": "○",
                     "detail": "仕立夜焚き"
-                },
-                {
-                    "date": "7月11日",
-                    "status": "×",
-                    "detail": "満席夜焚きイカ"
                 }
             ]
         },
