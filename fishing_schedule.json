@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-05-02 07:48:10",
+    "last_update": "2026-05-02 09:09:54",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -457,7 +457,7 @@
                 {
                     "date": "5月5日",
                     "status": "△",
-                    "detail": "ﾋﾗﾏｻﾒｲﾝ:2名空き"
+                    "detail": "ﾋﾗﾏｻﾒｲﾝ:1名空き"
                 },
                 {
                     "date": "5月6日",
@@ -1010,7 +1010,22 @@
                 {
                     "date": "12月25日",
                     "status": "○",
-                    "detail": "クリスマス / Wingar 予約表"
+                    "detail": "クリスマス"
+                },
+                {
+                    "date": "12月31日",
+                    "status": "○",
+                    "detail": "大晦日"
+                },
+                {
+                    "date": "1月1日",
+                    "status": "○",
+                    "detail": "元日"
+                },
+                {
+                    "date": "1月2日",
+                    "status": "×",
+                    "detail": "銀行休業日 / Wingar 予約表"
                 }
             ]
         },
