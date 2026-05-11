@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-05-11 11:24:18",
+    "last_update": "2026-05-11 14:56:15",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -396,6 +396,11 @@
                     "detail": "満船"
                 },
                 {
+                    "date": "6月19日",
+                    "status": "×",
+                    "detail": "満船"
+                },
+                {
                     "date": "6月20日",
                     "status": "×",
                     "detail": "満船"
@@ -461,8 +466,8 @@
                 },
                 {
                     "date": "5月12日",
-                    "status": "△",
-                    "detail": "ｲｶ夜焚き:2名空き"
+                    "status": "×",
+                    "detail": "ｲｶ夜焚き:満員御礼"
                 },
                 {
                     "date": "5月13日",
@@ -659,11 +664,6 @@
         "エルクルーズ": {
             "data": [
                 {
-                    "date": "5月12日",
-                    "status": "×",
-                    "detail": "休船"
-                },
-                {
                     "date": "5月13日",
                     "status": "△",
                     "detail": "イサキSLJ【3名空き】"
@@ -681,7 +681,7 @@
                 {
                     "date": "5月15日",
                     "status": "△",
-                    "detail": "夜便：夜焚き【4名空き】"
+                    "detail": "夜便：夜焚き【1名空き】"
                 },
                 {
                     "date": "5月16日",
@@ -716,7 +716,7 @@
                 {
                     "date": "5月21日",
                     "status": "△",
-                    "detail": "イサキSLJ【5名空き】"
+                    "detail": "イサキSLJ【2名空き】"
                 },
                 {
                     "date": "5月22日",
@@ -1162,12 +1162,32 @@
                     "detail": "SOLD OUT"
                 },
                 {
+                    "date": "6月20日",
+                    "status": "○",
+                    "detail": "SOLD OUT / 6月 20日 (土曜日) / 終日"
+                },
+                {
+                    "date": "6月20日",
+                    "status": "×",
+                    "detail": "チャーター"
+                },
+                {
                     "date": "6月27日",
                     "status": "○",
                     "detail": "SOLD OUT / 6月 27日 (土曜日) / 終日"
                 },
                 {
                     "date": "6月27日",
+                    "status": "×",
+                    "detail": "チャーター"
+                },
+                {
+                    "date": "6月28日",
+                    "status": "○",
+                    "detail": "SOLD OUT / 6月 28日 (日曜日) / 終日"
+                },
+                {
+                    "date": "6月28日",
                     "status": "×",
                     "detail": "チャーター"
                 },
