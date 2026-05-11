@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-05-11 07:44:37",
+    "last_update": "2026-05-11 11:24:18",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -873,6 +873,11 @@
                     "detail": "🦑EG 残3名"
                 },
                 {
+                    "date": "5月13日",
+                    "status": "△",
+                    "detail": "🦑EG＋🐟イサキ 残4名"
+                },
+                {
                     "date": "5月15日",
                     "status": "△",
                     "detail": "🦑EG＋🐟SLJ ロング便 残3名"
@@ -1060,12 +1065,7 @@
                 {
                     "date": "4月29日",
                     "status": "○",
-                    "detail": "昭和の日"
-                },
-                {
-                    "date": "5月3日",
-                    "status": "○",
-                    "detail": "憲法記念日 / Wingar 予約表"
+                    "detail": "昭和の日 / Wingar 予約表"
                 }
             ]
         },
@@ -1089,7 +1089,7 @@
                 {
                     "date": "5月17日",
                     "status": "△",
-                    "detail": "残：２"
+                    "detail": "残：1"
                 },
                 {
                     "date": "5月19日",
@@ -1158,8 +1158,8 @@
                 },
                 {
                     "date": "6月6日",
-                    "status": "△",
-                    "detail": "残：1"
+                    "status": "○",
+                    "detail": "SOLD OUT"
                 },
                 {
                     "date": "6月27日",
@@ -1476,7 +1476,7 @@
                 {
                     "date": "5月20日",
                     "status": "○",
-                    "detail": "空6夜焚きイカ"
+                    "detail": "空5夜焚きイカ"
                 },
                 {
                     "date": "5月22日",
