@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-05-23 20:08:50",
+    "last_update": "2026-05-23 21:58:36",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -718,11 +718,6 @@
         },
         "エルクルーズ": {
             "data": [
-                {
-                    "date": "5月24日",
-                    "status": "×",
-                    "detail": "イサキSLJ【満員】"
-                },
                 {
                     "date": "5月25日",
                     "status": "△",
