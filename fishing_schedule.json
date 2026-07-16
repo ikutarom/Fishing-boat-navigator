@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-07-16 11:42:09",
+    "last_update": "2026-07-16 13:53:15",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -124,8 +124,8 @@
                 },
                 {
                     "date": "7月18日",
-                    "status": "○",
-                    "detail": "夜炊きイカ　空き1名"
+                    "status": "×",
+                    "detail": "夜炊きイカ　満船"
                 },
                 {
                     "date": "7月19日",
