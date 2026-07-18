@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-07-18 16:00:16",
+    "last_update": "2026-07-18 17:05:05",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -910,7 +910,102 @@
                 {
                     "date": "11月15日",
                     "status": "○",
-                    "detail": "七五三 / Wingar 予約表"
+                    "detail": "七五三"
+                },
+                {
+                    "date": "11月23日",
+                    "status": "○",
+                    "detail": "勤労感謝の日"
+                },
+                {
+                    "date": "12月25日",
+                    "status": "○",
+                    "detail": "クリスマス"
+                },
+                {
+                    "date": "12月31日",
+                    "status": "○",
+                    "detail": "大晦日"
+                },
+                {
+                    "date": "1月1日",
+                    "status": "○",
+                    "detail": "元日"
+                },
+                {
+                    "date": "1月2日",
+                    "status": "×",
+                    "detail": "銀行休業日"
+                },
+                {
+                    "date": "1月3日",
+                    "status": "×",
+                    "detail": "銀行休業日"
+                },
+                {
+                    "date": "1月11日",
+                    "status": "○",
+                    "detail": "成人の日"
+                },
+                {
+                    "date": "2月3日",
+                    "status": "○",
+                    "detail": "節分"
+                },
+                {
+                    "date": "2月11日",
+                    "status": "○",
+                    "detail": "建国記念の日"
+                },
+                {
+                    "date": "2月23日",
+                    "status": "○",
+                    "detail": "天皇誕生日"
+                },
+                {
+                    "date": "3月3日",
+                    "status": "○",
+                    "detail": "雛祭り"
+                },
+                {
+                    "date": "3月21日",
+                    "status": "○",
+                    "detail": "春分の日"
+                },
+                {
+                    "date": "3月22日",
+                    "status": "×",
+                    "detail": "春分の日 振替休日"
+                },
+                {
+                    "date": "4月29日",
+                    "status": "○",
+                    "detail": "昭和の日"
+                },
+                {
+                    "date": "5月3日",
+                    "status": "○",
+                    "detail": "憲法記念日"
+                },
+                {
+                    "date": "5月4日",
+                    "status": "○",
+                    "detail": "みどりの日"
+                },
+                {
+                    "date": "5月5日",
+                    "status": "○",
+                    "detail": "こどもの日"
+                },
+                {
+                    "date": "5月9日",
+                    "status": "○",
+                    "detail": "母の日"
+                },
+                {
+                    "date": "7月7日",
+                    "status": "○",
+                    "detail": "七夕"
                 }
             ]
         },
@@ -1675,7 +1770,7 @@
                 {
                     "date": "8月13日",
                     "status": "△",
-                    "detail": "🈳🦑残り4名様"
+                    "detail": "🈳🦑残り3名様"
                 },
                 {
                     "date": "8月15日",
