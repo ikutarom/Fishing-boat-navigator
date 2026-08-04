@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-08-04 20:27:13",
+    "last_update": "2026-08-04 22:14:32",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -399,6 +399,11 @@
                     "date": "8月12日",
                     "status": "×",
                     "detail": "満船"
+                },
+                {
+                    "date": "8月18日",
+                    "status": "△",
+                    "detail": "イカメタル　残り６名"
                 }
             ]
         },
