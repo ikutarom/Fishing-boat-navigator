@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-08-07 13:05:43",
+    "last_update": "2026-08-07 14:55:25",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -1167,33 +1167,33 @@
                 },
                 {
                     "date": "8月10日",
-                    "status": "△",
-                    "detail": "夜焚き、２名様募集中"
+                    "status": "×",
+                    "detail": "休船"
                 },
                 {
                     "date": "8月11日",
-                    "status": "△",
-                    "detail": "夜焚き、２名様募集中"
+                    "status": "×",
+                    "detail": "休船"
                 },
                 {
                     "date": "8月12日",
                     "status": "×",
-                    "detail": "夜焚き、満員御礼🙇"
+                    "detail": "休船"
                 },
                 {
                     "date": "8月13日",
-                    "status": "△",
-                    "detail": "夜焚き、６名様募集中"
+                    "status": "×",
+                    "detail": "休船"
                 },
                 {
                     "date": "8月14日",
-                    "status": "△",
-                    "detail": "夜焚き、８名様募集中"
+                    "status": "×",
+                    "detail": "休船"
                 },
                 {
                     "date": "8月15日",
-                    "status": "△",
-                    "detail": "夜焚き、５名様募集中"
+                    "status": "×",
+                    "detail": "休船"
                 },
                 {
                     "date": "8月16日",
@@ -1202,23 +1202,23 @@
                 },
                 {
                     "date": "8月17日",
-                    "status": "○",
-                    "detail": "募集中"
+                    "status": "×",
+                    "detail": "休船"
                 },
                 {
                     "date": "8月18日",
-                    "status": "○",
-                    "detail": "募集中"
+                    "status": "×",
+                    "detail": "休船"
                 },
                 {
                     "date": "8月19日",
-                    "status": "○",
-                    "detail": "募集中"
+                    "status": "×",
+                    "detail": "休船"
                 },
                 {
                     "date": "8月20日",
-                    "status": "○",
-                    "detail": "募集中"
+                    "status": "×",
+                    "detail": "休船"
                 },
                 {
                     "date": "8月21日",
