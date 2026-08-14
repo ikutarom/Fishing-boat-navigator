@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-08-14 04:13:14",
+    "last_update": "2026-08-14 06:16:28",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -1036,11 +1036,6 @@
         },
         "GOD": {
             "data": [
-                {
-                    "date": "8月14日",
-                    "status": "○",
-                    "detail": "AM；太刀魚 SOLD OUT　お一人様￥6000"
-                },
                 {
                     "date": "8月15日",
                     "status": "×",
