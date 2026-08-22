@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-08-22 06:42:11",
+    "last_update": "2026-08-22 07:34:16",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -883,6 +883,11 @@
                     "detail": "スポーツの日"
                 },
                 {
+                    "date": "10月24日",
+                    "status": "△",
+                    "detail": "🦑TR 残5名"
+                },
+                {
                     "date": "10月31日",
                     "status": "×",
                     "detail": "🦑TR 満船"
@@ -1000,12 +1005,7 @@
                 {
                     "date": "7月7日",
                     "status": "○",
-                    "detail": "七夕"
-                },
-                {
-                    "date": "7月19日",
-                    "status": "○",
-                    "detail": "海の日 / Wingar 予約表"
+                    "detail": "七夕 / Wingar 予約表"
                 }
             ]
         },
@@ -1575,7 +1575,7 @@
                 {
                     "date": "10月18日",
                     "status": "△",
-                    "detail": "🈳残り4名様"
+                    "detail": "🈳残り3名様"
                 },
                 {
                     "date": "11月3日",
