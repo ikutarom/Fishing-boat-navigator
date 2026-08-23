@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-08-23 01:21:29",
+    "last_update": "2026-08-23 03:05:12",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -605,13 +605,13 @@
                 },
                 {
                     "date": "8月25日",
-                    "status": "△",
-                    "detail": "湾内タチウオ【1名空き】 / 8月 25日 (火曜日) / 終日"
+                    "status": "×",
+                    "detail": "夜便：夜焚き【満員】 / 8月 25日 (火曜日) / 終日"
                 },
                 {
                     "date": "8月25日",
                     "status": "×",
-                    "detail": "夜便：夜焚き【満員】"
+                    "detail": "湾内タチウオ【満員】"
                 },
                 {
                     "date": "8月26日",
@@ -793,6 +793,26 @@
         "Wingar": {
             "data": [
                 {
+                    "date": "8月24日",
+                    "status": "×",
+                    "detail": "🛥️休船"
+                },
+                {
+                    "date": "8月25日",
+                    "status": "×",
+                    "detail": "🛥️休船"
+                },
+                {
+                    "date": "8月26日",
+                    "status": "×",
+                    "detail": "🛥️休船"
+                },
+                {
+                    "date": "8月27日",
+                    "status": "×",
+                    "detail": "🛥️休船"
+                },
+                {
                     "date": "8月29日",
                     "status": "×",
                     "detail": "🐟LJ 満船"
@@ -970,27 +990,7 @@
                 {
                     "date": "5月4日",
                     "status": "○",
-                    "detail": "みどりの日"
-                },
-                {
-                    "date": "5月5日",
-                    "status": "○",
-                    "detail": "こどもの日"
-                },
-                {
-                    "date": "5月9日",
-                    "status": "○",
-                    "detail": "母の日"
-                },
-                {
-                    "date": "7月7日",
-                    "status": "○",
-                    "detail": "七夕"
-                },
-                {
-                    "date": "7月19日",
-                    "status": "○",
-                    "detail": "海の日 / Wingar 予約表"
+                    "detail": "みどりの日 / Wingar 予約表"
                 }
             ]
         },
