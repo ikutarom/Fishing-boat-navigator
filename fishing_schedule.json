@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-08-24 04:46:25",
+    "last_update": "2026-08-24 05:40:29",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -1226,13 +1226,13 @@
                 },
                 {
                     "date": "8月31日",
-                    "status": "×",
-                    "detail": "終日休船"
+                    "status": "△",
+                    "detail": "太刀魚便 12名🈳"
                 },
                 {
                     "date": "9月1日",
-                    "status": "△",
-                    "detail": "太刀魚便 12名🈳"
+                    "status": "×",
+                    "detail": "私用の為、休船"
                 },
                 {
                     "date": "9月2日",
