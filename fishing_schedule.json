@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-08-24 05:40:29",
+    "last_update": "2026-08-24 07:00:25",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -476,8 +476,8 @@
                 },
                 {
                     "date": "9月4日",
-                    "status": "△",
-                    "detail": "ｲｶ夜焚き:2名空き"
+                    "status": "×",
+                    "detail": "ｲｶ夜焚き:満員"
                 },
                 {
                     "date": "9月5日",
