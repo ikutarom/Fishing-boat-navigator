@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-08-24 12:52:36",
+    "last_update": "2026-08-24 13:54:40",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -1518,19 +1518,14 @@
         "DORAGI": {
             "data": [
                 {
-                    "date": "8月25日",
-                    "status": "△",
-                    "detail": "🈳🦑残り3名様"
+                    "date": "8月26日",
+                    "status": "×",
+                    "detail": "🈵🐉チャーター"
                 },
                 {
                     "date": "8月27日",
                     "status": "△",
                     "detail": "🈳🐉残り6名様"
-                },
-                {
-                    "date": "8月28日",
-                    "status": "△",
-                    "detail": "🈳🦑残り3名様"
                 },
                 {
                     "date": "8月29日",
@@ -1710,12 +1705,7 @@
                 {
                     "date": "1月11日",
                     "status": "○",
-                    "detail": "成人の日"
-                },
-                {
-                    "date": "2月3日",
-                    "status": "○",
-                    "detail": "節分 / 出船予定"
+                    "detail": "成人の日 / 出船予定"
                 }
             ]
         }
