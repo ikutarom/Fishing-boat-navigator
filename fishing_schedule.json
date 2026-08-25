@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-08-25 04:41:20",
+    "last_update": "2026-08-25 05:34:17",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -805,7 +805,7 @@
                 {
                     "date": "8月30日",
                     "status": "△",
-                    "detail": "🐟LJ 残3名"
+                    "detail": "🐟LJ 残2名"
                 },
                 {
                     "date": "9月5日",
@@ -1524,8 +1524,8 @@
                 },
                 {
                     "date": "8月29日",
-                    "status": "△",
-                    "detail": "🈳🦑残り1名様"
+                    "status": "×",
+                    "detail": "🈵🦑満船"
                 },
                 {
                     "date": "8月30日",
