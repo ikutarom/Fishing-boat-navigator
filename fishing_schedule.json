@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-08-25 23:27:28",
+    "last_update": "2026-08-26 01:20:14",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -1430,8 +1430,8 @@
                 },
                 {
                     "date": "9月5日",
-                    "status": "○",
-                    "detail": "空1タチウオ"
+                    "status": "×",
+                    "detail": "満席タチウオ"
                 },
                 {
                     "date": "9月12日",
