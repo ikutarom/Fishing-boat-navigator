@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-09-02 23:04:04",
+    "last_update": "2026-09-03 03:16:42",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -409,7 +409,7 @@
                 {
                     "date": "9月19日",
                     "status": "△",
-                    "detail": "タチ9名空き"
+                    "detail": "タチ6名空き"
                 },
                 {
                     "date": "9月20日",
@@ -1107,11 +1107,6 @@
         "GOD": {
             "data": [
                 {
-                    "date": "9月3日",
-                    "status": "○",
-                    "detail": "メンテナンス"
-                },
-                {
                     "date": "9月5日",
                     "status": "○",
                     "detail": "SOLD OUT / 9月 5日 (土曜日) / 終日"
@@ -1203,8 +1198,8 @@
                 },
                 {
                     "date": "9月26日",
-                    "status": "△",
-                    "detail": "残：２"
+                    "status": "○",
+                    "detail": "SOLD OUT"
                 },
                 {
                     "date": "9月27日",
@@ -1422,7 +1417,7 @@
                 {
                     "date": "9月12日",
                     "status": "△",
-                    "detail": "太刀魚便 残り9名🈳"
+                    "detail": "太刀魚便 残り10名🈳"
                 },
                 {
                     "date": "9月13日",
