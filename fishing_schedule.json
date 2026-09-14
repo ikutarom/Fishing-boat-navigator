@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-09-13 22:58:15",
+    "last_update": "2026-09-14 00:49:53",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -1012,6 +1012,11 @@
         "GOD": {
             "data": [
                 {
+                    "date": "9月15日",
+                    "status": "△",
+                    "detail": "太刀魚　残：あり"
+                },
+                {
                     "date": "9月19日",
                     "status": "○",
                     "detail": "SOLD OUT / 9月 19日 (土曜日) / 終日"
@@ -1364,24 +1369,14 @@
                     "detail": "満席タイラバ"
                 },
                 {
-                    "date": "9月15日",
-                    "status": "○",
-                    "detail": "空7タイラバ＆SLJ"
-                },
-                {
                     "date": "9月16日",
                     "status": "○",
-                    "detail": "空5太刀魚"
+                    "detail": "🙏🙇"
                 },
                 {
                     "date": "9月18日",
                     "status": "○",
-                    "detail": "最終太刀魚 / 9月 18日 (金曜日) / 終日"
-                },
-                {
-                    "date": "9月18日",
-                    "status": "○",
-                    "detail": "空1太刀魚"
+                    "detail": "🙏🙇"
                 },
                 {
                     "date": "9月19日",
@@ -1435,6 +1430,11 @@
                 },
                 {
                     "date": "11月21日",
+                    "status": "×",
+                    "detail": "定休日🙇"
+                },
+                {
+                    "date": "12月19日",
                     "status": "×",
                     "detail": "定休日🙇"
                 }
