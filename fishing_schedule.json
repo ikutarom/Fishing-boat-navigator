@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-09-26 10:57:44",
+    "last_update": "2026-09-26 14:56:52",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -1354,6 +1354,11 @@
                     "detail": "貸切タイラバ・SLJ"
                 },
                 {
+                    "date": "9月30日",
+                    "status": "○",
+                    "detail": "空4タイラバ＆SLJ"
+                },
+                {
                     "date": "10月2日",
                     "status": "○",
                     "detail": "空7タイラバ"
@@ -1412,11 +1417,6 @@
                     "date": "1月10日",
                     "status": "○",
                     "detail": "組合行事"
-                },
-                {
-                    "date": "1月16日",
-                    "status": "×",
-                    "detail": "定休日"
                 }
             ]
         },
