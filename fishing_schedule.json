@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-10-03 22:45:37",
+    "last_update": "2026-10-04 02:28:45",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -159,8 +159,8 @@
                 },
                 {
                     "date": "10月12日",
-                    "status": "○",
-                    "detail": "募集中"
+                    "status": "×",
+                    "detail": "鯛ラバ　チャーター"
                 },
                 {
                     "date": "10月13日",
