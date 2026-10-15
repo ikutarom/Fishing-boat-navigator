@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-10-15 01:16:59",
+    "last_update": "2026-10-15 07:04:46",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -1178,8 +1178,8 @@
                 },
                 {
                     "date": "10月18日",
-                    "status": "△",
-                    "detail": "残：5"
+                    "status": "○",
+                    "detail": "SOLD OUT"
                 },
                 {
                     "date": "10月20日",
@@ -1521,7 +1521,7 @@
                 {
                     "date": "10月31日",
                     "status": "○",
-                    "detail": "空4タイラバ"
+                    "detail": "空3タイラバ"
                 },
                 {
                     "date": "11月7日",
