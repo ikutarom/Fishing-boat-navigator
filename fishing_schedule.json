@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-10-21 22:11:12",
+    "last_update": "2026-10-22 01:19:24",
     "boat_info": {
         "M-selection": {
             "area": "糸島",
@@ -960,7 +960,7 @@
                 {
                     "date": "11月9日",
                     "status": "△",
-                    "detail": "🐟LJ 残3名"
+                    "detail": "🐟LJ 残2名"
                 },
                 {
                     "date": "11月14日",
@@ -1445,8 +1445,8 @@
             "data": [
                 {
                     "date": "10月23日",
-                    "status": "×",
-                    "detail": "満席テンヤ・タイラバ"
+                    "status": "○",
+                    "detail": "🌊天候中止"
                 },
                 {
                     "date": "10月24日",
